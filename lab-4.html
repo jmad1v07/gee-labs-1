@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Lab 4</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 52px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h2 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h3 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h4 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h5 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h6 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="overview.html">Overview</a>
+</li>
+<li>
+  <a href="js-introduction.html">JS Intro</a>
+</li>
+<li>
+  <a href="lab-4.html">Lab 4</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Lab 4</h1>
+
+</div>
+
+
+<p><br></p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This lab introduces spatial data models for representing geographic entities and phenomena and the data structures which implement these spatial data models in Google Earth Engine.</p>
+<p><br></p>
+</div>
+<div id="client-and-server" class="section level2">
+<h2>Client and Server</h2>
+<p>Up to now you have been writing JavaScript programs that are executed by your browser and run on the hardware in your local machine (i.e. any data in variables you declare reside in your computer’s memory and the operations or functions you invoke run on your computer’s CPU).</p>
+<p>However, your machine has limited storage, memory, and processing power. Google Earth Engine allows you to access servers comprising more powerful computers and access to larger datasets (than could be stored on your local machine). You still write a Google Earth Engine program in JavaScript using the code editor in your browser; however, the servers storing and processing the geospatial data in your program are remotely located in the cloud. The execution of a Google Earth Engine program is as follows:</p>
+<ol style="list-style-type: decimal">
+<li>You write a series of JavaScript statements that identify geospatial data, and operations to perform on this data, that run on remote servers and the results to be returned from this processing.</li>
+<li>Your browser encodes these statements and sends them in a message to the Google Earth Engine servers via the internet.</li>
+<li>The Google Earth Engine servers process your message, access data you requested, and perform the operations outlined in your script.</li>
+<li>Results your program requests back from the Google Earth Engine servers are returned to your browser (again via the internet) and displayed (e.g. a map is drawn in your browser, results are printed to the console, a file is made available to download).</li>
+</ol>
+<p>This differs from a desktop GIS (e.g. QGIS) where all the data and processing occurs locally on your machine’s hardware. Google Earth Engine is a distributed system which means the program runs by calling functions running on different computers connected via a network (e.g. your Google Earth Engine programs will call functions running locally in your browser and also functions running on Google servers with data shared between these functions over the internet). Google Earth Engine has a clear client-server architecture where your browser is the client requesting services from Google Earth Engine, the server, which offers a range of services and processes and responds to client requests.</p>
+<p>There are several advantages to this mode of computing. It is more efficient to just download the result of processing geospatial data than to download all the raw data and process and store it locally. For example, if you wanted to compute the area of forest in Australia using a land cover map you can perform this analysis in the cloud and download one number (the area of forest). Contrast this with having to download a land cover map for all of Australia, process the data, and then run the analysis to calculate the area of forest on your local machine. Also, more geospatial datasets are coming online and they getting larger; it is often not feasible to process all this “big data” locally.</p>
+</div>
+<div id="the-ee-object" class="section level2">
+<h2>The <code>ee</code> object</h2>
+<p>It is important to distinguish between variables that are stored, and operations that are run, locally on your machine and data and operations that run on Google servers in the cloud. The <code>ee</code> prefix indicates that the data being referred to in your script is a server side object. For example, <code>var localString = 'on my computer'</code> is a string type variable stored locally on your machine where as <code>var cloudString = ee.String('in the cloud')</code> is a proxy object for a variable containing string data located on servers in the cloud.</p>
+<p>In general, any variable that is declared as <code>ee.&lt;Thing&gt;()</code> is server side and any method or operation of the form <code>ee.&lt;Thing&gt;().method()</code> is a server side operation. One way of understanding <code>ee.&lt;Thing&gt;()</code> is as a container that you put instructions inside to send to the Google servers; for example, in <code>var cloudString = ee.String('in the cloud')</code> you are putting a client side string <code>'in the cloud'</code> in a container and that data is sent to servers in the cloud. Similarly, you could put the ID of geospatial data that is stored in databases located on Google Earth Engines servers and assign it to server side variables that are used in your program; executing <code>var landsatImage = ee.Image('LANDSAT/LC8_L1T_TOA/LC81130822014033LGN00')</code> will assign the Landsat image with the specified ID to the variable <code>landsatImage</code> in your script.</p>
+<p>If the geospatial data and operations used in your program are server side how do you access or visualise the results? There are a range of functions in Google Earth Engine that let you request data from the server to be displayed in your browser. For example, the <code>print()</code> function can request server side objects and print them to the <em>Console</em> and the <code>Map.addLayer()</code> function requests spatial data which is displayed in the map.</p>
+<p><br></p>
+</div>
+<div id="spatial-data-models" class="section level2">
+<h2>Spatial Data Models</h2>
+<p>A spatial data model refers to a conceptual model for describing geographic phenomena or entities. A spatial data model typically contains two pieces of information:</p>
+<ul>
+<li>positional information describing location (e.g. an <code>(x, y)</code> coordinate pair representing the location of a weather station)</li>
+<li>attribute information describing characteristics of the phenomena or entity (e.g. a name:value pair recording the name of the weather station <code>name:'Perth Airport'</code>)</li>
+</ul>
+<p>A spatial data model is a <em>representation</em> of geographic phenomena or entities; therefore, some detail is abstracted away.</p>
+<div id="vector-data-model" class="section level3">
+<h3>Vector Data Model</h3>
+<p>The vector data model represents geographic phenomena or entities as geometric features:</p>
+<ul>
+<li>points (i.e. a coordinate pair of values)</li>
+<li>lines (i.e. two or more points connected by a line)</li>
+<li>polygons (i.e. three or more points connected by a non-intersecting line which “closes” the polygon)</li>
+</ul>
+<p>Along with coordinates that represent the position of the geometry, vector data also stores non-spatial attribute information which describe characteristics of the geographic phenomena or entity represented by the geometry feature.</p>
+<p>The figure below demonstrates how geographic entities in Perth can be represented using the vector data model. The blue line feature broadly captures the shape of the river; however, it is a simplification as it does not provide information about how the river’s width varies across space. The red point feature is used to represent the location of Perth; this might be an appropriate way to represent Perth’s location on a zoomed out map but it does not capture Perth’s actual extent across the landscape.</p>
+<br>
+<details>
+<summary><b><em>What detail is abstracted away by representing Kings Park using the green polygon feature?</em></b></summary>
+<p>
+<ul>
+<li>
+Shape of Kings Park is simplified using only 6 vertices.
+</li>
+<li>
+Variation in land cover types and land uses within the park is not captured.
+</li>
+</ul>
+</p>
+</details>
+<p><br></p>
+<center>
+<div class="figure" style="text-align: center">
+<img src="img/vector-data-model.png" alt="Representing geographic entities using the vector data model" width="70%" />
+<p class="caption">
+Representing geographic entities using the vector data model
+</p>
+</div>
+</center>
+<p><br></p>
+</div>
+<div id="raster-data-model" class="section level3">
+<h3>Raster Data Model</h3>
+<p>The raster data model represents geographic phenomena or entities as a grid of cells (pixels). Attribute information about geographic phenomena or entities is described by assigning a value to each pixel. The dimensions of a pixel relative to distance on the Earth’s land surface determines the complexity and detail of spatial features that can be resolved in raster data. A pixel that represents a 1 km x 1 km footprint on the Earth’s surface will not be able to resolve an individual tree or a single building. Pixel values can be continuous (e.g. values represent precipitation) or categorical (e.g. values represent a land cover type).</p>
+<p>The figure below shows the 2018 European Space Agency (ESA) <a href="https://www.esa-landcover-cci.org">Climate Change Initiative (CCI) land cover map</a> for 2018. This is a raster data model representation of land cover; each pixel represents a 300 m x 300 m area on the Earth’s land surface and a pixel can only represent a single land cover type. If you look at the bottom two zoomed in maps you can some limitations of modelling land cover using 300 m x 300 m spatial resolution raster data. The shape of features of different land cover types is poorly represented by the “block-like” arrangement of pixels and there is variation in land cover within a single pixel.</p>
+<br>
+<center>
+<div class="figure" style="text-align: center">
+<img src="img/raster-data-model.png" alt="Representing land cover using the raster data model" width="70%" />
+<p class="caption">
+Representing land cover using the raster data model
+</p>
+</div>
+</center>
+<br>
+<details>
+<summary><b><em>How could you represent spatial variation in elevation using vector and raster data models?</em></b></summary>
+<p>
+<ul>
+<li>
+Vector data model: contour lines.
+</li>
+<li>
+Raster data model: digital elevation model (DEM) - each pixel value represents the elevation at that location.
+</li>
+</ul>
+</p>
+</details>
+<p><br></p>
+</div>
+</div>
+<div id="data-structures" class="section level2">
+<h2>Data Structures</h2>
+Data structures are how spatial data models are implemented in a computer system. GEE has a range of non-spatial data structures used for organising data related to geographic and non-geographic information.
+<center>
+<table style="width:75%; border-collapse: collapse; border-bottom: 1px solid #ddd; padding: 15px;">
+<caption>
+Google Earth Engine Data Structures
+</caption>
+<tr>
+<th>
+Name
+</th>
+<th>
+Constructor
+</th>
+<th>
+Summary
+</th>
+</tr>
+<tr>
+<td>
+String
+</td>
+<td>
+<code>ee.String()</code>
+</td>
+<td>
+Create a string object on the GEE server. Useful for storing text data (e.g. name of a weather station) and metadata.
+</td>
+</tr>
+<tr>
+<td>
+Dictionary
+</td>
+<td>
+<code>ee.Dictionary()</code>
+</td>
+<td>
+Create a dictionary object on the GEE server. Dictionary object comprise key and value pairs which describe properties of an object (e.g. a dictionary object could contain key attributes about a point feature representing a city - <code>{city: 'Perth', population: '1000000'}</code> - or metadata about a remote sensing image capture - <code>{CLOUD_COVER: 0.059, DATE_ACQUIRED: 2014-03-18, DATUM: WGS84}</code>).
+</td>
+</tr>
+<tr>
+<td>
+Number
+</td>
+<td>
+<code>ee.Number()</code>
+</td>
+<td>
+Create a number object on the GEE server. Useful for storing quantitative data (e.g. the result of a mathematical operation or a numeric measurement such as temperature).
+</td>
+</tr>
+<tr>
+<td>
+List
+</td>
+<td>
+<code>ee.List()</code>
+</td>
+<td>
+Create a list object on the GEE server. Useful for organising different objects (e.g. a list can store images, features, an array, and a string in one object - <code>var list = ee.List([1, 'text']);</code>).
+</td>
+</tr>
+<tr>
+<td>
+Array
+</td>
+<td>
+<code>ee.Array()</code>
+</td>
+<td>
+Create an array object on the GEE server. 1-D vector, 2-D matrics, 3-D cubes, or n-D hypercubes. Arrays are created from lists of numbers and lists of lists (e.g. <code>var arr = ee.Array({[1, 2], [1, 2]});</code> - a 2x2 array). This demonstrates how complex data structures and objects are constructed from simpler data structures.
+</td>
+</tr>
+<tr>
+<td>
+Date
+</td>
+<td>
+<code>ee.Date()</code>
+</td>
+<td>
+Create a date object on the GEE server. Useful for storing temporal attributes about geographic data (e.g. date of satellite image capture).
+</td>
+</tr>
+</table>
+</center>
+<p><br></p>
+</div>
+<div id="spatial-data-structures" class="section level2">
+<h2>Spatial Data Structures</h2>
+<div id="images" class="section level3">
+<h3>Images</h3>
+<p>Raster data in GEE are represented as <code>Image</code> objects.</p>
+<p>To create an <code>Image</code> object that stores raster data on the GEE server use the <code>ee.Image()</code> constructor. You pass arguments into the parentheses of the <code>ee.Image()</code> constructor to specify what raster data should be represented by the <code>Image</code> object. If you pass a number into <code>ee.Image()</code> you will get a constant <code>Image</code> where each pixel value is the number passed in.</p>
+<p>Add the following code to your GEE script. This will create an <code>Image</code> object where each pixel has the value 5 which can be referred to using the variable <code>img5</code>. Click on the <em>Inspector</em> tab and then click at locations on the map. You should see the value 5 printed in the <em>Inspector</em> tab.</p>
+<pre class="js"><code>/*Raster where pixel values equal 5*/
+var img5 = ee.Image(5);
+print(img5);
+Map.addLayer(img5, {palette:[&#39;FF0000&#39;]}, &#39;Raster with pixel value = 5&#39;);
+</code></pre>
+<p>Alternatively, you can pass a string id into the <code>ee.Image()</code> constructor to specify a GEE asset (e.g. a Landsat image).</p>
+<p>The variable <code>img</code> refers to an <code>Image</code> object on the GEE servers storing the Landsat 8 data. This variable can be used in a script to access the Landsat data for queries and analyse. Pass the variable <code>img</code> into the <code>print()</code> function to query the Landsat 8 image’s metadata. The Image metadata should be printed in the <em>Console</em> tab.</p>
+<pre class="js"><code>/*Pass Landsat 8 image id into Image constructor*/ 
+var img = ee.Image(&#39;LANDSAT/LC8_L1T_TOA/LC81130822014033LGN00&#39;);
+print(img);
+</code></pre>
+<p>An <code>Image</code> can have one or more bands, each band is a georeferenced raster which can have it’s own set of properties such as data type (e.g. Integer), scale (spatial resolution), band name, and projection. The <code>Image</code> object itself can contain metadata relevant to all bands in a dictionary object.</p>
+<p>Go to the <em>Console</em> tab and you should see the Landsat 8 <code>Image</code> has 12 bands. Click on a band and you should see some band specific properties such as its projection (<code>crs: EPSG:32650</code>). Click on the <code>Image</code> <code>properties</code> to explore metadata that applies to the <code>Image</code> object such as cloud cover at the time of image capture (<code>CLOUD_COVER: 11.039999961853027</code>) or satellite carrying the sensor (<code>SPACECRAFT_ID: LANDSAT_8</code>).</p>
+</div>
+<div id="geometry-objects" class="section level3">
+<h3>Geometry Objects</h3>
+</div>
+<div id="features" class="section level3">
+<h3>Features</h3>
+</div>
+<div id="collections" class="section level3">
+<h3>Collections</h3>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

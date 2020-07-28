@@ -1,0 +1,30 @@
+---
+title: ""
+pagetitle: "Home"
+output:
+  html_document:
+    theme: spacelab
+    css: home-page-style.css
+---
+
+<head>
+<style>
+h1 {text-align: center;}
+h2 {text-align: center;}
+p {text-align: center;}
+</style>
+</head>
+
+<body>
+<br>
+<br>
+
+<h1 style="color:black;"><b>Advanced GIS and Remote Sensing</b></h1>
+<br>
+<h2 style="color:black;"><b>Google Earth Engine labs</b></h2>
+<br>
+
+<center>
+<a href="overview.html" class="button"><b>Enter</b></a>
+</center>
+</body>

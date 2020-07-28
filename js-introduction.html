@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>JavaScript Introduction</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 52px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h2 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h3 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h4 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h5 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h6 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="overview.html">Overview</a>
+</li>
+<li>
+  <a href="js-introduction.html">JS Intro</a>
+</li>
+<li>
+  <a href="lab-4.html">Lab 4</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">JavaScript Introduction</h1>
+
+</div>
+
+
+<p><br></p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>You will be using Google Earth Engine to perform geospatial data analysis. Google Earth Engine programs comprise a series of statements written in a programming language (JavaScript or python) that outline steps taken to perform specific tasks using geospatial data. You write these statements to create programs that perform one or more useful tasks such as data processing, creating interactive maps, or training statistical models.</p>
+<p>This lab is an introductory section on programming using JavaScript. This section introduces key programming concepts that are important to understand when using Google Earth Engine. However, also view this section as a <em>reference resource</em> to refer back to as you work through the labs and become more proficient in using Google Earth Engine and creating your own programs. A good exercise to consolidate your understanding of these concepts is to try and identify where, and explain how, the concepts that are introduced are used to perform various geospatial data analysis tasks in later labs.</p>
+<p><br></p>
+</div>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p>Load the Google Earth Engine code editor in your browser via the URL: <a href="https://code.earthengine.google.com/">https://code.earthengine.google.com/</a>.</p>
+<div id="code-editor" class="section level3">
+<h3>Code Editor</h3>
+<p>You will create your Google Earth Engine programs using the code editor which can be loaded in your web browser. The code editor is a web-based interactive development environment (IDE) which provides access to the Google Earth Engine JavaScript API. The Google Earth Engine <a href="https://developers.google.com/earth-engine/playground">Developers Guide</a> provides an overview of the code editor tools.</p>
+<p>The code editor provides a range of tools that geospatial data analysis and visualisation easy, especially when working with big datasets. These tools will be introduced in the subsequent labs. Some key code editor features include:</p>
+<ul>
+<li><strong>code editor</strong>: where you write JavaScript statements.</li>
+<li><strong>Scripts tab</strong>: save the JavaScript code for your Google Earth Engine programs.</li>
+<li><strong>Map</strong>: web map visualise spatial data.</li>
+<li><strong>Docs</strong>: JavaScript API reference - lists all the in-built functions and operations.</li>
+<li><strong>Console</strong>: print results from analysis and metadata.</li>
+<li><strong>Inspector tab</strong>: interactive query of spatial objects on the map.</li>
+<li><strong>Geometry tools</strong>: digitise vector features to use in your Google Earth Engine programs.</li>
+<li><strong>Run</strong>: Run your script.</li>
+</ul>
+<center>
+<div class="figure" style="text-align: center">
+<img src="img/Code_editor_diagram.png" alt="Google Earth Engine code editor (source: Google Earth Engine [Developers Guide](https://developers.google.com/earth-engine/images/Playground_scripts.png)" width="80%" />
+<p class="caption">
+Google Earth Engine code editor (source: Google Earth Engine <a href="https://developers.google.com/earth-engine/images/Playground_scripts.png">Developers Guide</a>
+</p>
+</div>
+</div>
+<div id="create-a-repository" class="section level3">
+<h3>Create a Repository</h3>
+<p>Create a repository called <em>labs-gee</em> where you will store the scripts containing the code for programs you write throughout these labs. Go to the <em>Scripts</em> tab and click the <img src="img/Script_manager_new_button.png" style="width:7.0%" /> button to create a new <em>labs-gee</em> repository.</p>
+<center>
+<div class="figure" style="text-align: center">
+<img src="img/Playground_scripts.png" alt="Scripts tab and button to create new repositories (source: Google Earth Engine [Developers Guide](https://developers.google.com/earth-engine/images/Playground_scripts.png)" width="50%" />
+<p class="caption">
+Scripts tab and button to create new repositories (source: Google Earth Engine <a href="https://developers.google.com/earth-engine/images/Playground_scripts.png">Developers Guide</a>
+</p>
+</div>
+</center>
+<p>Enter the following code into the <em>Code Editor</em> and save the script to your <em>labs-gee</em> repository. Name the script <em>JS-intro</em>. This code is just some comments that define what the script does and who wrote it and when. Replace the author name and date as appropriate. <strong>Under path in the save widget make sure you select the correct repository (i.e. not default)</strong>.</p>
+<pre class="js"><code>/*
+JavsScript Introduction
+Author: Test
+Date: XX-XX-XXXX
+
+*/
+</code></pre>
+<br>
+<center>
+<div class="figure" style="text-align: center">
+<img src="img/save-js-intro-script.png" alt="Save script to labs-gee repository" width="80%" />
+<p class="caption">
+Save script to labs-gee repository
+</p>
+</div>
+</center>
+<br>
+<center>
+<iframe src="https://player.vimeo.com/video/441911311" width="640" height="321" frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+</iframe>
+<p>
+<a href="https://vimeo.com/441911311">Create repository and save script.</a>
+</p>
+</center>
+<p><br></p>
+</div>
+</div>
+<div id="programming" class="section level2">
+<h2>Programming</h2>
+<p>Programming (coding) is the creation of source code for programs that run on computers. You will be writing programs using <a href="https://developers.google.com/earth-engine/tutorial_js_01">JavaScript</a>. (To avoid confusion, JavaScript is different to the programming language Java).</p>
+<div id="data-types" class="section level3">
+<h3>Data Types</h3>
+<p>Programs need data to work with, perform operations on, and to return outputs from computation and analysis. Real world geographic and non-geographic phenomena and entities are represented in computer programs as data of specific types. In JavaScript there are seven primitive data types:</p>
+<ul>
+<li>undefined</li>
+<li>String</li>
+<li>Number</li>
+<li>Boolean</li>
+<li>BigInt</li>
+<li>Symbol</li>
+<li>null</li>
+</ul>
+<p>undefined types are variables that have not been assigned a value. Variables of null data type intentionally have no value.</p>
+<p>All other data types in JavaScript are of type object.</p>
+<p><strong>Strings</strong></p>
+<p>Variables of string data type contain characters and text which are surrounded by single ’ or double " quotes. There are several cases where string variables are used when working with geospatial data; for example, in the metadata of satellite images the name of the sensor used to collect an image could be stored as a string.</p>
+<br>
+<details>
+<summary><b><em>What other information related to geospatial data could be stored as a string data type?</em></b></summary>
+<p>
+Anything that needs to be represented as text data such as place names, road names, names of weather stations.
+</p>
+</details>
+<p><br></p>
+<p>Enter the following command into the code editor to create a string variable.</p>
+<pre class="js"><code>var stringVar= &#39;Hello World!&#39;;
+</code></pre>
+<p>You have created a string variable called <code>stringVar</code> which contains the text information ‘Hello World!’. This is data that you can use in your program.</p>
+<p>You can use the <code>print()</code> operation to print the data in <code>stringVar</code> onto the <em>Console</em> for inspection.</p>
+<pre class="js"><code>print(stringVar);
+</code></pre>
+<p>You should see ‘Hello World!’ displayed in the <em>Console</em>. You have just created a simple program that creates a string object storing text data in a variable named <code>stringVar</code> and prints this text data to a display. In reality, programs that perform geospatial data analysis will be more complex, contain many variables of different data types, and perform more operations than printing values to a display (instead of printing results to the <em>Console</em> a GIS program might write a <em>.tif</em> file containing the raster output of some analysis).</p>
+<br>
+<center>
+<iframe src="https://player.vimeo.com/video/441912597" width="640" height="321" frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+</iframe>
+<p>
+<a href="https://vimeo.com/441912597">Hello World!</a>
+</p>
+</center>
+<p><br></p>
+<p><strong>Numbers</strong></p>
+<p>The number data type in JavaScript is in double precision 64 bit floating point format. Add the following code to your script to make two number variables.</p>
+<pre class="js"><code>var x = 1;
+var y = 2;
+print(x);
+print(y);
+</code></pre>
+<p>Storing numbers in variables enables programs to perform mathematical and statistical operations and represent geographic phenomena and entities using quantitative values. For example, spectral reflectance values in remote sensing images are numeric which can be combined mathematically to compute vegetation indices (e.g. NDVI).</p>
+<p>Execute the following code to perform some basic maths with the variables <code>x</code> and <code>y</code>.</p>
+<pre class="js"><code>var z = x + y;
+</code></pre>
+<br>
+<details>
+<summary><b><em>What numeric value do you think variable </em><code>z</code> <em>will contain? How could you check if the variable </em><code>z</code> <em>contains the correct value?</em></b></summary>
+<p>
+3 <code>print(z);</code>.
+</p>
+</details>
+<p><br></p>
+<p><strong>Boolean</strong></p>
+<p>The Boolean data type is used to store true or false values. This is useful for storing the results of comparison (equal to, greater than, less than) and logical (and, or, not) operations.</p>
+<pre class="js"><code>var demoBool = z == 4;
+print(demoBool);
+
+var bool1 = x == 1 &amp;&amp; y == 2;
+
+var bool2 = y &lt; x;
+</code></pre>
+<p>You can read up on JavaScript logical and comparison operators <a href="https://www.w3schools.com/js/js_comparisons.asp">here</a> or look at the table below.</p>
+<br>
+<details>
+<summary><b><em>What do you think the value of </em><code>bool1</code> <em>and</em> <code>bool2</code> <em>will be?</em></b></summary>
+<p>
+true, false.
+</p>
+</details>
+<p><br></p>
+<center>
+<table style="width:75%; border-collapse: collapse; border-bottom: 1px solid #ddd; padding: 15px;">
+<caption>
+JavaScript comparison and logical operators
+</caption>
+<tr>
+<th>
+Operator
+</th>
+<th>
+Description
+</th>
+<th>
+Example
+</th>
+</tr>
+<tr>
+<td>
+<code>==</code>
+</td>
+<td>
+equal to
+</td>
+<td>
+<code>x == 5</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>!=</code>
+</td>
+<td>
+not equal
+</td>
+<td>
+<code>x != 5</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>&gt;</code>
+</td>
+<td>
+greater than
+</td>
+<td>
+<code>x &gt; 5</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>&lt;</code>
+</td>
+<td>
+less than
+</td>
+<td>
+<code>x &lt; 5</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>&gt;=</code>
+</td>
+<td>
+greater than or equal to
+</td>
+<td>
+<code>x &gt;= 5</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>&lt;=</code>
+</td>
+<td>
+less than or equal to
+</td>
+<td>
+<code>x &lt;= 5</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>&amp;&amp;</code>
+</td>
+<td>
+and
+</td>
+<td>
+<code>x == 5 &amp;&amp; y == 4</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>||</code>
+</td>
+<td>
+or
+</td>
+<td>
+<code>x == 5 || y == 5</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>!</code>
+</td>
+<td>
+not
+</td>
+<td>
+<code>!(x &lt;= 5)</code>
+</td>
+</tr>
+</table>
+</center>
+<p><br></p>
+<p><strong>Objects</strong></p>
+<p>An object in JavaScript is a collection properties where each property is a name:value pair and the value can be any primitive data type (e.g. String, Number, Boolean, null) or a type of object. You can create custom data types using objects as required by your program; for example, you could create an object to represent a point with two name:value pairs: <code>longitude: 25.55</code> and <code>latitude: 23.42</code> where the values are number type coordinates. You can access properties in an object using the dot operator: <code>.</code> with the format <code>&lt;object name&gt;.&lt;property name&gt;</code>.</p>
+<pre class="js"><code>var lon = 25.55;
+var lat = 23.42;
+
+// create an object named point
+var point = {
+  longitude: lon,
+  latitude: lat
+};
+print(point);
+
+// access value in object
+print(point.longitude);
+</code></pre>
+<p><strong>Arrays</strong></p>
+<p>Arrays are a special list-like object that store an ordered collection of elements. Arrays are declared by placing values in square brackets <code>[1, 2, 3]</code> and you access values inside an array using the value’s array index. The first value in an array has an index of 0, the second value has an index of 1, and the final value has an index of <span class="math inline">\(n-1\)</span> where <span class="math inline">\(n\)</span> is the number of elements in the array. This is the distinction between arrays and objects where elements are represented by name:value pairs. The elements in arrays are ordered and accessed by their index position; the elements in objects are unordered and accessed by their property name.</p>
+<p>Below is an example of how to create an array of numbers that represent years.</p>
+<pre class="js"><code>var years = [2000, 2001, 2002, 2003, 2004, 2005, 2006];
+</code></pre>
+<p>You can see the data inside arrays using the <code>print()</code> command or extract information from arrays using square brackets <code>[]</code> and the index of the element.</p>
+<pre class="js"><code>print(years);
+var year0 = years[0];
+print(year0);
+var year1 = years[1];
+print(year1);
+</code></pre>
+<p>You can also put strings inside arrays.</p>
+<pre class="js"><code>var stringList = [&#39;I&#39;, &#39;am&#39;, &#39;in&#39;, &#39;a&#39;, &#39;list&#39;];
+print(stringList);
+</code></pre>
+<p>Remember, each item in an array is separated by a comma. You can create n-Dimensional arrays.</p>
+<pre class="js"><code>var squareArray = [
+  [2, 3], 
+  [3, 4]
+];
+print(squareArray);
+</code></pre>
+<br>
+<details>
+<summary><b><em>What kind of geospatial data is well suited to being represented using arrays?</em></b></summary>
+<p>
+raster data (grids of pixels with each pixel assigned a value representing a phenomenon or entity that varies across space).
+</p>
+</details>
+<p><br></p>
+</div>
+<div id="variables" class="section level3">
+<h3>Variables</h3>
+<p>Variables refer to a named location in the computer’s memory where the data associated with that variable is stored.</p>
+<p>To create a variable you need to declare it using the <strong><code>var</code></strong> keyword. Once a variable is declared you can put data inside it and use that variable, and therefore the data inside it, in your program. You assign data to a variable using the assignment operator <code>=</code>.</p>
+<p>The code block below declares a variable <code>temp</code> and then assigns the value <code>25</code> to this variable. As demonstrated by the variable <code>temp1</code> you can declare a variable and assign values to it in one statement.</p>
+<pre class="js"><code>var temp;
+temp = 25;
+
+var temp1 = 26;
+</code></pre>
+<p>Using variables makes code easier to organise and write. For example, if you want to perform multiple operations on temperature data you can refer to the data using the variable name as opposed to either writing out the temperature values or reading them from a file separately for each operation. You can use variables in operations and functions too:</p>
+<br>
+<details>
+<summary><b><em>What value do you think the variable </em></b><code>tempDiff</code> <b><em>would store after executing this statement:</em></b> <code>var tempDiff = temp1 - temp;</code><b><em>?</em></b></summary>
+<p>
+1 <code>print(tempDiff);</code>.
+</p>
+</details>
+<p><br></p>
+<p>You only need to declare a variable once. <strong><code>var</code></strong> is a reserved keyword; this means a variable cannot be named <strong><code>var</code></strong>. Other reserved keywords in JavaScript include <strong><code>class</code></strong>, <strong><code>function</code></strong>, <strong><code>let</code></strong>, and <strong><code>return</code></strong> with a full list <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Keywords">here</a>.</p>
+</div>
+<div id="object-orientated-programming" class="section level3">
+<h3>Object-Orientated Programming</h3>
+<p>Except for the seven primitive data types, everything in JavaScript is an object. An object is a programming concept where each object can have properties which describe attributes of the object and methods which are operations or tasks the object can perform. Real world phenomenon or entities can be represented as objects in computer systems. For example, you can define an object called <code>field</code> to represent data about fields. The <code>field</code> object can have a numeric array property storing the vertices for the field’s outline, a crop type string property stating what crops are grown in the field, and a numeric type property stating crop yield. The <code>field</code> object could have a <code>computeArea()</code> method which would calculate and return the area of the field (in this instance using the data in the property storing vertices demarcating the fields outline). The <code>field</code> object is a spatial geometric object so it could also have methods such as <code>intersects()</code> which would return spatial objects whose extent intersects with the field. An object definition, which outlines the properties and methods associated with an object, is called a class; you can create multiple objects of the same class in your program. For example, your program could perform operations on multiple field objects all of class <code>field</code>.</p>
+</div>
+<div id="functions" class="section level3">
+<h3>Functions</h3>
+<p>There are many methods and operations already defined in JavaScript that you can use in your program. However, there maybe cases where you need to create your own operation to perform a task as part of your program; user-defined functions fill this role. A function is a set of statements that perform a specific task. First, you declare or define your function which consists of:</p>
+<ul>
+<li>The <code>function</code> keyword.</li>
+<li>The name of the function (e.g. <code>function subtraction</code>).</li>
+<li>The list of parameters the function takes in separated by commas and enclosed in parentheses (e.g. <code>function subtraction(number1, number2)</code>).</li>
+<li>A list of statements that perform the function tasks enclosed in curly brackets.</li>
+<li>A <code>return</code> statement that specifies what data is returned by a call to the function.</li>
+</ul>
+<pre class="js"><code>// substraction function
+
+//function declaration
+function subtraction(number1, number2) {
+  var diff = number1 - number2;
+  return diff;
+}
+</code></pre>
+<p>Once a function has been declared you can call it from within your program. For example, you can call the function <code>subtraction</code> declared above and pass the two numberic variables <code>temp</code> and <code>temp1</code> into it as arguments. This will return the difference between the numeric values stored in <code>temp</code> and <code>temp1</code>.</p>
+<pre class="js"><code>// use subtraction function
+
+var tempFuncDiff = subtraction(temp, temp1);
+print(tempFuncDiff);
+</code></pre>
+<p>You should see the result -1 printed in the <em>Console</em>.</p>
+<p>This is a very simple example of how to declare and use a function. However, creating your own functions is one of the key advantages of programming. You can flexibly combine functions together to create more complex functions and workflows specific to the task your computer program is being developed for. It is this flexibility in being able to define the tasks your computer program performs that makes programming a complementary skill to using GUI GIS (e.g. QGIS, ArcGIS) for geospatial data analysis. A strength of GUI based GIS is the ease of performing tasks using in-built functions and quickly visualising data whereas a strength of programming GIS is extending and combining in-built functions within GIS to perform specific tasks, that are challenging to implement in GUI GIS, at the cost of added complexity and cognitive load. Most GIS workflows require iterating between working in a GUI GIS and creating custom programs; this is why GUI GIS now provide options for executing user-defined code and consoles for entering commands (e.g. the Python console in QGIS).</p>
+<br>
+<details>
+<summary><b><em>Can you declare and call a function </em></b><code>convertTempToK</code> <b><em>that takes in a temperature value in degrees centigrade as a parameter and returns the temperature in Kelvin? Call the function with </em> <code>temp</code> <em>as an argument and print the result to the console</em></b></summary>
+<p>
+<pre class="js"><code>  // temperature conversion function
+  function convertTempToK(tempIn) {
+    var tempK = tempIn - (-273.15);
+    return tempK;
+  }
+  var tempInK = convertTempToK(temp);
+  print(tempInK);</code></pre>
+</p>
+</details>
+<p><br></p>
+</div>
+<div id="syntax-and-code-style" class="section level3">
+<h3>Syntax and Code Style</h3>
+<p>There are various syntax rules that need to be followed when writing JavaScript statements. If these rules are not followed your code will not execute and you’ll get a syntax error.</p>
+<p>As you see and write JavaScript programs, syntax and style will become apparent. This is not something you need to get right first time but is part of the process of learning to write your own programs.</p>
+<p>Some important syntax rules:</p>
+<ul>
+<li>Strings are enclosed within " or ’ quotes.</li>
+<li>Hyphen <code>-</code> cannot be used except as the subtraction operator (i.e. <code>perth-airport</code> is <strong>not</strong> valid).</li>
+<li>JavaScript identifiers are used to identify variables or functions (i.e. a variable of function name - <code>x = 23</code> is identified by variable name <code>x</code>). Identifiers are case sensitive and can only start with a letter, underscore (<code>_</code>), or dollar sign (<code>$</code>).</li>
+<li>Identifiers cannot start with a number.</li>
+<li>Variables need to be declared with the <strong><code>var</code></strong> keyword before they are used.</li>
+<li>Keywords (e.g. <strong><code>var</code></strong>) are reserved and cannot be used as variable or function names.</li>
+</ul>
+<p><b>Code Style</b></p>
+<p>Alongside syntax rules, there are stylistic recommendations for writing JavaScript. These are best adhered to as they’ll make your code easier for you, future you, or somebody else to read. This is important if you require help debugging a script.</p>
+<p>Some common style tips:</p>
+<ul>
+<li>Use camel case for variables - first word is lower case and all other words start with an upper case letter with no spaces between words (e.g. <code>camelCase</code>, <code>perthAirport</code>).</li>
+<li>Finish each statement with a semi-colon <code>var x = 23;</code>.</li>
+<li>At most, one statement per line (a statement can span multiple lines if required or improves readability).</li>
+<li>Consistency in code style throughout your script.</li>
+<li>Indent each block of code with two spaces.</li>
+<li>Sensible and logical variable names - variable names should be nouns and describe the variable.</li>
+<li>Sensible and logical function names - function names should be verbs that describe what the function does.</li>
+<li>Keep variable and function names short to avoid typos.</li>
+<li>One variable declaration per line.</li>
+</ul>
+<p>The Google <a href="https://google.github.io/styleguide/jsguide.html">JavaScript style guide</a> is a useful guide for writing clear JavaScript programs.</p>
+<p><b>Comments</b></p>
+<p>You can write text in your script that is not executed by the computer. These are comments and are useful to describe what parts of your script are doing. In general, you should aspire to write your code so that it is legible and easy to follow. However, comments augment good code, can help explain how a program works, and are useful to someone else using your script or to future you if you return to working on it.</p>
+<p>Some useful things to comment:</p>
+<ul>
+<li>Start the script with brief description of what it does.</li>
+<li>Author and date of script.</li>
+<li>Outline any data or other programs the script depends on.</li>
+<li>Outline what data or results are returned by the script.</li>
+<li>Avoid commenting things which are outlined in documentation elsewhere (e.g. Google Earth Engine documentation).</li>
+<li>Outline what arguments (and type) a function takes and returns.</li>
+</ul>
+<p>Lines of code can be commented using <code>//</code> or <code>/* .... */</code>.</p>
+<pre class="js"><code>/*
+Script declares variables to store latitude and longitude values.
+Author: XXXXX
+Date: 01/02/0304
+*/
+
+// longitude
+var lon = 25.55;
+
+// latitude
+var lat = 23.42;
+</code></pre>
+<p><br></p>
+</div>
+</div>
+<div id="recap" class="section level2">
+<h2>Recap</h2>
+<p>This introduction to JavaScript illustrates what a computer program is: a set of statements outlining instructions for operations that the computer should perform on data to carry out a required task. How you write these statements will depend on the task you want your program to perform. Each program will relate to different geographic and non-geographic entities and phenomena which can be represented in your program by using or combining JavaScript data types. Each program will perform one or more tasks using the data representing geographic and non-geographic entities and phenomena; you can specify which tasks should be performed using built-in operators and functions or by creating your own functions.</p>
+<hr>
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;">
+
+</div>
+<footer>
+<p>
+Advanced GIS and Remote Sensing
+</p>
+</footer>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+output_dir: '.'
+navbar: 
+  title: ""
+  left:
+    - text: "Home"
+      href: index.html  
+    - text: "Overview"
+      href: overview.html
+    - text: "JS Intro"
+      href: js-introduction.html
+    - text: "Lab 4"
+      href: lab-4.html

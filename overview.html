@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Overview</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 52px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h2 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h3 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h4 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h5 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h6 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="overview.html">Overview</a>
+</li>
+<li>
+  <a href="js-introduction.html">JS Intro</a>
+</li>
+<li>
+  <a href="lab-4.html">Lab 4</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Overview</h1>
+
+</div>
+
+
+<p><br></p>
+<div id="google-earth-engine-labs" class="section level2">
+<h2>Google Earth Engine Labs</h2>
+<p>These labs introduce Google Earth Engine as a tool for performing geospatial data analysis.</p>
+<ul>
+<li><strong>Preliminary Resource:</strong> Introduction to JavaScript and programming concepts</li>
+<li><strong>Lab 4a:</strong> Spatial data models and data structures</li>
+<li><strong>Lab 4b:</strong> Spatial data visualisation</li>
+<li><strong>Lab 5:</strong> Spatial and geometry operations</li>
+<li><strong>Lab 6:</strong> Introduction to remote sensing concepts</li>
+<li><strong>Lab 7:</strong> Machine Learning: Land cover classification</li>
+<li><strong>Lab 8:</strong> Machine Learning: Predicting urban land surface temperatures</li>
+<li><strong>Lab 9:</strong> Drought monitoring</li>
+</ul>
+<p>A series of questions are posed throughout the lab as demonstrated below; these are to help you engage with the content, have a go at answering them and click on the question to reveal the answer.</p>
+<br>
+<details>
+<summary><b><em>Example Question?</em></b></summary>
+<p>
+Answer.
+</p>
+</details>
+<p><br></p>
+<div id="sign-up" class="section level3">
+<h3>Sign Up</h3>
+<p>Sign up for Google Earth Engine <a href="https://signup.earthengine.google.com/#!/">here</a>. Identify that you are using Google Earth Engine for educational purposes as part of the Advanced GIS and Remote Sensing undergraduate course at the University of Western Australia.</p>
+<p><br></p>
+</div>
+</div>
+<div id="google-earth-engine" class="section level2">
+<h2>Google Earth Engine</h2>
+<p>Google Earth Engine is a platform for geospatial data analysis. It combines <a href="https://developers.google.com/earth-engine/datasets/">databases of big geospatial datasets</a> that are updated daily, a range of geospatial data analysis and processing functions similar to GIS and remote sensing software, and access to cloud computing resources to apply these functions to geospatial datasets. You can access Google Earth Engine through the <a href="https://code.earthengine.google.com"><em>Code Editor</em></a> - a web-based interactive development environment (IDE) for creating Google Earth Engine programs for geospatial data analysis and visualising the results in web maps, interactive charts, or text summaries.</p>
+<br>
+<center>
+<iframe width="720" height="405" src="https://www.youtube.com/embed/gKGOeTFHnKY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+</iframe>
+</center>
+<p><br></p>
+<p><a href="https://www.sciencedirect.com/science/article/pii/S0034425717302900">Gorelick et al. (2017)</a> provide a detailed description of the Google Earth Engine platform.</p>
+<div id="applications" class="section level3">
+<h3>Applications</h3>
+<p>Applications of Google Earth Engine span a variety of disciplines which utilise geospatial data:</p>
+<ul>
+<li><a href="https://earthenginepartners.appspot.com/science-2013-global-forest">Monitoring global forest change</a></li>
+<li><a href="http://species.mol.org/species/map/Perdix_dauurica">Mapping habitat ranges</a></li>
+<li><a href="https://blog.google/around-the-globe/google-europe/nature-water-unveiling-most-detailed-view-water-earth/">Global water security</a></li>
+<li><a href="http://www.g-feed.com/2015/05/introducing-scym.html">Monitoring global croplands</a></li>
+<li><a href="https://medium.com/google-earth/mapping-global-travel-time-to-urban-resources-448c1d7919d2">Mapping travel time to urban centres</a></li>
+</ul>
+<p>More examples of how Google Earth Engine is used can be found on the <a href="https://medium.com/google-earth/tagged/earth-engine">Google Earth Engine blog</a>.</p>
+</div>
+</div>
+<div id="useful-resources" class="section level2">
+<h2>Useful Resources</h2>
+<p>There are a range user resources for Google Earth Engine. You should use these resources to supplement the work done in the labs. Becoming familiar with these resources will help you troubleshoot problems. Using these resources will develop your independent problem solving skills when undertaking geospatial data analysis.</p>
+<ol style="list-style-type: decimal">
+<li><a href="https://developers.google.com/earth-engine/">Google Earth Engine introduction</a> - comprehensive overview of Google Earth Engine’s capabilities.</li>
+<li><a href="https://developers.google.com/earth-engine/tutorials">Google Earth Engine tutorials</a></li>
+<li><a href="https://developers.google.com/earth-engine/edu">Google Earth Engine for education</a> - range of training resources.</li>
+<li>User Forum and help tab in the code editor (see below).</li>
+</ol>
+<div class="figure" style="text-align: center">
+<img src="img/help.png" alt="Google Earth Engine user forum and help tab" width="50%" />
+<p class="caption">
+Google Earth Engine user forum and help tab
+</p>
+</div>
+<br>
+<hr>
+<footer>
+<p>
+Advanced GIS and Remote Sensing
+</p>
+</footer>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

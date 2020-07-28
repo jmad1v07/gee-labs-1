@@ -1,0 +1,56 @@
+.caption {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.title {
+     text-align: center;
+ } 
+ 
+footer {
+  text-align: center;
+  padding: 2px;
+}
+ 
+details > summary {
+  padding: 4px;
+  background-color: #eeeeee;
+  border: none;
+  box-shadow: 1px 1px 2px #bbbbbb;
+  cursor: pointer;
+}
+
+details > p {
+  background-color: #eeeeee;
+  padding: 0;
+  margin: 0;
+  box-shadow: 1px 1px 2px #bbbbbb;
+}
+
+pre {
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  margin: 0em 0;
+} 
+
+img {
+    padding: 5px;
+    border: thin silver solid;
+    image-orientation: none;
+  }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+h1 {
+  text-align:center;
+}
