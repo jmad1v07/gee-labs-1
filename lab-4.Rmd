@@ -409,7 +409,7 @@ print(l8ImCollKP);
 
 You should find 45 Landsat 8 surface reflectance `Images` intersected with Kings Park in 2018. You can inspect all the `Images` in this `ImageCollection` `l8ImCollKP` in the *Console*. The ability to store spatial data in collections makes creating programs that need to access and analyse analyse big geospatial data easier. 
 
-You have already created your own `ImageCollection` that contains only the Landsat 8 `Images` for the spatial and temporal extent of interest to you. Now you can easily apply a range of functions and operations to all the `Images` in the `ImageCollection`. For example, you could apply a function that identifies maximum greenness observed at each pixel in 2018 to analyse spatial variability in vegetation cover. 
+You have already created your own `ImageCollection` that contains only the Landsat 8 `Images` for the spatial and temporal extent of interest to you. Now you can easily apply a range of functions and operations to all the `Images` in the `ImageCollection`. For example, you could apply a function that identifies maximum greenness observed at each pixel in 2018 to analyse spatial variability in vegetation cover. You will learn how to apply functions to `Images` in `ImageCollections` in subsequent labs.
 
 <br>
 <center>
@@ -419,6 +419,22 @@ knitr::include_graphics("img/im-coll-kp.png")
 
 ```
 </center>
+<br>
+
+You can find more information on `ImageCollections` <a href="https://developers.google.com/earth-engine/ic_creating" target="_blank">here</a> and `FeatureCollections` <a href="https://developers.google.com/earth-engine/feature_collections" target="_blank">here</a>.
+
+<details>
+  <summary><b>*How would you represent multiple weather stations and observations recorded at these stations as a `FeatureCollection`?*</b></summary>
+  <p> Each weather station would be a `Feature` object in the `FeatureCollection`. Each weather station `Feature` would have a `geometry` property containing a Point `Geometry` object representing the location of the station. 
+  ```{js, echo=TRUE, eval=FALSE}
+  // Create polygon Feature
+var kpPolyFeature = ee.Feature(kpPoly, {name: 'Kings Park'});
+print(kpPolyFeature);
+  ```
+
+
+  </p>
+</details>
 <br>
 
 <hr>

@@ -769,7 +769,7 @@ print(l8ImCollKP);
 </code></pre>
 <p><br></p>
 <p>You should find 45 Landsat 8 surface reflectance <code>Images</code> intersected with Kings Park in 2018. You can inspect all the <code>Images</code> in this <code>ImageCollection</code> <code>l8ImCollKP</code> in the <em>Console</em>. The ability to store spatial data in collections makes creating programs that need to access and analyse analyse big geospatial data easier.</p>
-<p>You have already created your own <code>ImageCollection</code> that contains only the Landsat 8 <code>Images</code> for the spatial and temporal extent of interest to you. Now you can easily apply a range of functions and operations to all the <code>Images</code> in the <code>ImageCollection</code>. For example, you could apply a function that identifies maximum greenness observed at each pixel in 2018 to analyse spatial variability in vegetation cover.</p>
+<p>You have already created your own <code>ImageCollection</code> that contains only the Landsat 8 <code>Images</code> for the spatial and temporal extent of interest to you. Now you can easily apply a range of functions and operations to all the <code>Images</code> in the <code>ImageCollection</code>. For example, you could apply a function that identifies maximum greenness observed at each pixel in 2018 to analyse spatial variability in vegetation cover. You will learn how to apply functions to <code>Images</code> in <code>ImageCollections</code> in subsequent labs.</p>
 <br>
 <center>
 <div class="figure" style="text-align: center">
@@ -779,6 +779,17 @@ print(l8ImCollKP);
 </p>
 </div>
 </center>
+<p><br></p>
+<p>You can find more information on <code>ImageCollections</code> <a href="https://developers.google.com/earth-engine/ic_creating" target="_blank">here</a> and <code>FeatureCollections</code> <a href="https://developers.google.com/earth-engine/feature_collections" target="_blank">here</a>.</p>
+<details>
+<summary><b><em>How would you represent multiple weather stations and observations recorded at these stations as a <code>FeatureCollection</code>?</em></b></summary>
+<p>
+<p>Each weather station would be a <code>Feature</code> object in the <code>FeatureCollection</code>. Each weather station <code>Feature</code> would have a <code>geometry</code> property containing a Point <code>Geometry</code> object representing the location of the station.</p>
+<pre class="js"><code>// Create polygon Feature
+var kpPolyFeature = ee.Feature(kpPoly, {name: &#39;Kings Park&#39;});
+print(kpPolyFeature);</code></pre>
+</p>
+</details>
 <p><br></p>
 <hr>
 <div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;">
