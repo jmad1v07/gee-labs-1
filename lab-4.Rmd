@@ -466,8 +466,18 @@ You can find more information on `ImageCollections` <a href="https://developers.
 }
 
   ```
+  </p>
+</details>
+<br>
 
-
+<br>
+<details>
+  <summary><b>*1. Can you use the Geometry Tools to create a LineString `Geometry` object representing a road? and 2. can you convert the LineString `Geometry` object to a `Feature` object by giving it a `road_name` property?*</b></summary>
+  <p>
+  <center>
+  <iframe src="https://player.vimeo.com/video/442389572" width="640" height="303" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+<p><a href="https://vimeo.com/442389572">Create a LineString `Geometry` object to represent a road and create a `Feature` object with a `road_name` property.</a></p>
+</center>
   </p>
 </details>
 <br>
