@@ -18,10 +18,9 @@ p {text-align: center;}
 <body>
 <br>
 <br>
-
-<h1 style="color:black;"><b>Advanced GIS and Remote Sensing</b></h1>
+<h1 style="color:#333;"><b>Advanced GIS and Remote Sensing</b></h1>
 <br>
-<h2 style="color:black;"><b>Google Earth Engine labs</b></h2>
+<h2 style="color:#333;"><b>Google Earth Engine labs</b></h2>
 <br>
 
 <center>

@@ -425,11 +425,46 @@ You can find more information on `ImageCollections` <a href="https://developers.
 
 <details>
   <summary><b>*How would you represent multiple weather stations and observations recorded at these stations as a `FeatureCollection`?*</b></summary>
-  <p> Each weather station would be a `Feature` object in the `FeatureCollection`. Each weather station `Feature` would have a `geometry` property containing a Point `Geometry` object representing the location of the station. 
+  <p> Each weather station would be a `Feature` object in the `FeatureCollection`. Each weather station `Feature` would have a `geometry` property containing a Point `Geometry` object representing the location of the station and a `properties` property containing objects of name:value pairs of weather observations for a given day. 
+  
   ```{js, echo=TRUE, eval=FALSE}
-  // Create polygon Feature
-var kpPolyFeature = ee.Feature(kpPoly, {name: 'Kings Park'});
-print(kpPolyFeature);
+  // Example structure of weather stations Feature Collection
+  {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "station-id": XXXX,
+        "date": "01-01-2018",
+        "temperature": 29
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          119.17968749999999,
+          -26.74561038219901
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "station-id": XXXX,
+        "date": "02-01-2018",
+        "temperature": 27
+        },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.1015625,
+          -29.535229562948455
+        ]
+      }
+    }
+  ]
+}
+
   ```
 
 

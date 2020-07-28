@@ -784,10 +784,44 @@ print(l8ImCollKP);
 <details>
 <summary><b><em>How would you represent multiple weather stations and observations recorded at these stations as a <code>FeatureCollection</code>?</em></b></summary>
 <p>
-<p>Each weather station would be a <code>Feature</code> object in the <code>FeatureCollection</code>. Each weather station <code>Feature</code> would have a <code>geometry</code> property containing a Point <code>Geometry</code> object representing the location of the station.</p>
-<pre class="js"><code>// Create polygon Feature
-var kpPolyFeature = ee.Feature(kpPoly, {name: &#39;Kings Park&#39;});
-print(kpPolyFeature);</code></pre>
+<p>Each weather station would be a <code>Feature</code> object in the <code>FeatureCollection</code>. Each weather station <code>Feature</code> would have a <code>geometry</code> property containing a Point <code>Geometry</code> object representing the location of the station and a <code>properties</code> property containing objects of name:value pairs of weather observations for a given day.</p>
+<pre class="js"><code>// Example structure of weather stations Feature Collection
+{
+&quot;type&quot;: &quot;FeatureCollection&quot;,
+&quot;features&quot;: [
+  {
+    &quot;type&quot;: &quot;Feature&quot;,
+    &quot;properties&quot;: {
+      &quot;station-id&quot;: XXXX,
+      &quot;date&quot;: &quot;01-01-2018&quot;,
+      &quot;temperature&quot;: 29
+    },
+    &quot;geometry&quot;: {
+      &quot;type&quot;: &quot;Point&quot;,
+      &quot;coordinates&quot;: [
+        119.17968749999999,
+        -26.74561038219901
+      ]
+    }
+  },
+  {
+    &quot;type&quot;: &quot;Feature&quot;,
+    &quot;properties&quot;: {
+      &quot;station-id&quot;: XXXX,
+      &quot;date&quot;: &quot;02-01-2018&quot;,
+      &quot;temperature&quot;: 27
+      },
+    &quot;geometry&quot;: {
+      &quot;type&quot;: &quot;Point&quot;,
+      &quot;coordinates&quot;: [
+        124.1015625,
+        -29.535229562948455
+      ]
+    }
+  }
+]
+}
+</code></pre>
 </p>
 </details>
 <p><br></p>
