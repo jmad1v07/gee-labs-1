@@ -381,7 +381,18 @@ div.tocify {
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <p>This lab introduces spatial data models for representing geographic entities and phenomena and the data structures which implement these spatial data models in Google Earth Engine.</p>
+<div id="setup" class="section level3">
+<h3>Setup</h3>
+<p>Create a new script in your <em>labs-gee</em> repository called <em>lab4a</em>. Enter the following comment header to the script.</p>
+<pre class="js"><code>/*
+Lab 4a
+Author: Test
+Date: XX-XX-XXXX
+
+*/
+</code></pre>
 <p><br></p>
+</div>
 </div>
 <div id="client-and-server" class="section level2">
 <h2>Client and Server</h2>
@@ -570,30 +581,217 @@ Create a date object on the GEE server. Useful for storing temporal attributes a
 <div id="images" class="section level3">
 <h3>Images</h3>
 <p>Raster data in GEE are represented as <code>Image</code> objects.</p>
-<p>To create an <code>Image</code> object that stores raster data on the GEE server use the <code>ee.Image()</code> constructor. You pass arguments into the parentheses of the <code>ee.Image()</code> constructor to specify what raster data should be represented by the <code>Image</code> object. If you pass a number into <code>ee.Image()</code> you will get a constant <code>Image</code> where each pixel value is the number passed in.</p>
-<p>Add the following code to your GEE script. This will create an <code>Image</code> object where each pixel has the value 5 which can be referred to using the variable <code>img5</code>. Click on the <em>Inspector</em> tab and then click at locations on the map. You should see the value 5 printed in the <em>Inspector</em> tab.</p>
-<pre class="js"><code>/*Raster where pixel values equal 5*/
+<p>To create an image object that stores raster data on the GEE server use the <code>ee.Image()</code> constructor. You pass arguments into the parentheses of the <code>ee.Image()</code> constructor to specify what raster data should be represented by the image object. If you pass a number into <code>ee.Image()</code> you will get a constant image where each pixel value is the number passed in.</p>
+<p>Add the following code to your GEE script. This will create an image object where each pixel has the value 5 which can be referred to using the variable <code>img5</code>. Click on the <em>Inspector</em> tab and then click at locations on the map. You should see the value 5 printed in the <em>Inspector</em> tab.</p>
+<pre class="js"><code>// Raster where pixel values equal 5
 var img5 = ee.Image(5);
 print(img5);
 Map.addLayer(img5, {palette:[&#39;FF0000&#39;]}, &#39;Raster with pixel value = 5&#39;);
 </code></pre>
-<p>Alternatively, you can pass a string id into the <code>ee.Image()</code> constructor to specify a GEE asset (e.g. a Landsat image).</p>
-<p>The variable <code>img</code> refers to an <code>Image</code> object on the GEE servers storing the Landsat 8 data. This variable can be used in a script to access the Landsat data for queries and analyse. Pass the variable <code>img</code> into the <code>print()</code> function to query the Landsat 8 image’s metadata. The Image metadata should be printed in the <em>Console</em> tab.</p>
-<pre class="js"><code>/*Pass Landsat 8 image id into Image constructor*/ 
+<p>Alternatively, you can pass a string id into the <code>ee.Image()</code> constructor to specify a Google Earth Engine asset (e.g. a Landsat image). Google Earth Engine assets are geospatial data that is stored in databases on Google servers in the cloud, are available for use in your programs, and are frequently updated - see the available data at the <a href="https://developers.google.com/earth-engine/datasets">Google Earth Engine data catalog</a>.</p>
+<p>The variable <code>img</code> in the code block below refers to an image object on the Google servers storing Landsat 8 data. This variable can be used in your program to access, query, and analyse the Landsat data. Pass the variable <code>img</code> into the <code>print()</code> function to view the Landsat 8 image’s metadata. The image metadata should be printed in the <em>Console</em> tab. Exploring the image metadata in the <em>Console</em> is demonstrated in the video below.</p>
+<pre class="js"><code>// Pass Landsat 8 image id into Image constructor*
 var img = ee.Image(&#39;LANDSAT/LC8_L1T_TOA/LC81130822014033LGN00&#39;);
 print(img);
 </code></pre>
-<p>An <code>Image</code> can have one or more bands, each band is a georeferenced raster which can have it’s own set of properties such as data type (e.g. Integer), scale (spatial resolution), band name, and projection. The <code>Image</code> object itself can contain metadata relevant to all bands in a dictionary object.</p>
-<p>Go to the <em>Console</em> tab and you should see the Landsat 8 <code>Image</code> has 12 bands. Click on a band and you should see some band specific properties such as its projection (<code>crs: EPSG:32650</code>). Click on the <code>Image</code> <code>properties</code> to explore metadata that applies to the <code>Image</code> object such as cloud cover at the time of image capture (<code>CLOUD_COVER: 11.039999961853027</code>) or satellite carrying the sensor (<code>SPACECRAFT_ID: LANDSAT_8</code>).</p>
+<p>An image can have one or more bands, each band is a georeferenced raster which can have its own set of properties such as data type (e.g. Integer), scale (spatial resolution), band name, and projection. The image object itself can contain metadata relevant to all bands in a dictionary object.</p>
+<br>
+<center>
+<div class="figure" style="text-align: center">
+<img src="img/image.png" alt="Schematic of an `Image` data structure in Google Earth Engine where an image can contain multiple georeferenced bands (source: [What is Google Earth Engine?](https://docs.google.com/presentation/d/1hT9q6kWigM1MM3p7IEcvNQlpPvkedW-lgCCrIqbNeis/edit#slide=id.g4e98c855a5_0_3795))." width="70%" />
+<p class="caption">
+Schematic of an <code>Image</code> data structure in Google Earth Engine where an image can contain multiple georeferenced bands (source: <a href="https://docs.google.com/presentation/d/1hT9q6kWigM1MM3p7IEcvNQlpPvkedW-lgCCrIqbNeis/edit#slide=id.g4e98c855a5_0_3795">What is Google Earth Engine?</a>).
+</p>
+</div>
+</center>
+<p><br></p>
+<p>Go to the <em>Console</em> tab and you should see the Landsat 8 image has 12 bands. Click on a band and you should see some band specific properties such as its projection (<code>crs: EPSG:32650</code>). Click on the image <code>properties</code> to explore metadata that applies to the image such as cloud cover at the time of image capture (<code>CLOUD_COVER: 11.039999961853027</code>) or the satellite carrying the sensor (<code>SPACECRAFT_ID: LANDSAT_8</code>).</p>
+<p>You can visualise the Landsat 8 image on the map display in your browser. To this you use the <code>Map.addLayer()</code> function to request the image stored in the variable <code>img</code> on the Google servers to be displayed in your browser. If you execute the following code block you will visualise the an RGB composite map of the Landsat 8 data stored in <code>img</code> in your browswer’s display.</p>
+<pre class="js"><code>/* Define the visualization parameters. The bands option allows us to specify which bands to map. Here, we choose B4 (Red), B3 (Green), B2 (Blue) to make a RGB composite image.*/ 
+var vizParams = {
+  bands: [&#39;B4&#39;, &#39;B3&#39;, &#39;B2&#39;],
+  min: 0,
+  max: 0.5,
+};
+
+// Centre the display and then map the image
+Map.centerObject(img, 10);
+Map.addLayer(img, vizParams, &#39;RGB composite&#39;);
+</code></pre>
+<br>
+<center>
+<div class="figure" style="text-align: center">
+<img src="img/map-img.png" alt="Visualising Landsat 8 data as a RGB composite image." width="80%" />
+<p class="caption">
+Visualising Landsat 8 data as a RGB composite image.
+</p>
+</div>
+</center>
+<p><br></p>
+<center>
+<iframe src="https://player.vimeo.com/video/442255846" width="640" height="301" frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+</iframe>
+<p>
+<a href="https://vimeo.com/442255846"> Images in Google Earth Engine</a>
+</p>
+</center>
+<p><br></p>
 </div>
 <div id="geometry-objects" class="section level3">
 <h3>Geometry Objects</h3>
+<p>The spatial location or extent of vector data is stored as <code>Geometry</code> objects. Google Earth Engine implements the <code>Geometry</code> objects outlined in the <a href="https://tools.ietf.org/html/rfc7946">GeoJSON spec</a>:</p>
+<ul>
+<li>Point</li>
+<li>MultiPoint</li>
+<li>LineString</li>
+<li>MultiLineString</li>
+<li>Polygon</li>
+<li>MultiPolygon</li>
+</ul>
+<p>To create a <code>Geometry</code> object programmatically use the <code>ee.Geometry.&lt;geometry type&gt;()</code> constructor (e.g. for a LineString object use <code>ee.Geometry.LineString()</code>) and pass the coordinates for object as an argument to the constructor function. Look at the code block below to observe that coordinates for a location in Kings Park are passed as arguments to the <code>ee.Geometry.Point()</code> constructor to create a point <code>Geometry</code> object (<code>locationKP</code>).</p>
+<pre class="js"><code>//location of Kings Park
+var locationKP = ee.Geometry.Point(115.831751, -31.962064); 
+print(locationKP);
+
+// Display the point on the map.
+Map.centerObject(locationKP, 11); // 11 = zoom level
+Map.addLayer(locationKP, {color: &#39;FF0000&#39;}, &#39;Kings Park&#39;);
+</code></pre>
+<p>If you explore the metadata for <code>locationKP</code> in the <em>Console</em> tab you will see the object has a <code>type</code> field which indicates the object is of <code>Point</code> type and a <code>coordinates</code> field which contains the the coordinates for the point as an array. The value of the coordinates field is an ordered x y pair.</p>
+<p>You can create LineString objects in a similar way. Here, you can pass the coordinates as an array into the <code>ee.Geometry.LineString()</code> constructor. As noted in the <a href="https://tools.ietf.org/html/rfc7946">GeoJSON spec</a>, coordinates for LineString objects are an array of ordered x y pairs.</p>
+<pre class="js"><code>// May Drive as a LineString object
+var mayDr = ee.Geometry.LineString(
+        [[115.84063447625735, -31.959551722179764],
+         [115.8375445714722, -31.957002964307144],
+         [115.83303846032717, -31.956201911510334],
+         [115.82994855554202, -31.957403488085628],
+         [115.827244888855, -31.9606440253292],
+         [115.82625783593753, -31.961445039381488],
+         [115.82368291528323, -31.96217322791136],
+         [115.82127965600588, -31.963811630990566],
+         [115.82055009515383, -31.96563204456937],
+         [115.82278169305422, -31.96690631259952],
+         [115.82325376184085, -31.968471817682193],
+         [115.82218087823489, -31.969818858827356],
+         [115.82222379357913, -31.970401356984638]]);
+print(mayDr);
+Map.addLayer(mayDr, {color: &#39;00FF00&#39;}, &#39;May Drive&#39;);</code></pre>
+<p><code>Geometry</code> objects in Google Earth Engine are by default geodesic (i.e. edges are the shortest path on spherical surface) as opposed to planar (edges follow the shortest path on a 2D surface). You can read more about the difference between geodesic and planar geometries <a href="https://developers.google.com/earth-engine/geometries_planar_geodesic">here</a>.</p>
+<br>
+<center>
+<div class="figure" style="text-align: center">
+<img src="img/Geometry_geodesic_vs_planar_annotated.png" alt="Illustration of difference between geodesic and planar geometries (source: [Google Earth Engine: Geodesic vs. Planar Geometries](https://developers.google.com/earth-engine/images/Geometry_geodesic_vs_planar_annotated.png))." width="80%" />
+<p class="caption">
+Illustration of difference between geodesic and planar geometries (source: <a href="https://developers.google.com/earth-engine/images/Geometry_geodesic_vs_planar_annotated.png">Google Earth Engine: Geodesic vs. Planar Geometries</a>).
+</p>
+</div>
+</center>
+<p><br></p>
+<p>You can also import <code>Geometry</code> objects into your scripts by manually drawing them on the map display using the <em>Geometry Tools</em>. The <em>Geometry Tools</em> are located in the upper left corner of the map display.</p>
+<br>
+<center>
+<div class="figure" style="text-align: center">
+<img src="img/geometry-tools.png" alt="Geometry Tools." width="80%" />
+<p class="caption">
+Geometry Tools.
+</p>
+</div>
+</center>
+<p><br></p>
+<p>The following video illustrates how to use the <em>Geometry Tools</em> to create a Polygon object representing Kings Park and how to use variable storing the geometry object in your script.</p>
+<p>Some things to note:</p>
+<ul>
+<li>Use the placemark icon <img src="img/Playground_button_placemark.png" class="inline-icon"> to create Point or MultiPoint objects.</li>
+<li>Use the line icon <img src="img/Playground_button_line.png" class="inline-icon"> to create Line or MultiLine objects.</li>
+<li>Use the polygon icon <img src="img/Playground_button_polygon.png" class="inline-icon"> to create Polygon or MultiPolygon objects.</li>
+<li>Use the spanner icon to configure how geometry objects that you create using <em>Geometry Tools</em> are imported into your script and styling options for display on the map.</li>
+<li>Use <b>+ new layer</b> to create new <code>Geometry</code> objects. <b>If you want to create separate <code>Geometry</code> objects for different geographic features remember to click this button before digitising a new feature</b>.</li>
+</ul>
+<br>
+<center>
+<iframe src="https://player.vimeo.com/video/442270755" width="640" height="301" frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+</iframe>
+<p>
+<a href="https://vimeo.com/442270755">Geometry Tools.</a>
+</p>
+</center>
+<p></br></p>
 </div>
 <div id="features" class="section level3">
 <h3>Features</h3>
+<p>Geometry objects describe the positional information of vector data; however, there is also a need to represent attribute information about geographic phenomenon or entities represented by <code>Geometry</code> objects. Vector data in Google Earth Engine which contains geometry data (representing location and shape of geographic phenomenon or entities) and attribute data are <a href="https://tools.ietf.org/html/rfc7946#page-11">GeoJSON <code>Feature</code> objects</a>.</p>
+<p>A <code>Feature</code> object is of type <code>Feature</code> with a <code>geometry</code> property which contains a <code>Geometry</code> object or <code>null</code> and a <code>properties</code> property which stores a dictionary object of name:value pairs of attribute information associated with the geographic feature represented by the <code>Geometry</code> object.</p>
+<p>Execute the code block below convert the <code>Geometry</code> object representing Kings Park to a <code>Feature</code> object with a <code>properties</code> property which with a name attribute. Inspect the <code>Feature</code> object in the <em>Console</em>.</p>
+<pre class="js"><code>// Create a Feature from the Geometry.
+var kpFeature = ee.Feature(locationKP, {name: &#39;Kings Park&#39;});
+print(kpFeature);
+</code></pre>
+<br>
+<center>
+<div class="figure" style="text-align: center">
+<img src="img/feature.png" alt="Kings Park `Feature` object." width="70%" />
+<p class="caption">
+Kings Park <code>Feature</code> object.
+</p>
+</div>
+</center>
+<p><br></p>
+<details>
+<summary><b><em>How would a <code>Feature</code> object differ if the Kings Park <code>geometry</code> property was of Polygon type rather than point? Can you convert <code>kpPoly</code> to a <code>Feature</code> object?</em></b></summary>
+<p>
+<p>The <code>geometry</code> property of the <code>Feature</code> object would contain an array object of coordinates for the outline of the Polygon.</p>
+<pre class="js"><code>// Create polygon Feature
+var kpPolyFeature = ee.Feature(kpPoly, {name: &#39;Kings Park&#39;});
+print(kpPolyFeature);</code></pre>
+<div class="figure" style="text-align: center">
+<img src="img/poly-feature.png" alt="Kings Park Polygon `Feature` object." width="70%" />
+<p class="caption">
+Kings Park Polygon <code>Feature</code> object.
+</p>
+</div>
+</p>
+</details>
+<p><br></p>
+<p>You can read more about <code>Feature</code> objects in Google Earth Engine <a href="https://developers.google.com/earth-engine/features" target="_blank">here</a>.</p>
 </div>
 <div id="collections" class="section level3">
 <h3>Collections</h3>
+<p>Collections in Google Earth Engine comprise groups of related objects. <code>ImageCollections</code> contain stacks of related <code>Image</code> objects and <code>FeatureCollections</code> contain sets of related <code>Feature</code> objects. Storing objects together in a collection means that operations can be easily applied to all the objects in the collection such as sorting, filtering, summarsing, or other mathematical operations. For example, all the Landsat 8 surface reflectance <code>Images</code> are stored in the <code>ImageCollection</code> with the ID <code>'LANDSAT/LC08/C01/T1_SR'</code>. You can pass this string <code>ImageCollection</code> ID into the <code>ee.ImageCollection()</code> constructor to import all Landsat 8 surface reflectance <code>Images</code> into your program.</p>
+<p>If you were creating a program to monitor land surface changes over Kings Park in 2018, you might want to import an <code>ImageCollection</code> of all Landsat 8 <code>Images</code> into your program and then filter the <code>ImageCollection</code> for Landsat 8 scenes that intersect with the extent of Kings Park and were recording in 2018. The following code block demonstrates this. You can then apply subsequent analysis or summary operations to the <code>ImageCollection</code> <code>l8ImCollKP</code>.</p>
+<pre class="js"><code>// Landsat 8 Image Collection
+var l8ImColl = ee.ImageCollection(&quot;LANDSAT/LC08/C01/T1_SR&quot;);
+
+// Filter Image Collection for 2018 and Images that intersect Kings Park
+var l8ImCollKP = l8ImColl
+  .filterBounds(kpPoly)
+  .filterDate(&quot;2018-01-01&quot;, &quot;2018-12-31&quot;);
+print(l8ImCollKP);
+</code></pre>
+<p><br></p>
+<p>You should find 45 Landsat 8 surface reflectance <code>Images</code> intersected with Kings Park in 2018. You can inspect all the <code>Images</code> in this <code>ImageCollection</code> <code>l8ImCollKP</code> in the <em>Console</em>. The ability to store spatial data in collections makes creating programs that need to access and analyse analyse big geospatial data easier.</p>
+<p>You have already created your own <code>ImageCollection</code> that contains only the Landsat 8 <code>Images</code> for the spatial and temporal extent of interest to you. Now you can easily apply a range of functions and operations to all the <code>Images</code> in the <code>ImageCollection</code>. For example, you could apply a function that identifies maximum greenness observed at each pixel in 2018 to analyse spatial variability in vegetation cover.</p>
+<br>
+<center>
+<div class="figure" style="text-align: center">
+<img src="img/im-coll-kp.png" alt="`ImageCollection` of all Landsat 8 scenes that intersect with Kings Park in 2018." width="70%" />
+<p class="caption">
+<code>ImageCollection</code> of all Landsat 8 scenes that intersect with Kings Park in 2018.
+</p>
+</div>
+</center>
+<p><br></p>
+<hr>
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;">
+
+</div>
+<footer>
+<p>
+Advanced GIS and Remote Sensing
+</p>
+<p>
+Point <img src="img/Playground_button_placemark.png" class="inline-icon">, Line <img src="img/Playground_button_line.png" class="inline-icon">, and Polygon <img src="img/Playground_button_polygon.png" class="inline-icon"> marker symbols obtained from <a href="https://developers.google.com/earth-engine/playground#geometry-tools">Google Earth Engine Developers Guide</a>
+</p>
+</footer>
 </div>
 </div>
 

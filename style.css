@@ -7,6 +7,11 @@
      text-align: center;
  } 
  
+img.inline-icon {
+    height: 1.2em;
+    vertical-align:sub
+}
+ 
 footer {
   text-align: center;
   padding: 2px;
@@ -35,7 +40,7 @@ pre {
 } 
 
 img {
-    padding: 5px;
+    padding: 1px;
     border: thin silver solid;
     image-orientation: none;
   }
