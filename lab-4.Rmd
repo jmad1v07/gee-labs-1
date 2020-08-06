@@ -1,6 +1,6 @@
 ---
-title: "Lab 4"
-pagetitle: "Lab 4"
+title: "Lab 4a"
+pagetitle: "Lab 4a"
 output:
   html_document:
     theme: spacelab

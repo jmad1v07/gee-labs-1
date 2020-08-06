@@ -8,5 +8,9 @@ navbar:
       href: overview.html
     - text: "JS Intro"
       href: js-introduction.html
-    - text: "Lab 4"
-      href: lab-4.html
+    - text: "Lab 4"   
+      menu:
+        - text: "Lab 4a"
+          href: lab-4.html
+        - text: "Lab b4"
+          href: lab-4b.html

@@ -15,16 +15,34 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Google Earth Engine Labs 
 
-These labs introduce Google Earth Engine as a tool for performing geospatial data analysis. 
+These labs introduce Google Earth Engine as a tool for performing geospatial data analysis. Geospatial data analysis can be considered as a workflow comprising four stages (that are often iterative):
+
+* Data (variables to represent spatial concepts, phenomena, or entities - data collection, data entry, data download, and data import)
+* Transform (transforming data so it can can be used for geospatial data analysis - summarising, combining, filtering)
+* Visualisation (look for patterns, features, and relationships in your data - maps, charts, tables)
+* Model (use mathematical and statistical tools to answer questions using your data)
+
+These stages are based on the more generic data science workflow presented by <a href="https://r4ds.had.co.nz" target="_blank">Wickham and Grolemund (2017)</a>. As the figure below indicates, all the stages of data analysis workflow are wrapped in a *program* box. You will use a programming language to specify the tasks to be performed at each of the stage of the data analysis workflow. In these labs you will be introduced to JavaScript, a programming language for writing commands in Google Earth Engine programs. While learning to code is not the primary aim of these labs, an awareness of programming concepts and the ability to perform tasks using code is a useful skill for geospatial data analysis and often makes your life easier through the ability to automate tasks. The labs are designed to provide support in using a programming language to perform geospatial data analysis using Google Earth Engine and hopefully this is another skill you'll pick up.   
+
+<br>
+
+```{r data-science, fig.align = 'center', out.width = "70%", fig.cap = "Data science workflow (source: [Wickham and Grolemund (2017)](https://r4ds.had.co.nz))", echo = FALSE}
+knitr::include_graphics("img/data-science.png")
+
+```
+
+<br>
+
+Each of the labs relate to a stage in the geospatial data analysis workflow outlined above. Thematically, the labs will focus on geospatial data analysis focusing on issues in urban areas primarily using data from the Perth region.  
 
 * **Preliminary Resource:** Introduction to JavaScript and programming concepts
-* **Lab 4a:** Spatial data models and data structures
-* **Lab 4b:** Spatial data visualisation
-* **Lab 5:** Spatial and geometry operations
-* **Lab 6:** Introduction to remote sensing concepts
-* **Lab 7:** Machine Learning: Land cover classification
-* **Lab 8:** Machine Learning: Predicting urban land surface temperatures
-* **Lab 9:** Drought monitoring
+* **Lab 4a:** Data: Spatial data models and data structures
+* **Lab 4b:** Visualisation: Spatial data visualisation
+* **Lab 5:** Transform: Vector data operations
+* **Lab 6:** Transform: Raster and remote sensing data processing
+* **Lab 7:** Model: Land cover classification
+* **Lab 8:** Model: Predicting urban land surface temperatures
+* **Lab 9:** Model: Trends in urban vegetation and temperature
 
 A series of questions are posed throughout the lab as demonstrated below; these are to help you engage with the content, have a go at answering them and click on the question to reveal the answer. 
 

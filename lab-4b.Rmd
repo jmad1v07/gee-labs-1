@@ -1,0 +1,269 @@
+---
+title: "Lab 4b"
+pagetitle: "Lab 4b"
+output:
+  html_document:
+    theme: spacelab
+    css: style.css
+    toc: true
+    toc_float: true
+    toc_depth: 4
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br>
+
+## Introduction
+
+This lab will introduce tools for spatial data visualisation in Google Earth Engine. Data visualisation is the activity of relating observations and variation within variables in your data to visual objects and properties on a display (aesthetics). How you relate your data values to display objects will determine what insights you can derive from your data, what patterns and relationships it will reveal, and what messages you can convey from your data. Visual objects and properties you can relate to data values include  geometric objects (points, lines, polygons, pixels for a map; histogram bar polygons, line chart lines, scatter plot points for charts), line width, line style, point marker type, displacement, and colour. This lab will focus on the use of colour to represent features or patterns in geospatial data but you should also be aware of other visual properties of your map display that can be varied; for example, you don't want to use a line width so thick that it obscures variation in polygons represented by colour fill values. 
+
+### Setup
+
+Create a new script in your *labs-gee* repository called *lab4b*. Enter the following comment header to the script. 
+
+<br>
+
+```{js, echo=TRUE, eval=FALSE}
+/*
+Lab 4b
+Author: Test
+Date: XX-XX-XXXX
+
+*/
+
+```
+
+<br>
+
+<hr>
+
+## Colour Theory
+
+One of the key aspects of spatial data visualisation is using colour to represent variation in data values. This process involves mapping data values to colours and then assigning colours to objects (e.g. points, lines, polygons, or pixels) on your display. As stated by <a href="https://serialmentor.com/dataviz/color-basics.html" target="_blank">Wilke (2019)</a> there are three main uses of colour in data visualisation:
+
+1. distinguish groups in your data from each other
+2. represent data values
+3. to highlight features in your data
+
+### Colour
+
+Color is defined by the characteristics of a mix wavelengths of light in the visible spectrum <a href="https://ggplot2-book.org/index.html" target="_blank">Wickham (2020)</a>. A particular colour is defined by levels of intensity of light in different parts of the visible spectrum (e.g. yellow is a mixture of light in red and green wavelengths). The human eye has three types of sensors / receptors (cones) with each type of sensor most sensitive to light with wavelenghts of 0.44 $\mu$m (blue), 0.53 $\mu$m (green), and 0.57 $\mu$m (yellow - but absorbs red light). The human eye can distinguish millions of colours <a href="https://www.crcsi.com.au/history-2/earth-observation-series-2/" target="_blank">CRCSI (2016)</a>; thus, colour is useful for representing variation, patterns, or interesting features in your data. 
+
+<br>
+<center>
+
+```{r colour, fig.align = 'center', out.width = "60%", fig.cap = "Relative light absorption of cones in the human eye (source: [CRCSI (2016)](https://www.crcsi.com.au/history-2/earth-observation-series-2/)).", echo = FALSE}
+knitr::include_graphics("img/human-eye-colour.png")
+
+```
+
+</center>
+<br>
+
+An individual colour can be described in terms of hue, value, or chroma <a href="https://www.crcsi.com.au/history-2/earth-observation-series-2/" target="_blank">(CRCSI, 2016)</a>:
+
+* **Hue:** the attribute commonly associated with colour which is determined by the mix wavelengths. Hues have an order which follows the colours of the spectrum (ROYGBV) and spectral hues can be created by mixing adjacent wavelengths. Purple, for example, is a non-spectral hue as it is a mixture of blue and red whose wavelengths are not adjacent. 
+* **Brightness (Value / Intensity):** is the perceived brightness of a colour and is related to the amount of energy in all wavelengths of a light reflected by an object. This is the intensity or value of light. 
+* **Chroma (Saturation):** is related to the purity of a colour. It can be thought of as the distribution of intensity in wavelengths around the wavelength of average (peak) intensity of light reflected by an object. Adding white, grey, or black to light reduces the chroma and produces pastel colours. 
+
+### Colour Models / Colour Spaces
+
+**Additive Primaries (RGB Cube)**
+
+Colour is represented by combinations (addition) of red, green, and blue light. Red, green, and blue are primary colours and combine to form white. An absence of red, green, and blue is black. Secondary colours, which are brighter than any of the primary colours, can be formed by the addition of primary colours of varying intensities (e.g. yellow is the addition of red and green, magenta is the addition of red and blue, and cyan is the addition of green and blue). A related colour model uses subtractive primary colours (yellow, magenta, or cyan) which are subtracted from a white background to produce different colours.
+
+<br>
+<center>
+
+```{r colour-models, fig.align = 'center', out.width = "70%", fig.cap = "Additive and subtractive colour models (source: [CRCSI (2016)](https://www.crcsi.com.au/history-2/earth-observation-series-2/)).", echo = FALSE}
+knitr::include_graphics("img/colour-models-crcsi.png")
+
+```
+
+</center>
+<br>
+
+Colour can be represented by coordinates in 3D space using the RGB colour cube where each dimension is represented by a primary colour. The intensity of a colour is represented by its position along a dimension. Grey colours, equal intensities of each of the primary colours, is represented by the diagonal axis from black (absence of primary colours) to white (complete presence of the spectrum of colours). 
+
+<br>
+<center>
+
+```{r rgb-colour-models, fig.align = 'center', out.width = "70%", fig.cap = "RGB Colour Cube (source: [CRCSI (2016)](https://www.crcsi.com.au/history-2/earth-observation-series-2/)).", echo = FALSE}
+knitr::include_graphics("img/rgb-colour-cube.png")
+
+```
+
+</center>
+<br>
+
+**Hue, Saturation, Intensity (HSI) Colour Space** 
+
+Colour coordinates in the RGB cube colour model can be transformed to coordinates in Hue, Saturation, and Intensity (HSI) space. Hue represents saturated pure colours as angular values surrounding a central axis of achromatic colour with black at the bottom and white at the top (red hue = 0 or 360; green = 120; blue = 240). This central axis represents the lightness of the colour (black = 0 % and white = 100 %). The saturation of a colour represents the amount of grey in the colour (grey = 0 % and pure colour = 100 %). 
+
+<br>
+<center>
+
+```{r hsl-colour-models, fig.align = 'center', out.width = "70%", fig.cap = "HSL colour model (source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:HSL_color_solid_cylinder.png)).", echo = FALSE}
+knitr::include_graphics("img/1600px-HSL_color_solid_cylinder.png")
+
+```
+
+</center>
+<br>
+
+**Colour on Computer Displays**
+
+Computer displays consist of red, green, and blue sub-pixels, which when activated with different intensities, are perceived as different colours. The range of colours that can be displayed on a computer display is called the *gamut*. Colour in computer programs is represented as a three byte hexadecimal number which byte 1 corresponding to red, byte 2 corresponding to green, and byte 3 corresponding to blue. Each byte can take the range of 00 to FF in the hexadecimal system (or 0 to 255 in decimal). 00 indicates the absence of that colour and FF indicates saturation of that colour. `FF0000` is red, `00FF00` is green, and `0000FF` is blue. 
+
+Use this <a href="https://www.w3schools.com/colors/colors_rgb.asp" target="_blank">RGB colour picker</a> to see how changing red, green, and blue intensities creates hexadecimal number representations of the colour. 
+
+Similarly, you can use this <a href="https://www.w3schools.com/colors/colors_hsl.asp" target="_blank">HSL colour picker</a> to see how changing hue, saturation, and lightness results in different hexadecimal number representations of colour.
+
+<br>
+<details>
+  <summary><b>*How would you represent pure yellow as a 3 byte hexadecimal number?*</b></summary>
+  <p>
+  <br>
+  `FFFF00`
+  </p>
+</details>
+<br>
+
+<details>
+  <summary><b>*You want to represent a flooded location as a blue polygon object on your map display. You want this object to stand out and appear bright. What would be suitable hue, saturation, and lightness values for this object? What hexadecimal number would represent these HSL values?*</b></summary>
+  <p>
+  <br>
+  Choose a colour with a distinctive blue hue (around 240), pure colour (saturation close to 1 or 100 %), and a lightness with minimal white or black shades (around 0.5 or 50 %). Depending on the basemap and colour of other objects on the map you could adjust these values to maximise visual discrimination of the flooded object.
+  <br>
+  `0000FF`
+  <br>
+  
+  ```{r hsl-blue, fig.align = 'center', out.width = "70%", fig.cap = "Distinctive blue for displaying a flood object (source: [W3Schools](https://www.w3schools.com/colors/colors_hsl.asp)).", echo = FALSE}
+knitr::include_graphics("img/w3schools-colour-picker.png")
+
+```
+  </p>
+</details>
+<br>
+
+### Choosing Colours
+
+Choose colours and colour palettes that account for colour blindness. There are online tools that you can use to simulate colour blindness (e.g. <a href="https://colororacle.org" target="_blank">color oracle</a>). 
+
+Choose colours / colour palettes that have a logical interpretation (e.g. greens for vegetation; blue for wet; red for hot).
+
+If your data values don't have a natural order (e.g. land cover data) don't use a colour scale that implies order (e.g. dark to light colours, low to high saturation, warm to cool hues). Section 4 in <a href="https://serialmentor.com/dataviz/color-basics.html" target="_blank">Wilke (2019)</a> outlines key points to consider when choosing a colour scale to represent variation in your data and <a href="https://serialmentor.com/dataviz/color-pitfalls.html" target="_blank">common pitfalls</a> to avoid when using colour for data visualisations. 
+
+If there is order in your data, *sequential* colour palettes which indicate large and small values and distance between values should be used. Sequential colour palettes can be single-hue or multi-hue The top group of colour palettes in the below figure depict sequential colour palettes from <a href="https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3" target="_blank">Color Brewer</a>. In some cases, your data might have a logical midpoint value (e.g. median) and you want your colour palette to represent variation away from this value. In this instance a *diverging* colour palette should be used (see the bottom group of colour palettes in the below figure). *Qualitative* colour palettes (middle group in the figure below) assign colours to data values or categories where each colour appears equivalent and distinct. They should be used for categorical and unordered data. The <a href="https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3" target="_blank">Color Brewer</a> website is a good resource for generating colour palettes for spatial data which also account for colour blindness. 
+
+<br>
+
+```{r brewer-scales, fig.align = 'center', out.width = "60%", fig.asp = 1.5, echo = FALSE, fig.cap = "ColourBrewer scales (source [R 4 Data Science](https://r4ds.had.co.nz/graphics-for-communication.html))"}
+par(mar = c(0, 3, 0, 0))
+RColorBrewer::display.brewer.all()
+```
+<br>
+
+Be aware of context and how the relationship between objects on a map display can affect how they are perceived by human eyes. For example, thin geometric features are not easily detected when represented in blue hues, the perceived hue of an object changes with background colour (blue features are hard to detect on black backgrounds, yellow is hard to detect on white backgrounds), and the perceived chroma of an object is related to feature size. <a href="https://www.crcsi.com.au/assets/Consultancy-Reports-and-Case-Studies/Earth-Observation-reports-updated-Feb-2019/Vol2A-high-res-84MB.pdf" target="_blank">Excursus 5.2 (CRCSI, 2017; p. 75)</a> highlights how color composition can obscure or misrepresent variation in spatial data. 
+
+<br>
+<details>
+  <summary><b>*Go to the <a href="https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3" target="_blank">Color Brewer</a> website and choose a colour palette to represent spatial variation in precipitation? Justify why this is a suitable colour palette. Look out for how to copy the hexadecimal values representing the colours as a JavaScript array.*</b></summary>
+  <p>
+  <br>
+  Diverging colour palette emphasises variation between wet and dry areas with red representing dry areas and blue wet areas. Pure red and blue will highlight extreme values. People who are colour blind will be able to distinguish variation in precipitation.
+  <br>
+  <center>
+  <iframe src="https://player.vimeo.com/video/444908480" width="640" height="399" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  <p>Selecting a colour palette to represent precipitation using Color Brewer.</p>
+  </center>
+  </p>
+</details>
+<br>
+
+<hr>
+
+## Colour to Highlight Features
+
+You can use colour to highlight certain features or patterns in your data, or, as is often the case in spatial data visualisation, make certain features stand out from a basemap. Look at the colours used in Google Maps and also the typical styling for <a href="https://www.openstreetmap.org/#map=12/-31.9353/115.8210" target="_blank">open street maps</a>; they use subdued and relatively impure pastel colours. You can use strong and pure colours to visualise features that stand out against these backgrounds. 
+
+In the map display zoom and scroll to an area of parkland in Perth. Use the *Geometry Tools* to digitise a Polygon object to represent greenspace or a park. Change the name of the variable storing the Polygon `Geometry` object to `park`. Add the Polygon object in `park` to the map display with the <font color="#99e6b3">green colour</font>: `#99e6b3`. To do this you need to use the following functions:
+
+* `Map.addLayer()` - adds an Google Earth Engine object (i.e. spatial data stored in a variable on the Google servers) to the map display in your browser. You pass the variable you wish to display (i.e. `park`), a dictionary of visualisation parameters that specify how the spatial data is visualised (i.e. `{color:"#99e6b3"}`), and string name of the layer (i.e. `"Park"`).
+* `Map.centerObject()` - centers the map display on the location of an object passed as a variable to function (i.e. `park`) with the second argument being a number specifying the zoom level (i.e. `15`).
+
+<br>
+
+```{js, echo=TRUE, eval=FALSE}
+// Add Polygon geometry object representing a park to the map
+Map.centerObject(park, 15);
+Map.addLayer(park, {color:"#99e6b3"}, "Park");
+
+```
+
+<br>
+
+<center>
+<iframe src="https://player.vimeo.com/video/445129978" width="640" height="302" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+<p>Use Geometry Tools to create a Polygon object representing a park and display in green.</p>
+</center>
+
+<details>
+  <summary><b>*Assess the use of the <font color="#99e6b3">green colour</font>: `#99e6b3` to represent the park on Google Maps? Can you pick a different colour to visualise the park and justify your choice?*</b></summary>
+  <p>
+    The <font color="#99e6b3">green colour</font>: `#99e6b3` has a logical relationship with greenspace or parkland - the real world geographic entity it is representing. However, the green colour could be edited to make it stand out from the basemap. For example, `#99e6b3` has a hue of 140, a saturation of 60 %, and a lightness of 75 %. This indicates the hue of `#99e6b3` is a spectral mix of blue and green light, a saturation of 60 % indicates that the colour is not pure and with some grey introduced, and a lightness greater than 50 % indicates that white tints are introduced to the colour. You could reduce the white tints in the green, increase the saturation, and change the hue value to be closer to primary green (hue = 120). Use the <a href="https://www.w3schools.com/colors/colors_hsl.asp" target="_blank">HSL Calculator</a> to adjust hue, saturation, and lightness values and find a suitable colour to highlight your `park` against the Google Maps basemap. Edit your script to visualise your `park` object in a more distinctive green colour. You should include a different hexadecimal number as the string representing colour as the value against the `color` key in the visualisation parameters. The code snippet below is an example using the hexadecimal number representation of primary green `00FF00`.
+    
+```{js, echo=TRUE, eval=FALSE}
+// Use colour to highlight the park against the basemap
+Map.addLayer(park, {color:"#00FF00"}, "Park - Bright Green");
+
+```    
+  </p>
+</details>
+<br>
+
+
+<hr>
+
+## Colour to Represent Groups
+
+
+<!--- trees in Nedlands - green --->
+
+<!--- water do yourself --->
+
+<!--- demo of land cover map from lab 1 --->
+
+## Colour to Represent Data Values
+
+<hr>
+
+<!--- veg height --->
+
+<!--- temperature --->
+
+## Multiband Images
+
+### RGB Image
+
+<!--- UM --->
+
+### False Colour Composite Image
+
+<!--- UM --->
+
+<hr>
+
+## Animations
+
+<!--- Landcover / NDVI --->
+
+<hr>
+
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>
+<footer>
+<p>Advanced GIS and Remote Sensing</p>
+</footer>
