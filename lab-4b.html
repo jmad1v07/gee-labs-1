@@ -534,8 +534,8 @@ Selecting a colour palette to represent precipitation using Color Brewer.
 </div>
 <div id="colour-to-highlight-features" class="section level2">
 <h2>Colour to Highlight Features</h2>
-<p>You can use colour to highlight certain features or patterns in your data, or, as is often the case in spatial data visualisation, make certain features stand out from a basemap. Look at the colours used in Google Maps and also the typical styling for <a href="https://www.openstreetmap.org/#map=12/-31.9353/115.8210" target="_blank">open street maps</a>; they use subdued and relatively impure pastel colours. You can use strong and pure colours to visualise features that stand out against these backgrounds.</p>
-<p>In the map display zoom and scroll to an area of parkland in Perth. Use the <em>Geometry Tools</em> to digitise a Polygon object to represent greenspace or a park. Change the name of the variable storing the Polygon <code>Geometry</code> object to <code>park</code>. Add the Polygon object in <code>park</code> to the map display with the <font color="#99e6b3">green colour</font>: <code>#99e6b3</code>. To do this you need to use the following functions:</p>
+<p>You can use colour to highlight certain features or patterns in your data, or, as is often the case in spatial data visualisation, make certain features stand out from a base map. Look at the colours used in Google Maps and also the typical styling for <a href="https://www.openstreetmap.org/#map=12/-31.9353/115.8210" target="_blank">open street maps</a>; they use subdued and relatively impure pastel colours. You can use strong and pure colours to visualise features that stand out against these backgrounds.</p>
+<p>In the map display zoom and scroll to an area of parkland in Perth. Use the <em>Geometry Tools</em> to digitise a Polygon object to represent green space or a park. Change the name of the variable storing the Polygon <code>Geometry</code> object to <code>park</code>. Add the Polygon object in <code>park</code> to the map display with the <font color="#99e6b3">green colour</font>: <code>#99e6b3</code>. To do this you need to use the following functions:</p>
 <ul>
 <li><code>Map.addLayer()</code> - adds an Google Earth Engine object (i.e. spatial data stored in a variable on the Google servers) to the map display in your browser. You pass the variable you wish to display (i.e. <code>park</code>), a dictionary of visualisation parameters that specify how the spatial data is visualised (i.e. <code>{color:"#99e6b3"}</code>), and string name of the layer (i.e. <code>"Park"</code>).</li>
 <li><code>Map.centerObject()</code> - centers the map display on the location of an object passed as a variable to function (i.e. <code>park</code>) with the second argument being a number specifying the zoom level (i.e. <code>15</code>).</li>
@@ -556,7 +556,7 @@ Use Geometry Tools to create a Polygon object representing a park and display in
 <details>
 <summary><b><em>Assess the use of the <font color="#99e6b3">green colour</font>: <code>#99e6b3</code> to represent the park on Google Maps? Can you pick a different colour to visualise the park and justify your choice?</em></b></summary>
 <p>
-<p>The <font color="#99e6b3">green colour</font>: <code>#99e6b3</code> has a logical relationship with greenspace or parkland - the real world geographic entity it is representing. However, the green colour could be edited to make it stand out from the basemap. For example, <code>#99e6b3</code> has a hue of 140, a saturation of 60 %, and a lightness of 75 %. This indicates the hue of <code>#99e6b3</code> is a spectral mix of blue and green light, a saturation of 60 % indicates that the colour is not pure and with some grey introduced, and a lightness greater than 50 % indicates that white tints are introduced to the colour. You could reduce the white tints in the green, increase the saturation, and change the hue value to be closer to primary green (hue = 120). Use the <a href="https://www.w3schools.com/colors/colors_hsl.asp" target="_blank">HSL Calculator</a> to adjust hue, saturation, and lightness values and find a suitable colour to highlight your <code>park</code> against the Google Maps basemap. Edit your script to visualise your <code>park</code> object in a more distinctive green colour. You should include a different hexadecimal number as the string representing colour as the value against the <code>color</code> key in the visualisation parameters. The code snippet below is an example using the hexadecimal number representation of primary green <code>00FF00</code>.</p>
+<p>The <font color="#99e6b3">green colour</font>: <code>#99e6b3</code> has a logical relationship with greenspace or parks - the real world geographic entity it is representing. However, the green colour could be edited to make it stand out from the basemap. For example, <code>#99e6b3</code> has a hue of 140, a saturation of 60 %, and a lightness of 75 %. This indicates the hue of <code>#99e6b3</code> is a spectral mix of blue and green, a saturation of 60 % indicates that the colour is not pure and includes some some grey shades, and a lightness greater than 50 % indicates that white tints are introduced to the colour. You could reduce the white tints by reducing the lightness value to 50 %, increase the saturation, and change the hue value to be closer to primary green (hue = 120). Use the <a href="https://www.w3schools.com/colors/colors_hsl.asp" target="_blank">HSL Calculator</a> to adjust hue, saturation, and lightness values and find a suitable colour to highlight your <code>park</code> against the Google Maps basemap. Edit your script to visualise your <code>park</code> object in a more distinctive green colour. You should include a different hexadecimal number as the string representing colour as the value referenced by the <code>color</code> key in the visualisation parameters. The code snippet below is an example using the hexadecimal number representation of primary green <code>00FF00</code>.</p>
 <pre class="js"><code>// Use colour to highlight the park against the basemap
 Map.addLayer(park, {color:&quot;#00FF00&quot;}, &quot;Park - Bright Green&quot;);
 </code></pre>
@@ -567,15 +567,134 @@ Map.addLayer(park, {color:&quot;#00FF00&quot;}, &quot;Park - Bright Green&quot;)
 </div>
 <div id="colour-to-represent-groups" class="section level2">
 <h2>Colour to Represent Groups</h2>
-<!--- trees in Nedlands - green --->
-<!--- water do yourself --->
-<!--- demo of land cover map from lab 1 --->
+<p>You can use colour to represent categorical groups in your data. You do not want to choose a colour palette that implies order in your data. You want to use a qualitative colour palette that ensures groups in your data can be distinguished from each other and the colours are perceived as equivalent <a href="https://serialmentor.com/dataviz/color-basics.html" target="_blank">(Wilke, 2019)</a>. Also, if it makes sense with your data choose colours that have a logical relationship with the group or category in your data (e.g. vegetated land cover classes as green in a land cover map).</p>
+<p>Execute the below code. This loads the tree raster layer from the 2016 Urban Monitor data <a href="https://urbanmonitor-beta.landgate.wa.gov.au/content/app/urban-monitor-metadata-final-report.pdf" target="_blank">(Caccetta, 2012)</a> and displays tree pixels in black. The Urban Monitor data is derived from 20 cm spatial resolution multispectral aerial imagery collected and processed by CSIRO (resampled to 40 cm spatial resolution here). Tree land cover is a categorical group in your data (the only group in this raster data); is black the most suitable colour to represent trees?</p>
+<pre class="js"><code>// UM Tree
+var umTree = ee.Image(&quot;users/jmad1v07/gee-labs/um-lake-claremont-tree-2016&quot;);
+Map.centerObject(umTree, 12);
+Map.addLayer(umTree, {min: 0, max: 1, palette:[&quot;000000&quot;]}, &quot;UM Tree - black colour&quot;);
+</code></pre>
+<br>
+<details>
+<summary><b><em>Display the Urban Monitor tree <code>Image</code> on your map choosing a more suitable colour than black for display.</em></b></summary>
+<p>
+<p><br></p>
+<pre class="js"><code>// UM Tree - green
+Map.addLayer(umTree, {min: 0, max: 1, palette:[&quot;#009900&quot;]}, &quot;UM Tree - better colour???&quot;);
+</code></pre>
+</p>
+</details>
+<p><br></p>
+<p>Change the base map to satellite. You can do this by clicking the satellite button in the top right corner of the map display.</p>
+<br>
+<center>
+<div class="figure" style="text-align: center">
+<img src="img/satellite-basemap.png" alt="Change to satellite basemap." width="60%" />
+<p class="caption">
+Change to satellite basemap.
+</p>
+</div>
+</center>
+<br>
+<details>
+<summary><b><em>Change the base map to satellite. Choose a suitable colour to represent trees so that they stand out against the satellite base map? Justify your choice of colour.</em></b></summary>
+<p>
+<p><br> You could use <a href="https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3" target="_blank">Color Brewer</a> to help pick out a colour that is distinct from the green and brown colours that dominate the base map but are safe for colour blind viewers. One option could be to use a blue colour; this will be distinct from green but the trade off is that blue is not logically associated with trees.</p>
+<pre class="js"><code>// UM Tree - blue
+Map.addLayer(umTree, {min: 0, max: 1, palette:[&quot;#009E73&quot;]}, &quot;UM Tree - satellite basemap&quot;);
+</code></pre>
+</p>
+</details>
+<p><br></p>
+<p>You can also specify colours to visualise multiple categories in spatial data. If you execute the below code you will assign one of the colours specified in the array assigned to the <code>palette</code> key in the <code>igbpVis</code> object to one of land cover classes in the 500 m spatial resolution <a href="https://developers.google.com/earth-engine/datasets/catalog/MODIS_006_MCD12Q1" target="_blank">&gt;MODIS MCD12Q1</a> land cover data for 2019. Each pixel has a value from 1 to 17 which relates to the land cover classes (categories) of the Annual International Geosphere-Biosphere Programme (IGBP) classification.</p>
+<p><br></p>
+<pre class="js"><code>
+// Visualise MODIS MCD12Q1 Land Cover data for 2019 
+var lcModis = ee.Image(&quot;users/jmad1v07/gee-labs/lc-mcd12q1-2019-lc-type-1&quot;);
+
+// Define a palette for the distinct land cover classes.
+var igbpVis = {
+  min: 1.0,
+  max: 17.0,
+  palette: [
+    &#39;05450a&#39;, &#39;086a10&#39;, &#39;54a708&#39;, &#39;78d203&#39;, &#39;009900&#39;, &#39;c6b044&#39;, &#39;dcd159&#39;,
+    &#39;dade48&#39;, &#39;fbff13&#39;, &#39;b6ff05&#39;, &#39;27ff87&#39;, &#39;c24f44&#39;, &#39;a5a5a5&#39;, &#39;ff6d4c&#39;,
+    &#39;69fff8&#39;, &#39;f9ffa4&#39;, &#39;1c0dff&#39;
+  ],
+};
+Map.centerObject(lcModis, 9);
+Map.addLayer(lcModis, igbpVis, &quot;Land Cover MODIS MC12Q1 2019&quot;);
+</code></pre>
+<hr>
 </div>
 <div id="colour-to-represent-data-values" class="section level2">
 <h2>Colour to Represent Data Values</h2>
+<p>Up until now you have been mapping discrete values or categories to colours that are rendered on your display. However, if your data is continuous you will need to relate your data values to a range of colours in a palette to be displayed. How you relate data values to a range of colours and the choice of colours in your colour palette will determine how variation in your data is visualised.</p>
+<p>The 2016 Urban Monitor data introduced above also includes a vegetation height raster layer <a href="https://urbanmonitor-beta.landgate.wa.gov.au/content/app/urban-monitor-metadata-final-report.pdf" target="_blank">(Caccetta, 2012)</a>. Again, this is data is resampled to a 40 cm spatial resolution and each pixel value represents the height of vegetation in metres if a pixel was vegetated. Height is a continuous variable with a clear order from low to high.</p>
+<br>
+<details>
+<summary><b><em>Would a sequential or diverging colour palette be suited to visualising the height of vegetation?</em></b></summary>
+<p>
+<br> Sequential. There is not an obvious mid-point from which height diverges. Height increases from 0 m upwards.<br />
+
+</p>
+</details>
+<p><br></p>
+<p>Execute the below code visualise the Urban Monitor vegetation height data with a colour palette represent low vegetation height in black (<code>"000000"</code>) through to red for high vegetation (<code>"0000FF"</code>).</p>
+<pre class="js"><code>// UM Vegetation Height
+var umVht = ee.Image(&quot;users/jmad1v07/gee-labs/um-lake-claremont-vht-2016&quot;);
+Map.addLayer(umVht, {min: 0, max: 100, palette:[&quot;000000&quot;, &quot;FFFF00&quot;, &quot;FF0000&quot;]}, &quot;UM Vegetation Height&quot;);
+</code></pre>
+<p><br></p>
+<p>You should see something like the below image in your map display. It was just mentioned that the colour palette maps high vegetation to the colour red but tree canopy is appearing in black-yellow colours. Why is this?</p>
+<p>If you look at the dictionary of visualisation parameters you passed as an argument to the <code>Map.addLayer()</code> function you will see <code>min: 0, max: 100</code>. This means you are relating a pixel value of 0 metres to black colours and a pixel value of 100 metres to pure red colour. Pixel values between 0 to 100 are related the range of colours spanning a black-yellow-red colour palette that can be displayed by your screen. A tree height of 100 metres exceeds the height you could expect trees to be in the Lake Claremont area in Perth. This means that values are assigned to display colours that are not in your dataset; in other words you are not utilising the range of display colours to highlight variation in your data values.</p>
+<br>
+<center>
+<div class="figure" style="text-align: center">
+<img src="img/vht-colour-scale-no-red.png" alt="Visualising Urban Monitor vegetation height data with a black-yellow-red colour scale." width="70%" />
+<p class="caption">
+Visualising Urban Monitor vegetation height data with a black-yellow-red colour scale.
+</p>
+</div>
+</center>
+<br>
+<details>
+<summary><b><em>What would be appropriate min and max vegetation height values to relate to the minimum and maximum display range to highlight variation in vegetation height? Adjust the visualisation parameters to visualise the vegetation height data to emphasise variation in vegetation height. </em></b></summary>
+<p>
+<pre class="js"><code>// UM Vegetation Height - adjusted display range
+Map.addLayer(umVht, {min: 0, max: 30, palette:[&quot;000000&quot;, &quot;FFFF00&quot;, &quot;FF0000&quot;]}, &quot;UM Vegetation Height adjusted min max??&quot;);
+</code></pre>
+</p>
+</details>
+<p><br></p>
+<details>
+<summary><b><em>How effective do you think visualising vegetation height with a black-yellow-red colour palette is? Do you usually associated red with high vegetation (i.e. tree canopy)? Choose a different colour palette to represent vegetation height and justify your choice.</em></b></summary>
+<p>
+<p><br> Use a single hue green colour palette with darker green associated with higher vegetation. This colour palette was selected using <a href="https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3" target="_blank">Color Brewer</a>. Think about the limits of this colour palette when using it with the Google base map.</p>
+<pre class="js"><code>// UM Vegetation Height - adjusted colour palette
+Map.addLayer(umVht, {min: 0, max: 30, palette:[&#39;#edf8e9&#39;,&#39;#c7e9c0&#39;,&#39;#a1d99b&#39;,&#39;#74c476&#39;,&#39;#41ab5d&#39;,&#39;#238b45&#39;,&#39;#005a32&#39;]}, &quot;UM Vegetation Height adjusted colour palette&quot;);
+</code></pre>
+</p>
+</details>
+<p><br></p>
+<p>The following code will load average land surface temperature (LST; Kelvin) across Perth for the summer months (December, January, and February) for the years 2014 to 2019. This LST data is derived from Landsat 8 observations and computed using the algorithm of <a href="https://ieeexplore.ieee.org/document/6784508" target="_blank">Jiménez-Muñoz et al. (2014)</a>.</p>
+<pre class="js"><code>// Visualise Landsat 8 land surface temperature (K)
+var lstLandsat8 = ee.Image(&quot;users/jmad1v07/gee-labs/landsat8-lst&quot;);
+</code></pre>
+<p><br></p>
+<details>
+<summary><b><em>Sensible minimum and maximum data values to relate to the limits of the display colour range are 295 to 315 K. Can you create a colour palette to visualise variation in land surface temperature and map the Landsat 8 data in the variable <code>lstLandsat8</code> using this colour palette?</em></b></summary>
+<p>
+<p><br></p>
+<pre class="js"><code>// Example colour palette to visualise land surface temperature data
+Map.centerObject(lstLandsat8, 12);
+var lstVisParam = {min:295, max:315, palette:[&quot;000066&quot;,&quot;00ffff&quot;,&quot;ffff00&quot;,&quot;ff0000&quot;]};
+Map.addLayer(lstLandsat8, lstVisParam, &quot;Surface Temperature (K)&quot;);
+</code></pre>
+</p>
+</details>
+<p><br></p>
 <hr>
-<!--- veg height --->
-<!--- temperature --->
 </div>
 <div id="multiband-images" class="section level2">
 <h2>Multiband Images</h2>
