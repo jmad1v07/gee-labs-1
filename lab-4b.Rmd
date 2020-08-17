@@ -36,9 +36,8 @@ Date: XX-XX-XXXX
 
 ```
 
-<br>
-
 <hr>
+<br>
 
 ## Colour Theory
 
@@ -185,6 +184,7 @@ Be aware of context and how the relationship between objects on a map display ca
 <br>
 
 <hr>
+<br>
 
 ## Colour to Highlight Features
 
@@ -226,6 +226,7 @@ Map.addLayer(park, {color:"#00FF00"}, "Park - Bright Green");
 <br>
 
 <hr>
+<br>
 
 ## Colour to Represent Groups
 
@@ -306,7 +307,9 @@ Map.addLayer(lcModis, igbpVis, "Land Cover MODIS MC12Q1 2019");
 
 ```
 
+<br>
 <hr>
+<br>
 
 ## Colour to Represent Data Values
 
@@ -402,8 +405,12 @@ Map.addLayer(lstLandsat8, lstVisParam, "Surface Temperature (K)");
 <br>
 
 <hr>
+<br>
 
 ## Multiband Images
+
+<hr>
+<br>
 
 ### RGB Image
 
@@ -413,6 +420,7 @@ Map.addLayer(lstLandsat8, lstVisParam, "Surface Temperature (K)");
 
 <!--- UM --->
 
+<br>
 <hr>
 
 ## Animations

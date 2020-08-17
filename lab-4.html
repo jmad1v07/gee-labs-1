@@ -404,6 +404,7 @@ Date: XX-XX-XXXX
 
 */
 </code></pre>
+<hr>
 <p><br></p>
 </div>
 </div>
@@ -420,6 +421,7 @@ Date: XX-XX-XXXX
 </ol>
 <p>This differs from a desktop GIS (e.g. QGIS) where all the data and processing occurs locally on your machine’s hardware. Google Earth Engine is a distributed system which means the program runs by calling functions running on different computers connected via a network (e.g. your Google Earth Engine programs will call functions running locally in your browser and also functions running on Google servers with data shared between these functions over the internet). Google Earth Engine has a clear client-server architecture where your browser is the client requesting services from Google Earth Engine, the server, which offers a range of services and processes and responds to client requests.</p>
 <p>There are several advantages to this mode of computing. It is more efficient to just download the result of processing geospatial data than to download all the raw data and process and store it locally. For example, if you wanted to compute the area of forest in Australia using a land cover map you can perform this analysis in the cloud and download one number (the area of forest). Contrast this with having to download a land cover map for all of Australia, process the data, and then run the analysis to calculate the area of forest on your local machine. Also, more geospatial datasets are coming online and they getting larger; it is often not feasible to process all this “big data” locally.</p>
+<hr>
 <p><br></p>
 </div>
 <div id="the-ee-object" class="section level2">
@@ -427,6 +429,7 @@ Date: XX-XX-XXXX
 <p>It is important to distinguish between variables that are stored, and operations that are run, locally on your machine and data and operations that run on Google servers in the cloud. The <code>ee</code> prefix indicates that the data being referred to in your script is a server side object. For example, <code>var localString = 'on my computer'</code> is a string type variable stored locally on your machine where as <code>var cloudString = ee.String('in the cloud')</code> is a proxy object for a variable containing string data located on servers in the cloud.</p>
 <p>In general, any variable that is declared as <code>ee.&lt;Thing&gt;()</code> is server side and any method or operation of the form <code>ee.&lt;Thing&gt;().method()</code> is a server side operation. One way of understanding <code>ee.&lt;Thing&gt;()</code> is as a container that you put instructions inside to send to the Google servers; for example, in <code>var cloudString = ee.String('in the cloud')</code> you are putting a client side string <code>'in the cloud'</code> in a container and that data is sent to servers in the cloud. Similarly, you could put the ID of geospatial data that is stored in databases located on Google servers and assign it to server side variables that are used in your program; executing <code>var landsatImage = ee.Image('LANDSAT/LC8_L1T_TOA/LC81130822014033LGN00')</code> will assign the Landsat image with the specified ID to the variable <code>landsatImage</code> in your script.</p>
 <p>If the geospatial data and operations used in your program are server side how do you access or visualise the results? There are a range of functions in Google Earth Engine that let you request data from the server to be displayed in your browser. For example, the <code>print()</code> function can request server side objects and print them to the <em>Console</em> and the <code>Map.addLayer()</code> function requests spatial data which is displayed in the map.</p>
+<hr>
 <p><br></p>
 </div>
 <div id="spatial-data-models" class="section level2">
@@ -499,6 +502,8 @@ Raster data model: digital elevation model (DEM) - each pixel value represents t
 </ul>
 </p>
 </details>
+<p><br></p>
+<hr>
 <p><br></p>
 </div>
 </div>
@@ -589,6 +594,8 @@ Create a date object on the GEE server. Useful for storing temporal attributes a
 </tr>
 </table>
 </center>
+<br>
+<hr>
 <p><br></p>
 </div>
 <div id="spatial-data-structures" class="section level2">

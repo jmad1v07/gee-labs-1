@@ -22,6 +22,7 @@ You will be using Google Earth Engine to perform geospatial data analysis. Googl
 
 This lab is an introductory section on programming using JavaScript. This section introduces key programming concepts that are important to understand when using Google Earth Engine. However, also view this section as a *reference resource* to refer back to as you work through the labs and become more proficient in using Google Earth Engine and creating your own programs. A good exercise to consolidate your understanding of these concepts is to try and identify where, and explain how, the concepts that are introduced here are used to perform various geospatial data analysis tasks in later labs. 
 
+<hr>
 <br>
 
 ## Setup
@@ -99,6 +100,8 @@ knitr::include_graphics("img/save-js-intro-script.png")
 <p><a href="https://vimeo.com/441911311">Create repository and save script.</a></p>
 
 </center>
+
+<hr>
 <br>
 
 ## Programming
@@ -120,6 +123,8 @@ Programs need data to work with, perform operations on, and to return outputs fr
 undefined types are variables that have not been assigned a value. Variables of null data type intentionally have no value. 
 
 All other data types in JavaScript are of type object.
+
+<br>
 
 **Strings**
 
@@ -536,6 +541,7 @@ var lat = 23.42;
 
 ```
 
+<hr>
 <br>
 
 ## Recap

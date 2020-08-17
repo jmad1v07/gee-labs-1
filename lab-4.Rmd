@@ -36,6 +36,7 @@ Date: XX-XX-XXXX
 
 ```
 
+<hr>
 <br>
 
 ## Client and Server
@@ -55,6 +56,7 @@ This differs from a desktop GIS (e.g. QGIS) where all the data and processing oc
 
 There are several advantages to this mode of computing. It is more efficient to just download the result of processing geospatial data than to download all the raw data and process and store it locally. For example, if you wanted to compute the area of forest in Australia using a land cover map you can perform this analysis in the cloud and download one number (the area of forest). Contrast this with having to download a land cover map for all of Australia, process the data, and then run the analysis to calculate the area of forest on your local machine. Also, more geospatial datasets are coming online and they getting larger; it is often not feasible to process all this "big data" locally.  
 
+<hr>
 <br>
 
 ## The `ee` object
@@ -65,6 +67,7 @@ In general, any variable that is declared as `ee.<Thing>()` is server side and a
 
 If the geospatial data and operations used in your program are server side how do you access or visualise the results? There are a range of functions in Google Earth Engine that let you request data from the server to be displayed in your browser. For example, the `print()` function can request server side objects and print them to the *Console* and the `Map.addLayer()` function requests spatial data which is displayed in the map. 
 
+<hr>
 <br>
 
 ## Spatial Data Models
@@ -138,6 +141,9 @@ knitr::include_graphics("img/raster-data-model.png")
 </details>
 <br>
 
+<hr>
+<br>
+
 ## Data Structures
 
 Data structures are how spatial data models are implemented in a computer system. GEE has a range of non-spatial data structures used for organising data related to geographic and non-geographic information. 
@@ -183,6 +189,8 @@ Data structures are how spatial data models are implemented in a computer system
 </table>
 </center>
 
+<br>
+<hr>
 <br>
 
 ## Spatial Data Structures
