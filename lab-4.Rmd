@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-This lab introduces spatial data models for representing geographic entities and phenomena and the data structures which implement these spatial data models in Google Earth Engine. 
+This lab introduces spatial data models for representing geographic entities and phenomena in Google Earth Engine. 
 
 ### Setup
 
@@ -36,12 +36,14 @@ Date: XX-XX-XXXX
 
 ```
 
+<br>
+
 <hr>
 <br>
 
 ## Client and Server
 
-Up to now you have been writing JavaScript programs that are executed by your browser and run on the hardware in your local machine (i.e. any data in variables you declare resides in your computer's memory and the operations or functions you invoke run on your computer's CPU). 
+In the preliminary lab you have been writing JavaScript programs that are executed by your browser and run on the hardware in your local machine (i.e. any data in variables you declare resides in your computer's memory and the operations or functions you invoke run on your computer's CPU). 
 
 However, your machine has limited storage, memory, and processing power. Google Earth Engine allows you to access servers comprising more powerful computers and access to larger datasets (than could typically be stored on your local machine). You still write a Google Earth Engine program in JavaScript using the code editor in your browser; however, the servers storing and processing the geospatial data in your program are remotely located in the cloud. 
 
@@ -74,8 +76,8 @@ If the geospatial data and operations used in your program are server side how d
 
 A spatial data model refers to a conceptual model for describing geographic phenomena or entities. A spatial data model typically contains two pieces of information: 
 
-* positional information describing location (e.g. an `(x, y)` coordinate pair representing the location of a weather station)
-* attribute information describing characteristics of the phenomenon or entity (e.g. a name:value pair recording the name of the weather station `name:'Perth Airport'`) 
+* Positional information describing location, shape, and extent (e.g. an `(x, y)` coordinate pair representing the location of a weather station).
+* Attribute information describing characteristics of the phenomenon or entity (e.g. a name:value pair recording the name of the weather station `name:'Perth Airport'`). 
 
 A spatial data model is a *representation* of geographic phenomena or entities; therefore, some detail is abstracted away. 
 
@@ -89,7 +91,7 @@ The vector data model represents geographic phenomena or entities as geometric f
 
 Along with coordinates that represent the position of the geometry, vector data also stores non-spatial attribute information which describe characteristics of the geographic phenomenon or entity represented by the geometry feature.
 
-The figure below demonstrates how geographic entities in Perth can be represented using the vector data model. The blue line feature broadly captures the shape of the river; however, it is a simplification as it does not provide information about how the river's width varies across space. The red point feature is used to represent the location of Perth; this might be an appropriate way to represent Perth's location on a zoomed out map but it does not capture Perth's actual extent across the landscape. 
+The figure below demonstrates how geographic entities in Perth can be represented using the vector data model. The blue line feature broadly captures the shape of the river; however, it is a simplification as it does not provide information about how the river's width varies across space. The red point feature is used to represent the location of Perth; this might be an appropriate way to represent Perth's location on a zoomed out map but it does not capture Perth's actual extent across the Earth's surface. 
 
 <br>
 <details>
@@ -115,9 +117,9 @@ knitr::include_graphics("img/vector-data-model.png")
 
 ### Raster Data Model
 
-The raster data model represents geographic phenomena or entities as a grid of cells (pixels). Attribute information about geographic phenomena or entities is described by assigning a value to each pixel. The dimensions of a pixel relative to distance on the Earth's land surface determines the complexity and detail of spatial features that can be resolved in raster data. A pixel that represents a 1 km x 1 km footprint on the Earth's surface will not be able to resolve an individual tree or a single building. Pixel values can be continuous (e.g. values represent precipitation) or categorical (e.g. values represent a land cover type).
+The raster data model represents geographic phenomena or entities as a grid of cells (pixels). Attribute information about geographic phenomena or entities is described by assigning a value to each pixel. The dimensions of a pixel relative to distance on the Earth's land surface determines the complexity and detail of spatial features that can be resolved in raster data. A pixel that represents a 1 km x 1 km footprint on the Earth's surface will not be able to represent an individual tree or a single building. Pixel values can be continuous (e.g. values represent precipitation) or categorical (e.g. values represent a land cover type).
 
-The figure below shows the 2018 European Space Agency (ESA) [Climate Change Initiative (CCI) land cover map](https://www.esa-landcover-cci.org) for 2018. This is a raster data model representation of land cover; each pixel represents a 300 m x 300 m area on the Earth's land surface and a pixel can only represent a single land cover type. If you look at the bottom two zoomed in maps you can some limitations of modelling land cover using 300 m x 300 m spatial resolution raster data. The shape of features of different land cover types is poorly represented by the "block-like" arrangement of pixels and there is variation in land cover within a single pixel (a mixed pixel problem). 
+The figure below shows the 2018 European Space Agency (ESA) <a href="https://www.esa-landcover-cci.org" target="_blank">Climate Change Initiative (CCI) land cover map</a> for 2018. This is a raster data model representation of land cover; each pixel represents a 300 m x 300 m area on the Earth's land surface and a pixel can only represent a single land cover type. If you look at the bottom two zoomed in maps you can some limitations of modelling land cover using 300 m x 300 m spatial resolution raster data. The shape of features of different land cover types is poorly represented by the "block-like" arrangement of pixels and there is variation in land cover within a single pixel (a mixed pixel problem). 
 
 <br>
 <center>
@@ -146,7 +148,7 @@ knitr::include_graphics("img/raster-data-model.png")
 
 ## Data Structures
 
-Data structures are how spatial data models are implemented in a computer system. GEE has a range of non-spatial data structures used for organising data related to geographic and non-geographic information. 
+Data structures are used to implement data models in a computer system. GEE has a range of non-spatial data structures used for organising data related to geographic and non-geographic information. 
 
 <center>
 <table style="width:75%; border-collapse: collapse; border-bottom: 1px solid #ddd; padding: 15px;">
@@ -201,7 +203,7 @@ Raster data in GEE are represented as `Image` objects.
 
 To create an `Image` object that stores raster data on the GEE server use the `ee.Image()` constructor. You pass arguments into the parentheses of the `ee.Image()` constructor to specify what raster data should be represented by the `Image` object. If you pass a number into `ee.Image()` you will get a constant image where each pixel value is the number passed in. 
 
-Add the following code to your GEE script. This will create an image object where each pixel has the value 5 which can be referred to using the variable `img5`. Click on the *Inspector* tab and then click at locations on the map. You should see the value 5 printed in the *Inspector* tab.
+Add the following code to your GEE script. This will create an image object where each pixel has the value 5 which can be referred to using the variable `img5`. Click on the *Inspector* tab and then click at locations on the map. You should see the value 5 printed in the *Inspector*.
 
 <br>
 
@@ -217,7 +219,7 @@ Map.addLayer(img5, {palette:['FF0000']}, 'Raster with pixel value = 5');
 
 Alternatively, you can pass a string id into the `ee.Image()` constructor to specify a Google Earth Engine asset (e.g. a Landsat image). Google Earth Engine assets are geospatial data that are stored in databases on Google servers, are available for use in your programs, and are frequently updated - see the available data at the <a href="https://developers.google.com/earth-engine/datasets" target="_blank">Google Earth Engine data catalog</a>.
 
-The variable `img` in the code block below refers to an `Image` object on the Google servers storing Landsat 8 data. This variable can be used in your program to access, query, and analyse the Landsat data. Pass the variable `img` into the `print()` function to view the Landsat 8 image's metadata. The `image` metadata should be printed in the *Console* tab. Exploring the `Image` metadata in the *Console* is demonstrated in the video below. 
+The variable `img` in the code block below refers to an `Image` object on the Google servers storing Landsat 8 data. This variable can be used in your program to access, query, and analyse the Landsat data. Pass the variable `img` into the `print()` function to view the Landsat 8 `Image`'s metadata. The `Image` metadata should be printed in the *Console*. Exploring the `Image` metadata in the *Console* is demonstrated in the video below. 
 
 <br>
 
@@ -230,7 +232,7 @@ print(img);
 
 <br>
 
-An `Image` can have one or more bands, each band is a georeferenced raster which can have its own set of properties such as data type (e.g. Integer), scale (spatial resolution), band name, and projection. The `Image` object itself can contain metadata relevant to all bands in a dictionary object.
+An `Image` can have one or more bands, each band is a georeferenced raster which can have its own set of properties such as data type (e.g. Integer), scale (spatial resolution), band name, and projection. The `Image` object itself can contain metadata relevant to all bands inside a dictionary object.
 
 <br>
 <center>
@@ -243,9 +245,9 @@ knitr::include_graphics("img/image.png")
 </center>
 <br>
 
-Go to the *Console* tab and you should see the Landsat 8 `Image` has 12 bands. Click on a band and you should see some band specific properties such as its projection (`crs: EPSG:32650`). Click on the `Image` `properties` to explore metadata that applies to the `Image` such as cloud cover at the time of `Image` capture (`CLOUD_COVER: 11.039999961853027`) or the satellite carrying the sensor (`SPACECRAFT_ID: LANDSAT_8`).
+Go to the *Console* and you should see the Landsat 8 `Image` has 12 bands. Click on a band and you should see some band specific properties such as its projection (`crs: EPSG:32650`). Click on the `Image` `properties` to explore metadata that applies to the `Image` such as cloud cover at the time of `Image` capture (`CLOUD_COVER: 11.039999961853027`) or the satellite carrying the sensor (`SPACECRAFT_ID: LANDSAT_8`).
 
-You can visualise the Landsat 8 `Image` on the map display in your browser. To do this you use the `Map.addLayer()` function to request the `Image` stored in the variable `img` on the Google servers to be displayed in your browser. If you execute the following code block you will visualise an RGB composite map of the Landsat 8 data stored in `img` in your browswer's display. 
+You can visualise the Landsat 8 `Image` on the map display in your browser. To do this you use the `Map.addLayer()` function to request the `Image` stored in the variable `img` on the Google servers to be displayed in your browser. The following code block will visualise an RGB composite map of the Landsat 8 data stored in `img` in your browswer's display. 
 
 <br>
 
@@ -294,7 +296,7 @@ The spatial location or extent of vector data is stored as `Geometry` objects. G
 * Polygon
 * MultiPolygon
 
-To create a `Geometry` object programmatically use the `ee.Geometry.<geometry type>()` constructor (e.g. for a LineString object use `ee.Geometry.LineString()`) and pass the coordinates for object as an argument to the constructor function. Look at the code block below to observe that coordinates for a location in Kings Park are passed as arguments to the `ee.Geometry.Point()` constructor to create a point `Geometry` object (`locationKP`). 
+To create a `Geometry` object programmatically use the `ee.Geometry.<geometry type>()` constructor (e.g. for a LineString object use `ee.Geometry.LineString()`) and pass the coordinates for the object as an argument to the constructor. Look at the code block below to observe that coordinates for a location in Kings Park are passed as arguments to the `ee.Geometry.Point()` constructor to create a point `Geometry` object (`locationKP`). 
 
 <br>
 
@@ -311,7 +313,7 @@ Map.addLayer(locationKP, {color: 'FF0000'}, 'Kings Park');
 
 <br>
 
-If you explore the metadata for `locationKP` in the *Console* tab you will see the object has a `type` field which indicates the object is of `Point` type and a `coordinates` field which contains the the coordinates for the point as an array object. The value of the coordinates field is an ordered x y pair.
+If you explore the metadata for `locationKP` in the *Console* you will see the object has a `type` field which indicates the object is of `Point` type and a `coordinates` field which contains the the coordinates for the point as an array object. The value of the `coordinates` field is an ordered x y pair.
 
 You can create LineString objects in a similar way. Here, you can pass the coordinates as an array into the `ee.Geometry.LineString()` constructor. As noted in the <a href="https://tools.ietf.org/html/rfc7946" target="_blank">GeoJSON spec</a>, coordinates for LineString objects are an array of ordered x y pairs. 
 
@@ -386,11 +388,11 @@ Some things to note:
 
 ### Features
 
-`Geometry` objects describe the positional information of vector data; however, there is also a need to represent attribute information about geographic phenomena or entities represented by `Geometry` objects. Vector data in Google Earth Engine which contains geometry data (representing location and shape of geographic phenomenon or entities) and attribute data are [GeoJSON `Feature` objects](https://tools.ietf.org/html/rfc7946#page-11). 
+`Geometry` objects describe the positional information of vector data; however, there is also a need to represent attribute information about geographic phenomena or entities represented by `Geometry` objects. Vector data in Google Earth Engine which contains geometry data (representing location and shape of geographic phenomenon or entities) and attribute data are <a href="https://tools.ietf.org/html/rfc7946#page-11" target="_blank">GeoJSON `Feature` objects</a>.
 
 A `Feature` object is of type Feature with a `geometry` property which contains a `Geometry` object or `null` and a `properties` property which stores a dictionary object of name:value pairs of attribute information associated with the geographic feature represented by the `Geometry` object. 
 
-Execute the code block below convert the `Geometry` object representing Kings Park to a `Feature` object with a `properties` property which with a name attribute. Inspect the `Feature` object in the *Console*.
+Execute the code block below to convert the `Geometry` object representing Kings Park to a `Feature` object with a `properties` property which with a name attribute. Inspect the `Feature` object in the *Console*.
 
 <br>
 
@@ -431,7 +433,7 @@ You can read more about `Feature` objects in Google Earth Engine <a href="https:
 
 ### Collections
 
-Collections in Google Earth Engine comprise groups of related objects. `ImageCollections` contain stacks of related `Image` objects and `FeatureCollections` contain sets of related `Feature` objects. Storing objects together in a collection means that operations can be easily applied to all the objects in the collection such as sorting, filtering, summarsing, or other mathematical operations. For example, all Landsat 8 surface reflectance `Images` are stored in an `ImageCollection` with the ID `'LANDSAT/LC08/C01/T1_SR'`. You can pass this string `ImageCollection` ID into the `ee.ImageCollection()` constructor to import all Landsat 8 surface reflectance `Images` into your program. 
+Collections in Google Earth Engine comprise groups of related objects. `ImageCollections` contain stacks of related `Image` objects and `FeatureCollections` contain sets of related `Feature` objects. Storing objects together in a collection means that operations can be easily applied to all the objects in the collection such as sorting, filtering, summarsing, or other mathematical operations. For example, all Landsat 8 surface reflectance `Images` are stored in an `ImageCollection` with the ID `'LANDSAT/LC08/C01/T1_SR'`. You can pass this string ID into the `ee.ImageCollection()` constructor to import all Landsat 8 surface reflectance `Images` into your program. 
 
 If you were creating a program to monitor land surface changes over Kings Park in 2018, you might want to import an `ImageCollection` of all Landsat 8 `Images` into your program and then filter the `ImageCollection` for Landsat 8 scenes that intersect with the extent of Kings Park and were captured in 2018. The following code block demonstrates this. You can then apply subsequent analysis or summary operations to the `ImageCollection` stored in the variable `l8ImCollKP`.
 
@@ -451,7 +453,7 @@ print(l8ImCollKP);
 
 <br>
 
-You should find 45 Landsat 8 surface reflectance `Images` intersected with Kings Park in 2018. You can inspect all the `Images` in the `ImageCollection` `l8ImCollKP` in the *Console*. The ability to store spatial data in collections makes creating programs that need to access and analyse big geospatial data easier. 
+You should find 45 Landsat 8 surface reflectance `Images` that intersected with Kings Park in 2018. You can inspect all the `Images` in the `ImageCollection` `l8ImCollKP` in the *Console*. The ability to store spatial data in collections makes creating programs that need to access and analyse big geospatial data easier. 
 
 You have already created your own `ImageCollection` that contains only the Landsat 8 `Images` for the spatial and temporal extent of interest to you (Kings Park in 2018). Now you can easily apply a range of functions and operations to all the `Images` in the `ImageCollection`. For example, you could apply a function that identifies maximum greenness observed at each pixel in 2018 to analyse spatial variability in vegetation cover. You will learn how to apply functions to `Images` in `ImageCollections` in subsequent labs.
 
