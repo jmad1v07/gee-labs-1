@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Lab 5</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 52px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h2 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h3 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h4 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h5 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h6 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="overview.html">Overview</a>
+</li>
+<li>
+  <a href="js-introduction.html">JS Intro</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Lab 4
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lab-4.html">Lab 4a</a>
+    </li>
+    <li>
+      <a href="lab-4b.html">Lab 4b</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="lab-5.html">Lab 5</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Lab 5</h1>
+
+</div>
+
+
+<p><br></p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This lab will introduce data transformation and manipulation operations for vector data.</p>
+<div class="well well-sm">
+<p><b>Quick recap:</b> In Google Earth Engine, vector data is represented using <code>Feature</code> objects which include a <code>geometry</code> property storing a <code>Geometry</code> object describing the location, extent, and shape of the <code>Feature</code> and a <code>properties</code> dictionary object of attribute information describing non-spatial characteristics of the data. A collection of <code>Feature</code>s in Google Earth Engine is a <code>FeatureCollection</code>; for example, if each weather station is represented as a <code>Feature</code> then a group of weather stations could be stored as a <code>FeatureCollection</code> object.</p>
+</div>
+<p>Data transformation operations transform data into a format ready for subsequent analysis. For non-spatial data, common data transformation operations include filtering and subsetting observations or variables, creating new variables through applying functions to existing variables, joining and combining data, and summarising or aggregating data. For example, consider the following data transformation operations that could be applied to hypothetical climate data:</p>
+<div class="well well-sm">
+<ol style="list-style-type: decimal">
+<li><em><b>Filter and subset:</b></em> filter the data for all observations that occurred within a particular time-period (e.g. since the year 2010) and select a variable of interest (e.g. temperature in Fahrenheit).</li>
+<li><em><b>Mutate - create a new variable:</b></em> create a new variable (temperature in Celsius) by converting the observations of temperature in Fahrenheit using the equation: <span class="math inline">\(T_{(C^{o})} = (T_{(F^{o})} - 32) * 5/9\)</span>.</li>
+<li><em><b>Join and combine:</b></em> join your temperature data to precipitation data (e.g. joining on weather station ID and date and time of weather observation).</li>
+<li><em><b>Summarise:</b></em> summarise your data by computing the average daily temperature and precipitation for each weather station.</li>
+</ol>
+</div>
+<p>These data transformation operations can be applied to the non-spatial attribute information associated with spatial <code>Feature</code> objects. However, most data transformation operations have a spatial equivalent. For example,</p>
+<div class="well well-sm">
+<ol style="list-style-type: decimal">
+<li><em><b>Filter and subset:</b></em> a <code>FeatureCollection</code> could be filtered based on geographic location and topological relations (e.g. selecting only weather stations that intersect with the Western Australia extent or only weather stations contained within a 10,000 km radius from Perth).</li>
+<li><em><b>Mutate - create a new variable:</b></em> the <code>Geometry</code> objects can be converted into spatial objects with new shapes or extents (e.g. through applying a 1 km buffer operation).</li>
+<li><em><b>Join and combine:</b></em> spatial data can be combined through spatial join operations (e.g. join weather station data with Statistical Area Level 1 (SA1) polygon geometries based on the intersection between a weather station’s location and the extent of the SA1)</li>
+<li><em><b>Join and combine AND mutate - create a new variable:</b></em> vector data can be combined with raster data via zonal statistics (e.g. computing the area of each land cover class within a polygon <code>Geometry</code>).</li>
+<li><em><b>Summarise:</b></em> you could perform aggregations or summary operations for observations within a spatial extent (e.g compute the average temperature of all weather stations within each SA1 extent).</li>
+</ol>
+</div>
+<p>Typically, the data transformation process will include both non-spatial operations applied to attribute data and spatial / geometric operations applied to the <code>Geometry</code> objects. This lab will demonstrate several spatial and non-spatial data transformation operations that can be applied to vector data in Google Earth Engine. These operations will form part of a workflow to address the question: <em>Which Perth university has the greenest and coolest campus?</em></p>
+<div id="which-perth-university-has-the-greenest-and-coolest-campus" class="section level3">
+<h3>Which Perth university has the greenest and coolest campus?</h3>
+<p>You will start with a <code>FeatureCollection</code> containing <code>Feature</code> objects which represent the footprint of a building (a polygon <code>Geometry</code> object) and attribute information indicating if the building is part of a university (the <code>building</code> property), the name of the university (the <code>uni_name</code> property), and a building ID (the <code>osm_id</code> property). The building footprint data are from <a href="https://wiki.openstreetmap.org/wiki/API_v0.6" target="_blank">open street map</a> and include buildings from the University of Western Australia (UWA) Crawley Campus, Curtin University Bentley Campus, Murdoch University Perth (Murdoch) Campus, Edith Cowan University (ECU) Mount Lawley Campus, and some non-university buildings near to each campus.</p>
+<p>You will use the area of tree canopy within a certain distance of a building as an indicator of <em>greenness</em>; the tree canopy data is in raster format and derived from the Urban Monitor data <a href="https://urbanmonitor-beta.landgate.wa.gov.au/content/app/urban-monitor-metadata-final-report.pdf" target="_blank">(Caccetta, 2012)</a>.</p>
+<p>The temperature data is also in raster format and is a measure of average summer (December, January, and February) land surface temperature (LST) derived from Landsat 8 <a href="https://ieeexplore.ieee.org/document/6784508" target="_blank">(Jiménez-Muñoz et al. 2014)</a>.</p>
+<p>You will need to produce summary statistics that describe the greenness and temperature of each university campus.</p>
+<p>Your analysis will comprise the following steps:</p>
+<div class="well well-sm">
+<ol style="list-style-type: decimal">
+<li><em><b>Filter and subset:</b></em> filter the building footprint <code>FeatureCollection</code> to include only university buildings.</li>
+<li><em><b>Mutate - create a new variable:</b></em> perform a buffer operation on each university building footprint <code>Geometry</code> object.</li>
+<li><em><b>Mutate - create a new variable:</b></em> compute the area of tree canopy cover within the buffer of each building footprint.</li>
+<li><em><b>Mutate - create a new variable:</b></em> compute the average LST for each building’s buffer.</li>
+<li><em><b>Join and combine:</b></em> join the area of tree canopy cover and average LST within each building’s buffer to a <code>FeatureCollection</code> storing the building footprint <code>Geometry</code>.</li>
+<li><em><b>Summarise:</b></em> compute the average tree canopy cover and LST for buildings on each campus.</li>
+</ol>
+</div>
+</div>
+<div id="setup" class="section level3">
+<h3>Setup</h3>
+<p>Create a new script in your <em>labs-gee</em> repository called <em>lab5</em>. Enter the following comment header to the script.</p>
+<p><br></p>
+<pre class="js"><code>/*
+Lab 5
+Author: Test
+Date: XX-XX-XXXX
+
+*/
+</code></pre>
+<p><br></p>
+</div>
+<div id="data-import" class="section level3">
+<h3>Data Import</h3>
+<p>Execute the following code to import the data. The OSM buildings near Perth university campuses are a <code>FeatureCollection</code> of building <code>Feature</code> objects. The Urban Monitor tree cover data are clips of the area surrounding each university campus from a larger raster layer. Import these four clipped rasters as <code>Image</code> objects and <code>mosaic()</code> them into one <code>Image</code>. Each 40 cm pixel in the <code>uniTree</code> <code>Image</code> has a value 1 if it covers a tree canopy and a masked no data value if not.</p>
+<p><br></p>
+<pre class="js"><code>// Data import
+
+// Perth OSM university buildings and buildings near universities
+var perthBuildingOSM = ee.FeatureCollection(&#39;users/jmad1v07/gee-labs/perth-uni-osm&#39;);
+print(perthBuildingOSM);
+Map.centerObject(perthBuildingOSM, 13);
+Map.addLayer(perthBuildingOSM, {color: &#39;FF0000&#39;}, &#39;OSM buildings near Perth university campuses&#39;);
+
+// import urban monitor tree cover data
+var curtinTree = ee.Image(&#39;users/jmad1v07/gee-labs/curtin-tree-2016&#39;);
+var ecuTree = ee.Image(&#39;users/jmad1v07/gee-labs/ecu-tree-2016&#39;);
+var murdochTree = ee.Image(&#39;users/jmad1v07/gee-labs/murdoch-tree-2016&#39;);
+var uwaTree = ee.Image(&#39;users/jmad1v07/gee-labs/uwa-tree-2016&#39;);
+
+// mosaic urban monitor tree cover data covering Perth universities
+var uniTree = ee.ImageCollection([curtinTree, ecuTree, murdochTree, uwaTree]).mosaic();
+print(uniTree);
+
+// convert each pixel value to represent area of tree cover (SqM)
+var uniTreePixelArea = uniTree.multiply(ee.Image.pixelArea());
+print(uniTreePixelArea);
+
+// import Landsat 8 summer land surface temperature
+var landsatLST = ee.Image(&#39;users/jmad1v07/gee-labs/landsat8-lst&#39;);
+</code></pre>
+<p><br></p>
+<p>Explore the <code>perthBuildingOSM</code> data in the map display and in the <em>console</em>.</p>
+<div class="figure" style="text-align: center">
+<img src="img/osm-building-footprint-uwa.png" alt="OSM building footprints and properties near UWA." width="85%" />
+<p class="caption">
+OSM building footprints and properties near UWA.
+</p>
+</div>
+<br>
+<details>
+<summary><b><em>Can you visualise the <code>uniTree</code> <code>Image</code> on the map display? Look back to lab 4 for examples of how to visualise the Urban Monitor data and for appropriate colour schemes to use.</em></b></summary>
+<p>
+<p><br></p>
+<pre class="js"><code>  // UM uni tree
+  Map.addLayer(uniTree, {min: 0, max: 1, palette:[&#39;#009900&#39;]}, &#39;UM Tree&#39;);
+  </code></pre>
+</p>
+</details>
+<p><br></p>
+<hr>
+<p><br></p>
+</div>
+</div>
+<div id="filter" class="section level2">
+<h2>Filter</h2>
+<p>Filtering subsets observations from your data based on their values <a href="https://r4ds.had.co.nz" target="_blank">(Wickham and Grolemund, 2017)</a>. In Google Earth Engine, comparison operators (e.g equals to <code>eq</code>, not equals to <code>neq</code>, less than <code>lt</code>, greater than <code>gt</code>) are used to filter observations based on attribute values.</p>
+<p>There are a range of in-built convenience <code>filter()</code> functions in Google Earth Engine that you can use for common filtering operations; for example, the following code snippet from <a href="lab-4.html">Lab 4a</a> demonstrates the use of the in-built <code>filterDate()</code> function to filter a Landsat 8 <code>ImageCollection</code> using <code>Image</code> capture dates recorded in the metadata <code>properties</code> object.</p>
+<p><br></p>
+<pre class="js"><code>// Landsat 8 Image Collection
+var l8ImColl = ee.ImageCollection(&#39;LANDSAT/LC08/C01/T1_SR&#39;);
+
+// Filter Image Collection for 2018
+var l8ImColl = l8ImColl
+  .filterBounds(ee.Geometry.Point(115.81237940701908,-31.9783567043356))
+  .filterDate(&#39;2018-01-01&#39;, &#39;2018-12-31&#39;);
+print(l8ImColl); </code></pre>
+<p><br></p>
+<details>
+<summary><b><em>Change the date range to see how many <code>Image</code>s are returned if you expand the date range to include 2017?</em></b></summary>
+<p>
+<p><br> 88 <code>Image</code>s</p>
+<pre class="js"><code>  
+  // Filter Image Collection for 2018
+  var l8ImColl2017_2018 = l8ImColl
+  .filterBounds(ee.Geometry.Point(115.81237940701908,-31.9783567043356))
+  .filterDate(&#39;2017-01-01&#39;, &#39;2018-12-31&#39;);
+  print(l8ImColl2017_2018); </code></pre>
+</p>
+</details>
+<p><br></p>
+<details>
+<summary><b><em>What spatial filtering operation are you applying to the Landsat 8 <code>ImageCollection</code>?</em></b></summary>
+<p>
+<p><br> This filter returns all <code>Image</code>s from the Landsat 8 image collection whose extent intersects with the point <code>Geometry</code> object passed into the <code>filterBounds()</code> function.</p>
+<code>filterBounds(ee.Geometry.Point(115.81237940701908,-31.9783567043356))</code>
+</p>
+</details>
+<p><br></p>
+<p>You will often want filter data using attributes for which there are not in-built functions. Google Earth Engine allows you to specify custom <code>filter()</code> functions. The following code snippet demonstrates how you can create your own filter to subset only <code>Feature</code>s in the <code>perthBuildingOSM</code> <code>FeatureCollection</code> whose <code>building</code> property value is <code>'university'</code>. If you execute the following code snippet and inspect the filtered <code>FeatureCollection</code> printed in the <em>console</em> and the cyan building footprints on the map display you should see that <code>perthUniBuildingOSM</code> contains fewer <code>Feature</code>s than <code>perthBuildingOSM</code>.</p>
+<p><br></p>
+<pre class="js"><code>// Filter OSM data to keep only university buildings
+var perthUniBuildingOSM = perthBuildingOSM.filter(ee.Filter.eq(&#39;building&#39;, &#39;university&#39;));
+print(&#39;Uni Buildings:&#39;, perthUniBuildingOSM);
+Map.addLayer(perthUniBuildingOSM, {color: &#39;000000&#39;}, &#39;OSM university buildings&#39;);
+</code></pre>
+<p><br></p>
+<p>Let’s quickly unpack the <code>filter()</code> function. The <code>filter()</code> function takes an <code>ee.Filter.eq(name, value)</code> object as an argument. The <code>ee.Filter.eq()</code> object is constructed by specifying a name and value which correspond to the name of the <code>property</code> and a value that <code>property</code> should take for filter’s comparison operation to evaluate to true. You will also note that the <code>ee.Filter.eq()</code> object is prefixed with <code>ee</code>. This indicates that you will be applying the filter’s comparison operation to objects that are located on Google servers.</p>
+<br>
+<details>
+<summary><b><em>Look at the filter documentation on the <a href="https://developers.google.com/earth-engine/apidocs/ee-filter" target="_blank">Google Earth Engine documentation website</a>. Which filter would you use to return non-university building <code>Feature</code>s from <code>perthBuildingOSM</code></em></b></summary>
+<p>
+<br> <code>ee.Filter.neq()</code> <a href="https://developers.google.com/earth-engine/apidocs/ee-filter-neq" target="_blank">ee.Filter.neq(“building”, “university”)</a>.
+</p>
+</details>
+<p><br></p>
+<hr>
+<p><br></p>
+</div>
+<div id="buffer" class="section level2">
+<h2>Buffer</h2>
+<p>To compute the area of tree cover or average LST near each university building you need to define the area which corresponds to a building’s surrounding neighbourhood. You can compute this area by applying a geometric <code>buffer()</code> operation to each building <code>Feature</code>’s <code>Geometry</code> object.</p>
+<p>The buffer operation is a unary geometric operation; it is a unary geometric operation as it is applied to just one geometric object. Along with the buffer operation, examples of unary operations include computing the centroid of a polygon object, simplifying geometries, or shifting or rescaling a geometry <a href="https://geocompr.robinlovelace.net/geometric-operations.html" target="_blank">(Lovelace et al. 2020)</a>. In contrast, binary geometry operations modify a geometry based upon another; for example, clipping a one geometry using the extent using the extent of another.</p>
+<p>Applying a buffer to a geometry returns a polygon encompassing the area within a specified distance of the given geometry; for example, applying a 1 km buffer to a point object would return a circular polygon with a 1 km radius surrounding the point. In Google Earth Engine the <code>buffer()</code> operation can be applied to <code>Geometry</code> objects and returns a buffer polygon <code>Geometry</code> object. The <code>buffer()</code> function in Google Earth Engine has a distance parameter which is a number specifying the size of the buffer to compute. The distance parameter is in metres unless otherwise specified.</p>
+<p>Here, you will compute each building’s surrounding neighbourhood using a 50 m buffer. The following code snippet creates a function that computes a 50 m buffer for a <code>Geometry</code> object. Let’s quickly recap how user-defined functions are created in Google Earth Engine.</p>
+<ol style="list-style-type: decimal">
+<li><em>function name:</em> first, you have given the function an informative name that describes what it does; <code>bufferFunc</code> clearly indicates this function will compute a buffer.</li>
+<li><em>parameters:</em> the function parameters are enclosed within parentheses <code>(feature)</code> following the function declaration. This function takes in a single parameter <code>feature</code> which is passed onto the operations enclosed inside the <code>{}</code>.</li>
+<li><em>function operations:</em> this operation enclosed within this function computes the 50 m buffer for the <code>Feature</code> <code>feature</code> passed into the function.</li>
+<li><em>return:</em> this function <code>return</code>s a <code>Feature</code> object containing the 50 m buffered polygon surrounding the <code>Feature</code> passed into the function.</li>
+</ol>
+<p><br></p>
+<pre class="js"><code>// This function computes a 50 m buffer around each university building footprint
+var bufferFunc = function(feature) {
+  return feature.buffer(50);
+};
+</code></pre>
+<p><br></p>
+<p>Now you have specified your function that will compute the 50 m buffer, you need to apply this function to each university building. You do this by <code>map</code>ping the function over each <code>Feature</code> in the <code>perthUniBuildingOSM</code> <code>FeatureCollection</code>. You can think of this as a “for each” operation; for each <code>Feature</code> in the <code>FeatureCollection</code> compute this function and return the result.</p>
+<p>The concept of mapping a function over elements in a collection can be represented graphically:</p>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/function-map.png" alt="Graphical representation of mapping a function over a collection and returning a collection as an output (source: [Wickham (2020)](https://adv-r.hadley.nz/index.html))." width="70%" />
+<p class="caption">
+Graphical representation of mapping a function over a collection and returning a collection as an output (source: <a href="https://adv-r.hadley.nz/index.html">Wickham (2020)</a>).
+</p>
+</div>
+<p><br></p>
+<p>You can think of each of the orange boxes as being an element in a collection and <code>f</code> is a function that can be applied to each element in the collection. Here, <code>f</code> is <code>bufferFunc()</code>. Mapping the function <code>f</code> over each element in the collection returns a collection where each element is the return value from passing an input element into <code>f</code> as an argument. <em>To avoid confusion, map here refers to the mathematical meaning of an “an operation that associates each element of a given set with one or more elements of a second set” and NOT representing objects in space <a href="https://adv-r.hadley.nz/index.html" target="_blank">Wickham (2020)</a>.</em></p>
+<p>If you execute the following code snippet you will map your buffer function <code>bufferFunc</code> over each <code>Feature</code> representing a university building in the <code>FeatureCollection</code> <code>perthUniBuildingOSM</code> and return a <code>FeatureCollection</code> stored in the variable <code>perthUniBuildingOSMBuffer</code>. Each <code>Feature</code> in <code>perthUniBuildingOSMBuffer</code> should contain a <code>Geometry</code> polygon object representing a 50 m buffer around a building.</p>
+<p><br></p>
+<pre class="js"><code>// map buffer function over university buildings feature collection
+var perthUniBuildingOSMBuffer = perthUniBuildingOSM.map(bufferFunc);
+Map.addLayer(perthUniBuildingOSMBuffer, {color: &#39;33FF00&#39;}, &#39;Uni building 50 m buffer&#39;);
+</code></pre>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/buffer-curtin.png" alt="50 m buffer (green) computed for buildings at Curtin University." width="85%" />
+<p class="caption">
+50 m buffer (green) computed for buildings at Curtin University.
+</p>
+</div>
+<hr>
+<p><br></p>
+</div>
+<div id="zonal-statistics" class="section level2">
+<h2>Zonal Statistics</h2>
+<p>You need to compute the area of tree cover and average LST surrounding each university building. You can use your buffered polygon <code>Geometry</code> objects to represent the area surrounding a building. Data representing tree cover and LST are in raster format. You can use zonal operations to summarise the raster tree cover or LST values that intersect with a building’s buffer.</p>
+<p>Data aggregation and summaries are computed in Google Earth Engine using reducers of the <code>ee.Reducer</code> class; again, the <code>ee</code> prefix indicates these reducer functions are executed on Google servers. You can find an overview of reducer functions in Google Earth Engine <a href="https://developers.google.com/earth-engine/guides/reducers_intro" target="_blank">here</a>. Reducers aggregate data over space, time, or another dimension in attribute data using an aggregation or summary function (e.g. mean, max, min, sum, standard deviation).</p>
+<p>You will need to the pass values for the pixels that intersect with a building’s buffer into a reducer function. There are <code>reduceRegion()</code> and <code>reduceRegions()</code> functions that can be used to summarise raster values that intersect with a specified region (i.e. a building’s buffer); these functions return one summary value per region. The use of a reducer function for a region is depicted below.</p>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/Reduce_region_diagram.png" alt="Reduce region (source: [Google Earth Engine developers guide](https://developers.google.com/earth-engine/guides/reducers_reduce_region))." width="85%" />
+<p class="caption">
+Reduce region (source: <a href="https://developers.google.com/earth-engine/guides/reducers_reduce_region">Google Earth Engine developers guide</a>).
+</p>
+</div>
+<p><br></p>
+<p>The following code snippet applies the <code>reduceRegions()</code> function to the <code>umTreePixelArea</code> <code>Image</code> where each pixel value is the area of tree cover in square metres. If you look at the arguments to <code>reduceRegions()</code> you will see that the regions to summarise raster values within were taken from the <code>perthUniBuildingOSMBuffer</code> <code>FeatureCollection</code>, a sum reducer function was use to aggregate the raster values, and the aggregation operation was performed on raster data with spatial resolution of 0.4 metres.</p>
+<p>The result of the <code>reduceRegions()</code> function is a <code>FeatureCollection</code> with the same number of <code>Features</code> as the input <code>FeatureCollection</code> but with a name:value pair in the <code>properties</code> object which contains the result of the aggregation of raster values within that region.</p>
+<p><br></p>
+<pre class="js"><code>// Zonal stats: reduceRegions to sum tree cover within building buffer
+var perthUniBuildingTree = uniTreePixelArea.reduceRegions({
+  collection: perthUniBuildingOSMBuffer,
+  reducer: ee.Reducer.sum(),
+  scale: 0.4,
+});
+
+// helper function to give result of reducerRegions an informative name
+perthUniBuildingTree = perthUniBuildingTree.map(function(feature){
+  return ee.Feature(feature.geometry(), { 
+    building: feature.get(&#39;building&#39;),
+    osm_id: feature.get(&#39;osm_id&#39;),
+    uni_name: feature.get(&#39;uni_name&#39;),
+    treeAreaSqM: feature.get(&#39;sum&#39;)
+  });
+});
+
+print(&#39;zonal stats - tree area:&#39;, perthUniBuildingTree);
+</code></pre>
+<p><br></p>
+<p>You can perform a similar <code>reduceRegions()</code> operation to compute average LST surrounding each university building. Inspect the results of the <code>reduceRegions()</code> in the <em>console</em>.</p>
+<p><br></p>
+<pre class="js"><code>// Zonal stats: reduceRegions to average LST within building buffer
+var perthUniBuildingLST = landsatLST.reduceRegions({
+  collection: perthUniBuildingOSMBuffer,
+  reducer: ee.Reducer.mean(),
+  scale: 0.4,
+});
+
+// helper function to give result of reducerRegions an informative name
+perthUniBuildingLST = perthUniBuildingLST.map(function(feature){
+  return ee.Feature(feature.geometry(), { 
+    building: feature.get(&#39;building&#39;),
+    osm_id: feature.get(&#39;osm_id&#39;),
+    uni_name: feature.get(&#39;uni_name&#39;),
+    lstK: feature.get(&#39;mean&#39;)
+  });
+});
+
+print(&#39;zonal stats - ave. LST:&#39;, perthUniBuildingLST);
+</code></pre>
+<p><br></p>
+<br>
+<details>
+<summary><b><em>What is different about the reducer used to compute average LST for a building’s buffer?</em></b></summary>
+<p>
+<br> Instead of using a sum reducer which sums up all the raster values that intersect with the region a mean reducer was used which computes the average of all raster values that intersect with a region - <code>ee.Reducer.mean()</code>.
+</p>
+</details>
+<p><br></p>
+<hr>
+<p><br></p>
+</div>
+<div id="join" class="section level2">
+<h2>Join</h2>
+<p>You now have four <code>FeatureCollection</code>s that contain information about university buildings:</p>
+<div class="well well-sm">
+<ul>
+<li><code>perthUniBuildingOSM</code>: the <code>Geometry</code> objects for university building footprints.</li>
+<li><code>perthUniBuildingOSMBuffer</code>: the <code>Geometry</code> objects for each university building’s polygon buffer.</li>
+<li><code>perthUniBuildingTree</code>: <code>Geometry</code> objects for each university building’s polygon buffer and a <code>properties</code> dictionary with the area of tree cover within each buffer.</li>
+<li><code>perthUniBuildingLST</code>: <code>Geometry</code> objects for each university building’s polygon buffer and a <code>properties</code> dictionary with the average LST within each buffer.</li>
+</ul>
+</div>
+<p>You need to combine these <code>FeatureCollection</code>s into one data set without duplicating common <code>Geometry</code> objects or name:value pairs of attributes (e.g. the buffer <code>Geometry</code> objects will be common for <code>perthUniBuildingOSMBuffer</code>, <code>perthUniBuildingTree</code>, <code>perthUniBuildingLST</code>).</p>
+<p>You can use join operations to combine elements in a <code>FeatureCollection</code> through matching observations based on a common variable in both data sets (if you are familiar with relational database management systems this common variable(s) is often called a key - in Google Earth Engine these variables are called <code>leftField</code> and <code>rightField</code>). In Google Earth Engine what constitutes a match between observations in two data sets is determined by an <code>ee.Filter()</code> object; an <code>ee.Filter.eq()</code> object would join the attributes for two <code>Feature</code>s if their values for the specified <code>leftField</code> and <code>rightField</code> are equivalent. The graphic below illustrates the concept of joining two data sets based upon matching values in a common variable.</p>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/inner-join.png" alt="Illustration of an inner join between two data sets based upon matching values in a common field (source: [Wickham and Grolemund (2017)](https://r4ds.had.co.nz))." width="70%" />
+<p class="caption">
+Illustration of an inner join between two data sets based upon matching values in a common field (source: <a href="https://r4ds.had.co.nz">Wickham and Grolemund (2017)</a>).
+</p>
+</div>
+<p><br></p>
+<p>The first step is to specify an <code>ee.Filter.equals()</code> object that will match values in a common field between two <code>Feature</code> objects. You can use the <code>osm_id</code> property which uniquely identifies a building object to match common buildings across <code>FeatureCollection</code>s.</p>
+<p><br></p>
+<pre class="js"><code>// Use an equals filter to specify how the collections match.
+var osmFilter = ee.Filter.equals({
+  leftField: &#39;osm_id&#39;,
+  rightField: &#39;osm_id&#39;
+});
+</code></pre>
+<p><br></p>
+<p>Next, you need to specify the type of join to apply. Here, you will use an inner join which keeps all attributes from both <code>FeatureCollection</code>s being joined where there are matching observations for the joining field <code>osm_id</code>.</p>
+<p><br></p>
+<pre class="js"><code>// Define the join.
+var innerJoin = ee.Join.inner(&#39;primary&#39;, &#39;secondary&#39;);
+
+// Apply the join.
+var lstTreeJoin = innerJoin.apply(perthUniBuildingTree, perthUniBuildingLST, osmFilter);
+print(&#39;joined:&#39;, lstTreeJoin);
+</code></pre>
+<p><br></p>
+<p>The matching <code>Feature</code>s from <code>perthUniBuildingTree</code> and <code>perthUniBuildingLST</code> are stored in a <code>primary</code> and <code>secondary</code> dictionary object of the output from the join. Execute the following helper function to add the name:value pairs in <code>secondary</code> to the <code>properties</code> in the <code>primary</code> dictionary. This puts all your name:value pairs in one <code>properties</code> dictionary and makes it easy for you to query, summarise, and visualise this data. You can inspect the tidied <code>FeatureCollection</code> in the <em>console</em> to see the output from this function.</p>
+<p><em>Not necessary, but it might be a good activity to consolidate understanding: work through the function in the below code snippet and describe what each line is doing. Things to focus on are what operations are being performed, on what, what is the output from an operation, and where is the output stored.</em></p>
+<p><br></p>
+<pre class="js"><code>// tidy up properties of output from join
+lstTreeJoin = lstTreeJoin.map(function(feature) {
+  var f1 = ee.Feature(feature.get(&#39;primary&#39;));
+  var f2 = ee.Feature(feature.get(&#39;secondary&#39;));
+  return f1.set(f2.toDictionary());
+});
+
+print(&#39;joined and tidied:&#39;, lstTreeJoin);
+</code></pre>
+<p><br></p>
+<hr>
+<p><br></p>
+</div>
+<div id="descriptive-statistics" class="section level2">
+<h2>Descriptive Statistics</h2>
+<p>You have now transformed your raw data (open street map buildings near Perth university campuses, a raster layer of tree cover, and a raster layer of LST) into a format where you can answer the question posed at the beginning of the lab: <em>Which Perth university has the greenest and coolest campus?</em></p>
+<p>Your <code>FeatureCollection</code>, <code>lstTreeJoin</code>, should contain 215 <code>Feature</code>s with each <code>Feature</code> comprising a <code>Geometry</code> object and a dictionary of <code>properties</code>: <code>building</code>, <code>osm_id</code>, <code>uni_name</code>, <code>lstK</code>, and <code>treeAreaSqM</code>. One approach to addressing the question is to perform a <em>group by</em> and <em>summarise</em> operation. You group your data by the <code>uni_name</code> property and then compute summary statistics for all observations within each group. Comparing the summary statistics between groups would indicate which university campus has buildings that are surrounded by more trees and cooler temperatures.</p>
+<p>You have already been introduced to <a href="https://developers.google.com/earth-engine/guides/reducers_intro" target="_blank">reducers</a> in Google Earth Engine which are used to aggregate values across space, time, or other dimensions. There are other useful reducer functions: <a href="https://developers.google.com/earth-engine/guides/reducers_reduce_columns" target=_blank"><code>reduceColumns()</code></a> aggregates values in <code>FeatureCollection</code> <code>properties</code> and a <a href="https://developers.google.com/earth-engine/guides/reducers_grouping" target="_blank"><code>reducer.group()</code></a> applies summary operations to groups of observations.</p>
+<p>The following code snippet demonstrates how to apply <code>reduceColumns()</code> to the <code>FeatureCollection</code> <code>lstTreeJoin</code>. Let’s go through this snippet line by line:</p>
+<p>The <code>reduceColumns()</code> function takes a:</p>
+<ul>
+<li><code>selectors</code> parameter which is a list of <code>properties</code> that the reducer will group by and summarise values for.</li>
+<li>a <code>reducer</code> parameter which specifies the type of reducer function that will be applied to the <code>properties</code> specified in the <code>selectors</code> argument.</li>
+<li>You pass a mean reducer <code>ee.Reducer.mean()</code> as the reducer argument into <code>reduceColumns()</code> indicating you want to aggregate values using the mean function here.</li>
+<li>You specify <code>repeat(2)</code> so you apply this reducer twice (one reducer for <code>'treeAreaSqM'</code> and one reducer for <code>'lstK'</code>).</li>
+<li>Finally, you use <code>.group({.......})</code> to define how to group <code>Feature</code>s in your <code>FeatureCollection</code> before reducing their values. <code>groupField</code> specifies the grouping property in <code>selectors</code> (index location 2 corresponds to the third element in the list - <code>uni_name</code>). <code>groupName</code> is the name of the property for the grouping variable in the output.</li>
+</ul>
+<p><br></p>
+<pre class="js"><code>// group by and summarise tree area and LST within each university campus
+var campusSummaryStats = lstTreeJoin.reduceColumns({
+    selectors: [&#39;treeAreaSqM&#39;, &#39;lstK&#39;, &#39;uni_name&#39;],
+    reducer: ee.Reducer.mean().repeat(2).group({
+      groupField: 2,
+      groupName: &#39;uni_name&#39;
+    })
+});
+
+print(campusSummaryStats);</code></pre>
+<p><br></p>
+<p>If you inspect the <code>print()</code> of <code>campusSummaryStats</code> in the <em>console</em> you will see that it has returned a dictionary object which contains a list of dictionary objects. This is quite an unfriendly data structure for storing and querying the data it contains.</p>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/unfriendly-data-structure.png" alt="Structure of data returned by grouped `reduceColumns()`." width="85%" />
+<p class="caption">
+Structure of data returned by grouped <code>reduceColumns()</code>.
+</p>
+</div>
+<p><br></p>
+<p>The following code snippet tidies up this data returning a <code>FeatureCollection</code> where each <code>Feature</code> has a null <code>geometry</code> property and a dictionary of <code>properties</code>: <code>uni_name</code>, <code>lstK</code>, and <code>treeAreaSqM</code>.</p>
+<p><br></p>
+<p><em>Again, it is not necessary to understand what is going on here but working through it line by line would be a good extra exercise to consolidate understanding of using Google Earth Engine and programmatically transforming data into more friendly formats.</em></p>
+<pre class="js"><code>// tidy up campus summary stats
+var campusSummaryStats = ee.Dictionary(campusSummaryStats).values();
+var campusSummaryStatsFlat = ee.List(campusSummaryStats).flatten();
+
+var tidySummaryStats = function(listElement) {
+  var groups = ee.Dictionary();
+  var stats = ee.Dictionary(listElement).get(&#39;mean&#39;);
+  var treeArea = ee.List(stats).get(0);
+  var temp = ee.List(stats).get(1);
+  var uni = ee.Dictionary(listElement).get(&#39;uni_name&#39;);
+  groups = groups.set(&#39;uni_name&#39;, uni)
+    .set(&#39;treeAreaSqM&#39;, treeArea)
+    .set(&#39;lstK&#39;, temp);
+  var groupsFeat = ee.Feature(null, groups); 
+  return groupsFeat;
+  
+};
+
+var tidyCampusStats = campusSummaryStatsFlat.map(tidySummaryStats);
+tidyCampusStats = ee.FeatureCollection(tidyCampusStats);
+print(&#39;tidy campus stats:&#39;, tidyCampusStats);
+</code></pre>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/tidy-data-structure.png" alt="Tidier data structure for storing the results of grouped `reduceColumns()`." width="85%" />
+<p class="caption">
+Tidier data structure for storing the results of grouped <code>reduceColumns()</code>.
+</p>
+</div>
+<p><br></p>
+<p>Let’s look at the results. You should have <code>print()</code>ed <code>tidyCampusStats</code> onto the <em>console</em>. The <code>properties</code> object for each <code>Feature</code> stores the average area of tree canopy cover and LST within a 50 m buffer of buildings on each university campus. The figure above shows that, on average, buildings on Curtin University’s Bentley Campus have an LST of 307.47 K. Look at the values reported for the other university campuses.</p>
+<hr>
+<p><br></p>
+</div>
+<div id="visualisation" class="section level2">
+<h2>Visualisation</h2>
+<p>To make comparisons between campuses in terms of their greenness and coolness, you can look up the values in the <em>console</em> for the <code>properties</code> object storing the results of the group by and summarise operations. However, this is not a visually friendly way to inspect your data, identify patterns, or visualise relationships between variables. Google Earth Engine provides a range of tools to generate <a href="https://developers.google.com/earth-engine/guides/charts" target="_blank">interactive charts</a> from spatial data.</p>
+<p>You can create chart objects that can be rendered in the <em>console</em> to visualise your data. The <code>ui.Chart.feature.byFeature()</code> function creates a chart from a set of <code>Feature</code>s in a <code>FeatureCollection</code> plotting each <code>Feature</code> on the X-axis and the value for a <code>Feature</code>’s property on the Y-axis.</p>
+<p>The first argument to the <code>ui.Chart.feature.byFeature()</code> function is the <code>FeatureCollection</code> - <code>tidyCampusStats</code> here. The second argument to <code>ui.Chart.feature.byFeature()</code> is the label property for <code>Feature</code>s plotted on the X-axis - <code>'uni_name'</code> here. The final argument is a list object of properties whose values are plotted on the Y-axis - <code>['treeAreaSqM']</code> here.</p>
+<p>Use the <code>.setChartType()</code> method to specify the type of chart to create. View possible charts in this <a href="https://developers.google.com/chart/interactive/docs/gallery" target="_blank">gallery</a>. A dictionary of name:value pairs is passed into the <code>setOptions()</code> method to control various stylistic elements of the chart (e.g. chart title, axis title).</p>
+<p>To render your chart in the <em>console</em> use the <code>print()</code> function.</p>
+<p><br></p>
+<pre class="js"><code>// Make a chart by feature
+var treeColumnChart =
+  ui.Chart.feature.byFeature(tidyCampusStats, &#39;uni_name&#39;, [&#39;treeAreaSqM&#39;])
+    .setChartType(&#39;ColumnChart&#39;)
+    .setSeriesNames([&#39;&#39;])
+    .setOptions({
+      title: &#39;Average tree cover near university buildings (SqM)&#39;,
+      hAxis: {title: &#39;Uni. Campus&#39;},
+      vAxis: {title: &#39;Tree Cover (SqM)&#39;}
+    });
+    
+print(treeColumnChart);
+    
+    
+// Make a chart by feature.
+var lstColumnChart =
+  ui.Chart.feature.byFeature(tidyCampusStats, &#39;uni_name&#39;, [&#39;lstK&#39;])
+    .setChartType(&#39;ColumnChart&#39;)
+    .setSeriesNames([&#39;&#39;])
+    .setOptions({
+      title: &#39;Average LST near university buildings (K)&#39;,
+      hAxis: {title: &#39;Uni. Campus&#39;},
+      vAxis: {title: &#39;LST (K)&#39;}
+    });
+    
+print(lstColumnChart);  
+</code></pre>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/tree-chart.png" alt="Average area of tree cover within a 50 m buffer of buildings on university campuses." width="85%" />
+<p class="caption">
+Average area of tree cover within a 50 m buffer of buildings on university campuses.
+</p>
+</div>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/lst-chart.png" alt="Average LST (K) within a 50 m buffer of buildings on university campuses." width="85%" />
+<p class="caption">
+Average LST (K) within a 50 m buffer of buildings on university campuses.
+</p>
+</div>
+<p><br></p>
+<p>The <code>ui.Chart.feature.groups()</code> function creates a chart from a set of <code>Feature</code>s in a <code>FeatureCollection</code> plotting values for <code>Feature</code> properties on the X-axis and Y-axis. This chart can be used to visualise the relationships between, and variation within, variables stored in <code>FeatureCollection</code> data.</p>
+<p>The first argument to the <code>ui.Chart.feature.groups()</code> function is the <code>FeatureCollection</code> - <code>lstTreeJoin</code> here as we want to visualise data for individual univeristy buildings. The second argument to <code>ui.Chart.feature.groups()</code> is property to be plotted on the X-axis - <code>'treeAreaSqM'</code> here. The third argument to <code>ui.Chart.feature.groups()</code> is property to be plotted on the Y-axis - <code>'lstK'</code> here. The final argument is the series property used to determine groups within the data - <code>'uni_name'</code> here (setting this argument will mean each University’s data points will be rendered in different colours).</p>
+<p><br></p>
+<pre class="js"><code>// Make a scatter chart
+var tempVsTree =
+  ui.Chart.feature.groups(lstTreeJoin, &#39;treeAreaSqM&#39;, &#39;lstK&#39;, &#39;uni_name&#39;)
+    .setChartType(&#39;ScatterChart&#39;)
+    .setOptions({
+      title: &#39;&#39;,
+      hAxis: {title: &#39;Building neighbourhood tree cover (SqM)&#39;},
+      vAxis: {title: &#39;Temperature (K)&#39;}
+    });
+
+print(tempVsTree);
+</code></pre>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/lst-tree-scatter.png" alt="Scatter chart showing the relationship between average LST (K) and tree cover (SqM) within a 50 m buffer of buildings on university campuses." width="85%" />
+<p class="caption">
+Scatter chart showing the relationship between average LST (K) and tree cover (SqM) within a 50 m buffer of buildings on university campuses.
+</p>
+</div>
+<hr>
+<p><br></p>
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;">
+
+</div>
+<footer>
+<p>
+Advanced GIS and Remote Sensing
+</p>
+</footer>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
