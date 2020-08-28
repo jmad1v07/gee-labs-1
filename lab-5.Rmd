@@ -180,7 +180,6 @@ print(l8ImColl);
   88 `Image`s
   
   ```{js, echo=TRUE, eval=FALSE}
-
 // Filter Image Collection for 2018
 var l8ImColl2017_2018 = l8ImColl
   .filterBounds(ee.Geometry.Point(115.81237940701908,-31.9783567043356))
@@ -314,11 +313,11 @@ knitr::include_graphics("img/buffer-curtin.png")
 
 ## Zonal Statistics 
 
-You need to compute the area of tree cover and average LST surrounding each university building. You can use your buffered polygon `Geometry` objects to represent the area surrounding a building. Data representing tree cover and LST are in raster format. Zonal operations can be used to summarise the raster tree cover or LST values that intersect with a building's buffer. 
+You need to compute the area of tree cover and average LST surrounding each university building. You can use your buffered polygon `Geometry` objects to represent the area surrounding a building. Tree cover and LST data are in raster format. Zonal operations can be used to summarise the raster tree cover or LST values that intersect with a building's buffer. 
 
-Data aggregation and summaries are computed in Google Earth Engine using reducers of the `ee.Reducer` class; again, the `ee` prefix indicates these reducer functions are executed on Google servers. You can find an overview of reducer functions in Google Earth Engine <a href="https://developers.google.com/earth-engine/guides/reducers_intro" target="_blank">here</a>. Reducers aggregate data over space, time, or another dimension in attribute data using an aggregation or summary function (e.g. mean, max, min, sum, standard deviation). 
+Data aggregation and summaries are computed in Google Earth Engine using reducer objects of the `ee.Reducer` class; again, the `ee` prefix indicates that these reducer functions are executed on Google servers. You can find an overview of reducer functions in Google Earth Engine <a href="https://developers.google.com/earth-engine/guides/reducers_intro" target="_blank">here</a>. Reducers aggregate data over space, time, or another dimension in attribute data using an aggregation or summary function (e.g. mean, max, min, sum, standard deviation). 
 
-You will need to the pass values for the pixels that intersect with a building's buffer into a reducer function. There are `reduceRegion()` and `reduceRegions()` functions that can be used to summarise raster values that intersect with a specified region (i.e. a building's buffer); these functions return one summary value per region. A schematic illustrating the use of a reducer function for a region is depicted below.
+You the pass values for the pixels that intersect with a building's buffer into a reducer function. There are `reduceRegion()` and `reduceRegions()` functions that can be used to summarise raster values that intersect with a specified region (i.e. a building's buffer); these functions return one summary value per region. A schematic illustrating a reducer function for a region is depicted below.
 
 <br> 
 
@@ -329,21 +328,21 @@ knitr::include_graphics("img/Reduce_region_diagram.png")
 
 <br>
 
-The following code snippet applies the `reduceRegions()` function to the `umTreePixelArea` `Image` where each pixel value is the area of tree cover in square metres. If you look at the arguments to `reduceRegions()` you will see that the regions over which raster values are summarised are taken from the `perthUniBuildingOSMBuffer` `FeatureCollection`, a sum reducer function was use to aggregate the raster values, and the aggregation operation was performed on raster data with a spatial resolution of 0.4 metres. 
+The following code snippet applies the `reduceRegions()` function to the `umTreePixelArea` `Image` where each pixel value is the area of tree cover in square metres. If you look at the arguments to `reduceRegions()` you will see that the regions over which raster values are summarised are taken from the `perthUniBuildingOSMBuffer` `FeatureCollection`, a sum reducer function was use to summarise the raster values, and the summary operation was performed on raster data with a spatial resolution of 0.4 metres. 
 
-The result of the `reduceRegions()` function is a `FeatureCollection` with the same number of `Features` as the input `FeatureCollection` but with a name:value pair in the `properties` object which contains the result of the aggregation of raster values within that region.
+The result of the `reduceRegions()` function is a `FeatureCollection` with the same number of `Features` as the input `FeatureCollection` but with a name:value pair in the `properties` object which contains the result of the summary of raster values within that region.
 
 <br>
 
 ```{js, echo=TRUE, eval=FALSE}
-// Zonal stats: reduceRegions to sum tree cover within building buffer
+// Zonal stats: reduceRegions to sum tree cover within a building's buffer
 var perthUniBuildingTree = uniTreePixelArea.reduceRegions({
   collection: perthUniBuildingOSMBuffer,
   reducer: ee.Reducer.sum(),
   scale: 0.4,
 });
 
-// helper function to give result of reducerRegions an informative name
+// helper function to give result of reduceRegions an informative name
 perthUniBuildingTree = perthUniBuildingTree.map(function(feature){
   return ee.Feature(feature.geometry(), { 
     building: feature.get('building'),
@@ -364,14 +363,14 @@ You can perform a similar `reduceRegions()` operation to compute average LST sur
 <br>
 
 ```{js, echo=TRUE, eval=FALSE}
-// Zonal stats: reduceRegions to average LST within building buffer
+// Zonal stats: reduceRegions to average LST within a building's buffer
 var perthUniBuildingLST = landsatLST.reduceRegions({
   collection: perthUniBuildingOSMBuffer,
   reducer: ee.Reducer.mean(),
   scale: 0.4,
 });
 
-// helper function to give result of reducerRegions an informative name
+// helper function to give result of reduceRegions an informative name
 perthUniBuildingLST = perthUniBuildingLST.map(function(feature){
   return ee.Feature(feature.geometry(), { 
     building: feature.get('building'),
@@ -415,7 +414,7 @@ You now have four `FeatureCollection`s that contain information about university
 
 You need to combine these `FeatureCollection`s into one data set without duplicating common `Geometry` objects or name:value pairs of attributes (e.g. the buffer `Geometry` objects will be common for `perthUniBuildingOSMBuffer`, `perthUniBuildingTree`, `perthUniBuildingLST`). 
 
-You can use join operations to combine elements in a `FeatureCollection` through matching observations based on a common variable in both data sets (if you are familiar with relational database management systems this common variable(s) is often called a key - in Google Earth Engine these variables are called `leftField` and `rightField`). In Google Earth Engine what constitutes a match between observations in two data sets is determined by an `ee.Filter()` object; an `ee.Filter.eq()` object would join the attributes for two `Feature`s if their values for the specified `leftField` and `rightField` are equivalent. The graphic below illustrates the concept of joining two data sets based upon matching values in a common variable.
+You can use join operations to combine elements in a `FeatureCollection` through matching observations based on a common variable in both data sets (if you are familiar with relational database management systems this common variable(s) is often called a key - in Google Earth Engine these variables are called `leftField` and `rightField`). In Google Earth Engine what constitutes a match, between observations in two data sets, is determined by an `ee.Filter()` object; an `ee.Filter.eq()` object would join the attributes for two `Feature`s if their values for the specified `leftField` and `rightField` are equivalent. The graphic below illustrates the concept of joining two data sets based upon matching values in a common variable.
 
 <br>
 
@@ -482,21 +481,21 @@ print('joined and tidied:', lstTreeJoin);
 
 ## Descriptive Statistics
 
-You have now transformed your raw data (open street map buildings near Perth university campuses, a raster layer of tree cover, and a raster layer of LST) into a format where you can answer the question posed at the beginning of the lab: *Which Perth university has the greenest and coolest campus?*
+You have now transformed your raw data (open street map buildings near Perth university campuses, a raster layer of tree cover, and a raster layer of LST) into a format where you can answer the question at the beginning of the lab: *Which Perth university has the greenest and coolest campus?*
 
-Your `FeatureCollection`, `lstTreeJoin`, should contain 215 `Feature`s with each `Feature` comprising a `Geometry` object and a dictionary of `properties`: `building`, `osm_id`, `uni_name`, `lstK`, and `treeAreaSqM`. One approach to addressing the question is to perform a *group by* and *summarise* operation. You group your data by the `uni_name` property and then compute summary statistics for all observations within each group. Comparing the summary statistics between groups would indicate which university campus has buildings that are surrounded by more trees and cooler temperatures. 
+Your `FeatureCollection`, `lstTreeJoin`, should contain 215 `Feature`s with each `Feature` comprising a `Geometry` object and a dictionary of `properties`: `building`, `osm_id`, `uni_name`, `lstK`, and `treeAreaSqM`. One approach to addressing the question is to perform a *group by* and *summarise* operation. Group your data by the `uni_name` property and compute summary statistics for all observations within each group. Comparing the summary statistics between groups would indicate which university campus has buildings that are surrounded by more trees and cooler temperatures. 
 
-You have already been introduced to <a href="https://developers.google.com/earth-engine/guides/reducers_intro" target="_blank">reducers</a> in Google Earth Engine which are used to aggregate values across space, time, or other dimensions. There are other useful reducer functions: <a href="https://developers.google.com/earth-engine/guides/reducers_reduce_columns" target=_blank">`reduceColumns()`</a> aggregates values in `FeatureCollection` `properties` and a <a href="https://developers.google.com/earth-engine/guides/reducers_grouping" target="_blank">`reducer.group()`</a> applies summary operations to groups of observations. 
+You have already used <a href="https://developers.google.com/earth-engine/guides/reducers_intro" target="_blank">reducers</a> in Google Earth Engine to aggregate values across space, time, or other dimensions. There are other useful reducer functions: <a href="https://developers.google.com/earth-engine/guides/reducers_reduce_columns" target=_blank">`reduceColumns()`</a> aggregates values in `FeatureCollection` `properties` and a <a href="https://developers.google.com/earth-engine/guides/reducers_grouping" target="_blank">`reducer.group()`</a> applies summary operations to groups of observations. 
 
 The following code snippet demonstrates how to apply `reduceColumns()` to the `FeatureCollection` `lstTreeJoin`. Let's go through this snippet line by line:
 
-The `reduceColumns()` function takes a:
+The `reduceColumns()` function has a:
 
 * `selectors` parameter which is a list of `properties` that the reducer will group by and summarise values for.
 * a `reducer` parameter which specifies the type of reducer function that will be applied to the `properties` specified in the `selectors` argument. 
-* You pass a mean reducer `ee.Reducer.mean()` as the reducer argument into `reduceColumns()` indicating you want to aggregate values using the mean function here. 
-* You specify `repeat(2)` so you apply this reducer twice (one reducer for `'treeAreaSqM'` and one reducer for `'lstK'`). 
-* Finally, you use `.group({.......})` to define how to group `Feature`s in your `FeatureCollection` before reducing their values. `groupField` specifies the grouping property in `selectors` (index location 2 corresponds to the third element in the list - `uni_name`). `groupName` is the name of the property for the grouping variable in the output.
+* pass a mean reducer `ee.Reducer.mean()` as the reducer argument into `reduceColumns()` indicating you want to aggregate values using the mean function. 
+* specify `repeat(2)` to apply this reducer twice (one reducer for `'treeAreaSqM'` and one reducer for `'lstK'`). 
+* use `.group({.......})` to define how to group `Feature`s in your `FeatureCollection` before reducing their values. `groupField` specifies the grouping property in `selectors` (index location 2 corresponds to the third element in the list - `uni_name`). `groupName` is the name of the property for the grouping variable in the output.
 
 <br>
 
@@ -511,11 +510,12 @@ var campusSummaryStats = lstTreeJoin.reduceColumns({
 });
 
 print(campusSummaryStats);
+
 ```
 
 <br>
 
-If you inspect the `print()` of `campusSummaryStats` in the *console* you will see that it has returned a dictionary object which contains a list of dictionary objects. This is quite an unfriendly data structure for storing and querying the data it contains. 
+If you inspect the `print()` of `campusSummaryStats` in the *console* you will see that it returned a dictionary object which contains a list of dictionary objects. This is an unfriendly data structure for storing and querying the data it contains. 
 
 <br>
 
@@ -530,7 +530,7 @@ The following code snippet tidies up this data returning a `FeatureCollection` w
 
 <br>
 
-*Again, it is not necessary to understand what is going on here but working through it line by line would be a good extra exercise to consolidate understanding of using Google Earth Engine and programmatically transforming data into more friendly formats.*
+*Again, it is not necessary to understand what is going on here but working through it line by line would be a good extra exercise to consolidate understanding of programmatically transforming data into more friendly formats.*
 
 ```{js, echo=TRUE, eval=FALSE}
 // tidy up campus summary stats
@@ -573,9 +573,9 @@ Let's look at the results. You should have `print()`ed `tidyCampusStats` onto th
 
 ## Visualisation
 
-To make comparisons between campuses in terms of their greenness and coolness, you can look up the values in the *console* for the `properties` object storing the results of the group by and summarise operations. However, this is not a visually friendly way to inspect your data, identify patterns, or visualise relationships between variables. Google Earth Engine provides a range of tools to generate <a href="https://developers.google.com/earth-engine/guides/charts" target="_blank">interactive charts</a> from spatial data. 
+To make comparisons between campuses in terms of their greenness and coolness, you can look up the values in the *console* for the `properties` object storing the results of the group by and summarise operations. However, this is not a visually friendly way to inspect your data, identify patterns, or detect relationships between variables. Google Earth Engine provides a range of tools to generate <a href="https://developers.google.com/earth-engine/guides/charts" target="_blank">interactive charts</a> from spatial data. 
 
-You can create chart objects that can be rendered in the *console* to visualise your data. The `ui.Chart.feature.byFeature()` function creates a chart from a set of `Feature`s in a `FeatureCollection` plotting each `Feature` on the X-axis and the value for a `Feature`'s property on the Y-axis. 
+Chart objects can be rendered in the *console* to visualise your data. The `ui.Chart.feature.byFeature()` function creates a chart from a set of `Feature`s in a `FeatureCollection` plotting each `Feature` on the X-axis and the value for a `Feature`'s property on the Y-axis. 
 
 The first argument to the `ui.Chart.feature.byFeature()` function is the `FeatureCollection` - `tidyCampusStats` here. The second argument to `ui.Chart.feature.byFeature()` is the label property for `Feature`s plotted on the X-axis - `'uni_name'` here. The final argument is a list object of properties whose values are plotted on the Y-axis - `['treeAreaSqM']` here. 
 
@@ -631,9 +631,9 @@ knitr::include_graphics("img/lst-chart.png")
 
 <br>
 
-The `ui.Chart.feature.groups()` function creates a chart from a set of `Feature`s in a `FeatureCollection` plotting values for `Feature` properties on the X-axis and Y-axis. This chart can be used to visualise the relationships between, and variation within, variables stored in `FeatureCollection` data. 
+The `ui.Chart.feature.groups()` function creates a chart from a set of `Feature`s in a `FeatureCollection` plotting values for `Feature` properties on the X-axis and Y-axis. This chart can be used to visualise the relationships between variables stored in `FeatureCollection` data. 
 
-The first argument to the `ui.Chart.feature.groups()` function is the `FeatureCollection` - `lstTreeJoin` here as we want to visualise data for individual univeristy buildings. The second argument to `ui.Chart.feature.groups()` is property to be plotted on the X-axis - `'treeAreaSqM'` here. The third argument to `ui.Chart.feature.groups()` is property to be plotted on the Y-axis - `'lstK'` here. The final argument is the series property used to determine groups within the data - `'uni_name'` here (setting this argument will mean each University's data points will be rendered in different colours). 
+The first argument to the `ui.Chart.feature.groups()` function is the `FeatureCollection` - `lstTreeJoin` here as we want to visualise data for individual univeristy buildings. The second argument to `ui.Chart.feature.groups()` is the property to be plotted on the X-axis - `'treeAreaSqM'` here. The third argument to `ui.Chart.feature.groups()` is the property to be plotted on the Y-axis - `'lstK'` here. The final argument is the series property used to determine groups within the data - `'uni_name'` here (setting this argument will mean each University's data points will be rendered in different colours). 
 
 <br>
 
