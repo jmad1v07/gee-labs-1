@@ -22,26 +22,26 @@ This lab will introduce data transformation and manipulation operations for vect
 
 <div class="well well-sm">
 
-<b>Quick recap:</b> In Google Earth Engine, vector data is represented using `Feature` objects which include a `geometry` property storing a `Geometry` object describing the location, extent, and shape of the `Feature` and a `properties` dictionary object of attribute information describing non-spatial characteristics of the data. A collection of `Feature`s in Google Earth Engine is a `FeatureCollection`; for example, if each weather station is represented as a `Feature` then a group of weather stations could be stored as a `FeatureCollection` object. 
+<b>Quick recap:</b> In Google Earth Engine, vector data is represented using `Feature` objects which include a `geometry` property storing a `Geometry` object that describes the location, extent, and shape of the `Feature` and a `properties` dictionary object of attribute information describing non-spatial characteristics of the data. A collection of `Feature`s in Google Earth Engine is a `FeatureCollection`; for example, if each weather station is represented as a `Feature` then a group of weather stations could be stored as a `FeatureCollection` object. 
 
 </div>
 
-Data transformation operations transform data into a format ready for subsequent analysis. For non-spatial data, common data transformation operations include filtering and subsetting observations or variables, creating new variables through applying functions to existing variables, joining and combining data, and summarising or aggregating data. For example, consider the following data transformation operations that could be applied to hypothetical climate data: 
+Data transformation operations transform data into a format ready for subsequent analysis. For non-spatial data, common data transformation operations include filtering and subsetting observations, creating new variables through applying functions to existing variables, joining and combining data, and summarising or aggregating data. For example, consider the following data transformation operations that could be applied to climate data: 
 
 <div class="well well-sm">
 
-1. *<b>Filter and subset:</b>* filter the data for all observations that occurred within a particular time-period (e.g. since the year 2010) and select a variable of interest (e.g. temperature in Fahrenheit). 
+1. *<b>Filter and subset:</b>* filter the data for all observations that occurred within a time-period (e.g. since the year 2010) and select a variable of interest (e.g. temperature in Fahrenheit). 
 2. *<b>Mutate - create a new variable:</b>* create a new variable (temperature in Celsius) by converting the observations of temperature in Fahrenheit using the equation: $T_{(C^{o})} = (T_{(F^{o})} - 32) * 5/9$. 
 3. *<b>Join and combine:</b>*  join your temperature data to precipitation data (e.g. joining on weather station ID and date and time of weather observation). 
 4. *<b>Summarise:</b>* summarise your data by computing the average daily temperature and precipitation for each weather station.
 
 </div>
 
-These data transformation operations can be applied to the non-spatial attribute information associated with spatial `Feature` objects. However, most data transformation operations have a spatial equivalent. For example,
+Data transformation operations can be applied to the non-spatial attribute information associated with spatial `Feature` objects. However, most data transformation operations have a spatial equivalent. For example,
 
 <div class="well well-sm">
 
-1. *<b>Filter and subset:</b>* a `FeatureCollection` could be filtered based on geographic location and topological relations (e.g. selecting only weather stations that intersect with the Western Australia extent or only weather stations contained within a 10,000 km radius from Perth).
+1. *<b>Filter and subset:</b>* filter a `FeatureCollection` based on geographic location and topological relations (e.g. selecting only weather stations that intersect with the Western Australia extent or only weather stations contained within a 10,000 km radius from Perth).
 2. *<b>Mutate - create a new variable:</b>* the `Geometry` objects can be converted into spatial objects with new shapes or extents (e.g. through applying a 1 km buffer operation). 
 3. *<b>Join and combine:</b>* spatial data can be combined through spatial join operations (e.g. join weather station data with Statistical Area Level 1 (SA1) polygon geometries based on the intersection between a weather station's location and the extent of the SA1)
 3. *<b>Join and combine AND mutate - create a new variable:</b>* vector data can be combined with raster data via zonal statistics (e.g. computing the area of each land cover class within a polygon `Geometry`). 
@@ -53,9 +53,9 @@ Typically, the data transformation process will include both non-spatial operati
 
 ### Which Perth university has the greenest and coolest campus?
 
-You will start with a `FeatureCollection` containing `Feature` objects which represent the footprint of a building (a polygon `Geometry` object) and attribute information indicating if the building is part of a university (the `building` property), the name of the university (the `uni_name` property), and a building ID (the `osm_id` property). The building footprint data are from <a href="https://wiki.openstreetmap.org/wiki/API_v0.6" target="_blank">open street map</a>  and include buildings from the University of Western Australia (UWA) Crawley Campus, Curtin University Bentley Campus, Murdoch University Perth (Murdoch) Campus, Edith Cowan University (ECU) Mount Lawley Campus, and some non-university buildings near to each campus. 
+You will start with a `FeatureCollection` containing `Feature` objects which represent the footprint of a building (a polygon `Geometry` object) and attribute information indicating if the building is part of a university (the `building` property), the name of the university (the `uni_name` property), and a building ID (the `osm_id` property). The building footprint data are from <a href="https://wiki.openstreetmap.org/wiki/API_v0.6" target="_blank">Open Street Map</a>  and include buildings from the University of Western Australia (UWA) Crawley Campus, Curtin University Bentley Campus, Murdoch University Perth (Murdoch) Campus, Edith Cowan University (ECU) Mount Lawley Campus, and some non-university buildings near to each campus. 
 
-You will use the area of tree canopy within a certain distance of a building as an indicator of *greenness*; the tree canopy data is in raster format and derived from the Urban Monitor data <a href="https://urbanmonitor-beta.landgate.wa.gov.au/content/app/urban-monitor-metadata-final-report.pdf" target="_blank">(Caccetta, 2012)</a>.  
+You will use the area of tree canopy cover within a certain distance of a building as an indicator of *greenness*; the tree canopy data is in raster format and derived from the Urban Monitor data <a href="https://urbanmonitor-beta.landgate.wa.gov.au/content/app/urban-monitor-metadata-final-report.pdf" target="_blank">(Caccetta, 2012)</a>.  
 
 The temperature data is also in raster format and is a measure of average summer (December, January, and February) land surface temperature (LST) derived from Landsat 8 <a href="https://ieeexplore.ieee.org/document/6784508" target="_blank">(Jiménez-Muñoz et al. 2014)</a>. 
 
@@ -94,7 +94,7 @@ Date: XX-XX-XXXX
 
 ### Data Import
 
-Execute the following code to import the data. The OSM buildings near Perth university campuses are a `FeatureCollection` of building `Feature` objects. The Urban Monitor tree cover data are clips of the area surrounding each university campus from a larger raster layer. Import these four clipped rasters as `Image` objects and `mosaic()` them into one `Image`. Each 40 cm pixel in the `uniTree` `Image` has a value 1 if it covers a tree canopy and a masked no data value if not.  
+Execute the following code to import the data. The OSM buildings near Perth university campuses are a `FeatureCollection` of building `Feature` objects. The Urban Monitor tree cover data are clips of the area surrounding each university campus from a larger raster layer. Import these four clipped rasters as `Image` objects and `mosaic()` them into one `Image`. Each 40 cm pixel in the `uniTree` `Image` has a value 1 if it covers a tree canopy and a masked no data value if not. The `multiply(ee.Image.pixelArea())` operation is converting the pixel value of one into the area of the pixel in square metres.   
 
 <br>
 
@@ -137,7 +137,7 @@ knitr::include_graphics('img/osm-building-footprint-uwa.png')
 
 <br>
 <details>
-  <summary><b>*Can you visualise the `uniTree` `Image` on the map display? Look back to lab 4 for examples of how to visualise the Urban Monitor data and for appropriate colour schemes to use.*</b></summary>
+  <summary><b>*Can you visualise the `uniTree` `Image` on the map display? Look back to lab 4 for examples of how to visualise the Urban Monitor data and for appropriate colour schemes.*</b></summary>
   <p>
   <br>
   ```{js, echo=TRUE, eval=FALSE}
@@ -202,8 +202,7 @@ print(l8ImColl2017_2018);
 </details>
 <br>
 
-
-You will often want filter data using attributes for which there are not in-built functions. Google Earth Engine allows you to specify custom `filter()` functions. The following code snippet demonstrates how you can create your own filter to subset only `Feature`s in the `perthBuildingOSM` `FeatureCollection` whose `building` property value is `'university'`. If you execute the following code snippet and inspect the filtered `FeatureCollection` printed in the *console* and the cyan building footprints on the map display you should see that `perthUniBuildingOSM` contains fewer `Feature`s than `perthBuildingOSM`. 
+You will often want filter data using attributes for which there are not in-built functions. Google Earth Engine allows you to specify custom `filter()` functions. The following code snippet demonstrates how to create your own filter to subset `Feature`s in the `perthBuildingOSM` `FeatureCollection` whose `building` property value is `'university'`. If you execute the following code snippet and inspect the filtered `FeatureCollection` in the *console* and the cyan building footprints on the map display you should see that `perthUniBuildingOSM` contains fewer `Feature`s than `perthBuildingOSM`. 
 
 <br>
 
@@ -217,7 +216,7 @@ Map.addLayer(perthUniBuildingOSM, {color: '000000'}, 'OSM university buildings')
 
 <br>
 
-Let's quickly unpack the `filter()` function. The `filter()` function takes an `ee.Filter.eq(name, value)` object as an argument. The `ee.Filter.eq()` object is constructed by specifying a name and value which correspond to the name of the `property` and a value that `property` should take for filter's comparison operation to evaluate to true. You will also note that the `ee.Filter.eq()` object is prefixed with `ee`. This indicates that you will be applying the filter's comparison operation to objects that are located on Google servers. 
+Let's quickly unpack the `filter()` function. The `filter()` function takes an `ee.Filter.eq(name, value)` object as an argument. The `ee.Filter.eq()` object is constructed by specifying a name and value which correspond to the name of the property and a value that property should take for a filter's comparison operation to evaluate to true. You will also note that the `ee.Filter.eq()` object is prefixed with `ee`. This indicates that you will be applying the filter's comparison operation to objects that are located on Google servers. 
 
 <br>
 <details>
@@ -236,15 +235,15 @@ Let's quickly unpack the `filter()` function. The `filter()` function takes an `
 
 To compute the area of tree cover or average LST near each university building you need to define the area which corresponds to a building's surrounding neighbourhood. You can compute this area by applying a geometric `buffer()` operation to each building `Feature`'s `Geometry` object. 
 
-The buffer operation is a unary geometric operation; it is a unary geometric operation as it is applied to just one geometric object. Along with the buffer operation, examples of unary operations include computing the centroid of a polygon object, simplifying geometries, or shifting or rescaling a geometry <a href="https://geocompr.robinlovelace.net/geometric-operations.html" target="_blank">(Lovelace et al. 2020)</a>. In contrast, binary geometry operations modify a geometry based upon another; for example, clipping a one geometry using the extent using the extent of another. 
+The buffer operation is a unary geometric operation; it is a unary geometric operation as it is applied to just one geometric object. Along with the buffer operation, examples of unary operations include computing the centroid of a polygon object, simplifying geometries, or shifting or rescaling a geometry <a href="https://geocompr.robinlovelace.net/geometric-operations.html" target="_blank">(Lovelace et al. 2020)</a>. In contrast, binary geometry operations modify a geometry based upon another; for example, clipping one geometry using the extent using the extent of another. 
 
-Applying a buffer to a geometry returns a polygon encompassing the area within a specified distance of the given geometry; for example, applying a 1 km buffer to a point object would return a circular polygon with a 1 km radius surrounding the point. In Google Earth Engine the `buffer()` operation can be applied to `Geometry` objects and returns a buffer polygon `Geometry` object. The `buffer()` function in Google Earth Engine has a distance parameter which is a number specifying the size of the buffer to compute. The distance parameter is in metres unless otherwise specified. 
+Applying a buffer to a geometry returns a polygon encompassing the area within a specified distance of the input geometry; for example, applying a 1 km buffer to a point object would return a circular polygon with a 1 km radius surrounding the point. In Google Earth Engine the `buffer()` operation can be applied to `Geometry` objects and returns a buffer polygon `Geometry` object. The `buffer()` function in Google Earth Engine has a distance parameter which is a number specifying the size of the buffer to compute (in metres unless otherwise specified). 
 
 Here, you will compute each building's surrounding neighbourhood using a 50 m buffer. The following code snippet creates a function that computes a 50 m buffer for a `Geometry` object. Let's quickly recap how user-defined functions are created in Google Earth Engine. 
 
 1. *function name:* first, you have given the function an informative name that describes what it does; `bufferFunc` clearly indicates this function will compute a buffer. 
-2. *parameters:* the function parameters are enclosed within parentheses `(feature)` following the function declaration. This function takes in a single parameter `feature` which is passed onto the operations enclosed inside the `{}`. 
-3. *function operations:* this operation enclosed within this function computes the 50 m buffer for the `Feature` `feature` passed into the function. 
+2. *parameters:* the function parameters are enclosed within parentheses `(feature)` following the function declaration. This function takes in a single parameter `feature` which is passed onto the operations enclosed in `{}`. 
+3. *function operations:* the operation enclosed within this function computes the 50 m buffer for the `feature` passed into the function. 
 4. *return:* this function `return`s a `Feature` object containing the 50 m buffered polygon surrounding the `Feature` passed into the function.
 
 <br>
@@ -259,7 +258,7 @@ var bufferFunc = function(feature) {
 
 <br>
 
-Now you have specified your function that will compute the 50 m buffer, you need to apply this function to each university building. You do this by `map`ping the function over each `Feature` in the `perthUniBuildingOSM` `FeatureCollection`. You can think of this as a "for each" operation; for each `Feature` in the `FeatureCollection` compute this function and return the result. 
+You have created a function that will compute the 50 m buffer. Next, you need to apply this function to each university building. You do this by `map`ping the function over each `Feature` in the `perthUniBuildingOSM` `FeatureCollection`. You can think of this as a "for each" operation; for each `Feature` in the `FeatureCollection` compute this function and return the result. 
 
 The concept of mapping a function over elements in a collection can be represented graphically:
 
@@ -272,9 +271,27 @@ knitr::include_graphics("img/function-map.png")
 
 <br>
 
-You can think of each of the orange boxes as being an element in a collection and `f` is a function that can be applied to each element in the collection. Here, `f` is `bufferFunc()`. Mapping the function `f` over each element in the collection returns a collection where each element is the return value from passing an input element into `f` as an argument. *To avoid confusion, map here refers to the mathematical meaning of an "an operation that associates each element of a given set with one or more elements of a second set" and NOT representing objects in space <a href="https://adv-r.hadley.nz/index.html" target="_blank">Wickham (2020)</a>.*
+You can think of each of the orange boxes as being an element in a collection and `f` is a function that can be applied to each element. Here, `f` is `bufferFunc()`. Mapping the function `f` over each element in the collection returns a collection where each element is the return value from passing an input element into `f` as an argument. 
 
-If you execute the following code snippet you will map your buffer function `bufferFunc` over each `Feature` representing a university building in the `FeatureCollection` `perthUniBuildingOSM` and return a `FeatureCollection` stored in the variable `perthUniBuildingOSMBuffer`. Each `Feature` in `perthUniBuildingOSMBuffer` should contain a `Geometry` polygon object representing a 50 m buffer around a building. 
+<br>
+
+<div class="well well-sm">
+<center>
+`buildingFootprint` &rarr; <b>`bufferFunc(50)`</b> &rarr; `bufferedBuildingFootprint`<br>
+&darr;<br>
+`buildingFootprint` &rarr; <b>`bufferFunc(50)`</b> &rarr; `bufferedBuildingFootprint`<br>
+&darr;<br>
+`buildingFootprint` &rarr; <b>`bufferFunc(50)`</b> &rarr; `bufferedBuildingFootprint`<br>
+&darr;<br>
+`buildingFootprint` &rarr; <b>`bufferFunc(50)`</b> &rarr; `bufferedBuildingFootprint`<br>
+</center>
+</div>
+
+<br>
+
+*To avoid confusion, map here refers to the mathematical meaning of an "an operation that associates each element of a given set with one or more elements of a second set" and NOT representing objects in space <a href="https://adv-r.hadley.nz/index.html" target="_blank">(Wickham, 2020)</a>.*
+
+If you execute the following code snippet you will map the buffer function `bufferFunc` over each `Feature` representing a university building in the `FeatureCollection` `perthUniBuildingOSM` and return a `FeatureCollection` stored in the variable `perthUniBuildingOSMBuffer`. Each `Feature` in `perthUniBuildingOSMBuffer` should contain a `Geometry` polygon object representing a 50 m buffer around a building. 
 
 <br>
 
@@ -297,11 +314,11 @@ knitr::include_graphics("img/buffer-curtin.png")
 
 ## Zonal Statistics 
 
-You need to compute the area of tree cover and average LST surrounding each university building. You can use your buffered polygon `Geometry` objects to represent the area surrounding a building. Data representing tree cover and LST are in raster format. You can use zonal operations to summarise the raster tree cover or LST values that intersect with a building's buffer. 
+You need to compute the area of tree cover and average LST surrounding each university building. You can use your buffered polygon `Geometry` objects to represent the area surrounding a building. Data representing tree cover and LST are in raster format. Zonal operations can be used to summarise the raster tree cover or LST values that intersect with a building's buffer. 
 
 Data aggregation and summaries are computed in Google Earth Engine using reducers of the `ee.Reducer` class; again, the `ee` prefix indicates these reducer functions are executed on Google servers. You can find an overview of reducer functions in Google Earth Engine <a href="https://developers.google.com/earth-engine/guides/reducers_intro" target="_blank">here</a>. Reducers aggregate data over space, time, or another dimension in attribute data using an aggregation or summary function (e.g. mean, max, min, sum, standard deviation). 
 
-You will need to the pass values for the pixels that intersect with a building's buffer into a reducer function. There are `reduceRegion()` and `reduceRegions()` functions that can be used to summarise raster values that intersect with a specified region (i.e. a building's buffer); these functions return one summary value per region. The use of a reducer function for a region is depicted below.
+You will need to the pass values for the pixels that intersect with a building's buffer into a reducer function. There are `reduceRegion()` and `reduceRegions()` functions that can be used to summarise raster values that intersect with a specified region (i.e. a building's buffer); these functions return one summary value per region. A schematic illustrating the use of a reducer function for a region is depicted below.
 
 <br> 
 
@@ -312,7 +329,7 @@ knitr::include_graphics("img/Reduce_region_diagram.png")
 
 <br>
 
-The following code snippet applies the `reduceRegions()` function to the `umTreePixelArea` `Image` where each pixel value is the area of tree cover in square metres. If you look at the arguments to `reduceRegions()` you will see that the regions to summarise raster values within were taken from the `perthUniBuildingOSMBuffer` `FeatureCollection`, a sum reducer function was use to aggregate the raster values, and the aggregation operation was performed on raster data with spatial resolution of 0.4 metres. 
+The following code snippet applies the `reduceRegions()` function to the `umTreePixelArea` `Image` where each pixel value is the area of tree cover in square metres. If you look at the arguments to `reduceRegions()` you will see that the regions over which raster values are summarised are taken from the `perthUniBuildingOSMBuffer` `FeatureCollection`, a sum reducer function was use to aggregate the raster values, and the aggregation operation was performed on raster data with a spatial resolution of 0.4 metres. 
 
 The result of the `reduceRegions()` function is a `FeatureCollection` with the same number of `Features` as the input `FeatureCollection` but with a name:value pair in the `properties` object which contains the result of the aggregation of raster values within that region.
 
@@ -375,7 +392,7 @@ print('zonal stats - ave. LST:', perthUniBuildingLST);
   <summary><b>*What is different about the reducer used to compute average LST for a building's buffer?*</b></summary>
   <p>
   <br>
-  Instead of using a sum reducer which sums up all the raster values that intersect with the region a mean reducer was used which computes the average of all raster values that intersect with a region - `ee.Reducer.mean()`.
+  Instead of using a sum reducer which sums all the raster values that intersect with the region a mean reducer was used which computes the average of all raster values that intersect with a region - `ee.Reducer.mean()`.
   </p>
 </details>
 <br>
