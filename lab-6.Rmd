@@ -542,8 +542,8 @@ knitr::include_graphics("img/landsat-bands-young.png")
 var saviL7 = function(image) {
   
   var savi = ((image.select('B4').subtract(image.select('B3')))
-    .divide(image.select('B4').add(image.select('B3')).add(1)))
-    .multiply(2);
+    .divide(image.select('B4').add(image.select('B3')).add(0.5)))
+    .multiply(1.5);
   savi = savi.rename('nd');
   var startDate = image.get('system:time_start'); 
   return savi.set({'system:time_start': startDate});
@@ -552,8 +552,8 @@ var saviL7 = function(image) {
 var saviL8 = function(image) {
   
   var savi = ((image.select('B5').subtract(image.select('B4')))
-    .divide(image.select('B5').add(image.select('B4')).add(1)))
-    .multiply(2);
+    .divide(image.select('B5').add(image.select('B4')).add(0.5)))
+    .multiply(1.5);
   savi = savi.rename('nd');
   var startDate = image.get('system:time_start'); 
   return savi.set({'system:time_start': startDate});
