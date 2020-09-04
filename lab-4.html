@@ -375,6 +375,9 @@ div.tocify {
 <li>
   <a href="lab-5.html">Lab 5</a>
 </li>
+<li>
+  <a href="lab-6.html">Lab 6</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -636,7 +639,7 @@ Schematic of an <code>Image</code> data structure in Google Earth Engine where a
 </center>
 <p><br></p>
 <p>Go to the <em>Console</em> and you should see the Landsat 8 <code>Image</code> has 12 bands. Click on a band and you should see some band specific properties such as its projection (<code>crs: EPSG:32650</code>). Click on the <code>Image</code> <code>properties</code> to explore metadata that applies to the <code>Image</code> such as cloud cover at the time of <code>Image</code> capture (<code>CLOUD_COVER: 11.039999961853027</code>) or the satellite carrying the sensor (<code>SPACECRAFT_ID: LANDSAT_8</code>).</p>
-<p>You can visualise the Landsat 8 <code>Image</code> on the map display in your browser. To do this you use the <code>Map.addLayer()</code> function to request the <code>Image</code> stored in the variable <code>img</code> on the Google servers to be displayed in your browser. The following code block will visualise an RGB composite map of the Landsat 8 data stored in <code>img</code> in your browswer’s display.</p>
+<p>You can visualise the Landsat 8 <code>Image</code> on the map display in your browser. To do this you use the <code>Map.addLayer()</code> function to request the <code>Image</code> stored in the variable <code>img</code> on the Google servers to be displayed in your browser. The following code block will visualise an RGB composite map of the Landsat 8 data stored in <code>img</code> in your browser’s display.</p>
 <p><br></p>
 <pre class="js"><code>/* Define the visualization parameters. The bands option allows us to specify which bands to map. Here, we choose B4 (Red), B3 (Green), B2 (Blue) to make a RGB composite image.*/ 
 var vizParams = {
