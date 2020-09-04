@@ -891,8 +891,8 @@ Landsat bands and wavelength coverage (source: <a href="https://esajournals.onli
 var saviL7 = function(image) {
 
 var savi = ((image.select(&#39;B4&#39;).subtract(image.select(&#39;B3&#39;)))
-  .divide(image.select(&#39;B4&#39;).add(image.select(&#39;B3&#39;)).add(1)))
-  .multiply(2);
+  .divide(image.select(&#39;B4&#39;).add(image.select(&#39;B3&#39;)).add(0.5)))
+  .multiply(1.5);
 savi = savi.rename(&#39;nd&#39;);
 var startDate = image.get(&#39;system:time_start&#39;); 
 return savi.set({&#39;system:time_start&#39;: startDate});
@@ -901,8 +901,8 @@ return savi.set({&#39;system:time_start&#39;: startDate});
 var saviL8 = function(image) {
 
 var savi = ((image.select(&#39;B5&#39;).subtract(image.select(&#39;B4&#39;)))
-  .divide(image.select(&#39;B5&#39;).add(image.select(&#39;B4&#39;)).add(1)))
-  .multiply(2);
+  .divide(image.select(&#39;B5&#39;).add(image.select(&#39;B4&#39;)).add(0.5)))
+  .multiply(1.5);
 savi = savi.rename(&#39;nd&#39;);
 var startDate = image.get(&#39;system:time_start&#39;); 
 return savi.set({&#39;system:time_start&#39;: startDate});
