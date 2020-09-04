@@ -632,6 +632,7 @@ Turn off the other layers on your map display using the *Layers* menu. Visualise
 ```{js, echo=TRUE, eval=FALSE}
 // 3 year median NDVI composite - 2000 - 2002
 print(l2000Composite);
+Map.centerObject(l2000Composite, 12);
 Map.addLayer(l2000Composite, {min: 0.1, max: 0.8, palette:['#ffffcc','#d9f0a3','#addd8e','#78c679','#41ab5d','#238443','#005a32']}, 'median NDVI 2000 - 2002');
 
 ```
