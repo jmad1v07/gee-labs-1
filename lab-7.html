@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Lab 7</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 52px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h2 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h3 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h4 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h5 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h6 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="overview.html">Overview</a>
+</li>
+<li>
+  <a href="js-introduction.html">JS Intro</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Lab 4
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lab-4.html">Lab 4a</a>
+    </li>
+    <li>
+      <a href="lab-4b.html">Lab 4b</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="lab-5.html">Lab 5</a>
+</li>
+<li>
+  <a href="lab-6.html">Lab 6</a>
+</li>
+<li>
+  <a href="lab-7.html">Lab 7</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Lab 7</h1>
+
+</div>
+
+
+<p><br></p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This lab will introduce a workflow to classify <code>Image</code>s in Google Earth Engine using supervised classification algorithms.</p>
+<p>Image classification is the process of classifying pixels in an <code>Image</code> into similar classes (groups or clusters of similar pixels) or categories (a label that relates to physical or land surface characteristics).</p>
+<p>You will use a supervised classification algorithm to assign each pixel a category label based upon pixel values for one or more predictor variables. Land cover mapping is a common image classification task. Different land cover types have different spectral signatures (i.e. they have different levels of reflectance in different portions of the electromagnetic spectrum); an algorithm can be trained to predict each pixel’s land cover type based upon values of predictor variables (i.e. spectral reflectance data).</p>
+<p>An algorithm is a set of rules or instructions that a computer follows to solve a problem or perform a task. Algorithms can take many forms and different algorithms are suited to different classification tasks.</p>
+<p>You have a predictor dataset <span class="math inline">\(X\)</span> which contains <span class="math inline">\(p\)</span> predictor variables <span class="math inline">\(X_{1}, X_{2},..., X_{p}\)</span>; in the case of land cover classification using remotely sensed data <span class="math inline">\(p\)</span> often corresponds to wavelengths of the electromagnetic spectrum. Your goal is to train a classifier (algorithm) <span class="math inline">\(f\)</span> which relates predictor variables <span class="math inline">\(X\)</span> to an outcome <span class="math inline">\(Y\)</span>.</p>
+<p><span class="math display">\[Y = f(X)\]</span></p>
+<p>The video below presents a good overview of tools for <code>Image</code> classification in Google Earth Engine. It is quite long, so best watched after the lab to consolidate what you have learnt.</p>
+<br>
+<center>
+<iframe width="412" height="232" src="https://www.youtube.com/embed/NPplRtH2N94" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<p>
+An overview of <code>Image</code> classification in Google Earth Engine.
+</p>
+</center>
+<p><br></p>
+<div id="supervised-classification" class="section level3">
+<h3>Supervised Classification</h3>
+<p>In supervised classification, the values of <span class="math inline">\(Y\)</span> are known and typically correspond to geographic phenomena or entities of interest (e.g. the range of land cover types in an <code>Image</code>). In the case of land cover classification, the classifier <span class="math inline">\(f\)</span> will predict a pixel <span class="math inline">\(i\)</span>’s land cover type <span class="math inline">\(y_{i}\)</span> based on the values of <span class="math inline">\(x_{i}\)</span>.</p>
+<p>A classification tree is one of the simplest supervised classifiers to see inside and visualise the algorithm’s rules and the process it follows to make predictions. A classification tree consists of a series of yes / no splits for values of <span class="math inline">\(X\)</span>, the predictor variables (e.g. spectral reflectance measured in <span class="math inline">\(p\)</span> wavelengths). The leaves of a classification tree correspond to an outcome category or label (e.g. a land cover type). For a pixel with measures of spectral reflectance but an unknown land cover type, you move down the tree following the yes / no splits to arrive at a leaf node. The leaf node you end up in is the predicted land cover for that pixel.</p>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/decision-tree-tso-mather.png" alt="Example classification tree showing how land cover can be predicted from spectral reflectance values (adpated from Tso and Mather (2009))." width="80%" />
+<p class="caption">
+Example classification tree showing how land cover can be predicted from spectral reflectance values (adpated from Tso and Mather (2009)).
+</p>
+</div>
+<p><br></p>
+<p>Your goal is to train a classifier <span class="math inline">\(\hat{f}\)</span> that predicts a pixel’s land cover type, <span class="math inline">\(\hat{y}_i\)</span>, using pixel spectral reflectance data. Training a classifier involves identifying the rules that best relate values of predictor variables to an outcome category. To train the classifier you give it some labelled training data; labelled training data are observations where there are values for the predictor variables, <span class="math inline">\(X_{1}, X_{2},..., X_{p}\)</span>, and a label of the outcome category <span class="math inline">\(Y\)</span>. That is, for each training observation <span class="math inline">\(x_{i}\)</span> there is a known <span class="math inline">\(y_{i}\)</span>. You train a classifier by finding rules that minimise a metric of classification error when predicting the known<span class="math inline">\(y_{i}\)</span> in the training data. The process of preparing the training data is called training or feature engineering.</p>
+<p>Your final step is to assess the accuracy of your model. You see how well your model performs in predicting <span class="math inline">\(Y\)</span> for data that was not used in training the model (test or validation data).</p>
+</div>
+<div id="unsupervised-classification" class="section level3">
+<h3>Unsupervised Classification</h3>
+<p>In unsupervised classification, for each observation <span class="math inline">\(x_{i}\)</span> in the training data there is no observed outcome <span class="math inline">\(y_{i}\)</span>. An unsupervised classification algorithm <span class="math inline">\(f\)</span> assigns observations to clusters based upon them having similar values in the predictor variables <span class="math inline">\(X\)</span>. In the context of remote sensing <code>Image</code> classification, an unsupervised classification algorithm would assign a pixel <span class="math inline">\(i\)</span> to a class <span class="math inline">\(j\)</span> based upon a its <span class="math inline">\(x_{i}\)</span> spectral reflectance values. Your goal, given some training data, is to train an unsupervised classification algorithm <span class="math inline">\(\hat{f}\)</span> that assigns pixels to classes so that the within-class (within-cluster) variability in pixel values is minimised. Unsupervised classifiers in Google Earth Engine are called <code>clusterers</code>; this name refers to goal of unsupervised classifiers to create clusters of similar observations. Classes (clusters) do not directly relate to ground objects, real world phenonomenon or entities, or land cover types; instead, they define clusters of similar pixels in terms of their spectral reflectance values. Often, <code>Image</code> classes relate to interesting land surface characteristics but it is a post-processing step to formalise these relationships and assign meaningful labels to <code>Image</code> classes. You will not be using unsupervised classification algorithms in this lab. However, you can follow this <a href="https://developers.google.com/earth-engine/guides/clustering" target="_blank">guide</a> to see how to use them in Google Earth Engine.</p>
+</div>
+<div id="task" class="section level3">
+<h3>Task</h3>
+<p>You will perform a supervised classification of a Landsat 8 <code>Image</code> to predict a pixel’s land cover type.</p>
+<p><b>Supervised classification</b></p>
+<ol style="list-style-type: decimal">
+<li>Prepare labelled training data comprising observations of Landsat 8 spectral reflectance values and a land cover type property.</li>
+<li>Train a supervised classifier to predict a pixel’s land cover type (water, built up, or vegetation).</li>
+<li>Predict each pixel’s land cover type in the Landsat 8 <code>Image</code>.</li>
+<li>Assess the accuracy of the your land cover prediction using independent test data.</li>
+</ol>
+</div>
+<div id="setup" class="section level3">
+<h3>Setup</h3>
+<p><br></p>
+<pre class="js"><code>/*
+Lab 7
+Author: Test
+Date: XX-XX-XXXX
+
+*/
+</code></pre>
+<p><br></p>
+</div>
+<div id="data-import" class="section level3">
+<h3>Data Import</h3>
+<pre class="js"><code>// Data import
+
+// study area
+var bBox = 
+    /* color: #d63000 */
+    /* displayProperties: [
+      {
+        &quot;type&quot;: &quot;rectangle&quot;
+      }
+    ] */
+    ee.Geometry.Polygon(
+        [[[115.23492202085255, -31.663337604046916],
+          [115.23492202085255, -32.220373273114554],
+          [116.13442763608693, -32.220373273114554],
+          [116.13442763608693, -31.663337604046916]]], null, false);
+
+//Get Landsat 8 SR Image
+var l8SR = ee.Image(&#39;LANDSAT/LC08/C01/T1_SR/LC08_113082_20160802&#39;).clip(bBox);
+print(l8SR);
+
+// Use these Landsat 8 bands and rescale spectral reflectance values
+var bands = [&#39;B2&#39;, &#39;B3&#39;, &#39;B4&#39;, &#39;B5&#39;, &#39;B6&#39;, &#39;B7&#39;];
+l8SR = l8SR.select(bands).divide(10000);
+
+/* Define the visualization parameters. The bands option allows us to specify which bands to map. Here, we choose B4 (Red), B3 (Green), B2 (Blue) to make a RGB composite image.*/ 
+var vizParams = {
+  bands: [&#39;B4&#39;, &#39;B3&#39;, &#39;B2&#39;],
+  min: 0,
+  max: 0.4,
+};
+
+// Centre the display and then map the Landsat 8 image
+Map.centerObject(l8SR, 10);
+Map.addLayer(l8SR, vizParams, &#39;RGB composite&#39;);
+print(l8SR);
+</code></pre>
+<p><br></p>
+<p>Use the <em>Inspector</em> tab to visualise the difference in Landsat 8 spectral reflectance across different wavelengths for different land cover types.</p>
+<br>
+<center>
+<iframe src="https://player.vimeo.com/video/457400549" width="640" height="368" frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+</iframe>
+<p>
+Visualise spectral reflectance using the <em>Inspector</em> tab
+</p>
+</center>
+<p><br></p>
+<hr>
+<p><br></p>
+</div>
+</div>
+<div id="supervised-classification-1" class="section level2">
+<h2>Supervised Classification</h2>
+<div id="training-feature-engineering" class="section level3">
+<h3>Training (Feature) Engineering</h3>
+<p>The first task in a supervised classification workflow is to prepare the training data. This is termed training or feature engineering (in machine learning predictor variables are often called features).</p>
+<p>Classifiers in Google Earth Engine require a <code>FeatureCollection</code> for training where one property in the <code>properties</code> object is the outcome variable and the other properties are the predictors.</p>
+<p>The <code>FeatureCollection</code> <code>trainingPoints</code> contains three <code>Feature</code> objects. Each <code>Feature</code> object has a multipoint <code>Geometry</code> object and a <code>properties</code> object containing the property <code>lc</code>. <code>lc</code> refers to the land cover type at each point’s location.</p>
+<p>An <code>lc</code> value of 0 corresponds to vegetated land cover, an <code>lc</code> value of 1 corresponds to built up land cover, and an <code>lc</code> value of 2 corresponds to water.</p>
+<p>These labelled training points were created through manual digitisation guided by visual inspection of the Google satellite basemap.</p>
+<p><br></p>
+<pre class="js"><code>// Training engineering
+// Import points labelled with land cover type property
+var trainingPoints = ee.FeatureCollection(&quot;users/jmad1v07/gee-labs/training_points&quot;);
+print(trainingPoints);
+Map.addLayer(trainingPoints, {color:&#39;red&#39;}, &#39;training data&#39;);
+</code></pre>
+<p><br></p>
+<details>
+<summary><b><em>The date of the Google satellite basemap used to guide the creation of the training data was not known. What problem could this introduce when using this training data to train a classifier to predict the land cover type of Landsat 8 pixels?</em></b></summary>
+<p>
+<br> Land cover might have changed between the date of capture of the Google satellite basemap and the date of the Landsat 8 <code>Image</code> you wish to classify. This means that the labelled training data may not accurately reflect the land cover type at the time the Landsat 8 <code>Image</code> was captured.
+</p>
+</details>
+<p><br></p>
+<p><br></p>
+<details>
+<summary><b><em>Explore the red points on the map that represent the location of the labelled training points. You should see clusters of points in Perth CBD and Kings Park. What problem could this clustering of training data present?</em></b></summary>
+<p>
+<br> Training data observations which are close to each other in space might have spatial correlation among their data values. This spatial correlation reduces the effective number of independent training data observations. This can be problematic as non-parametric classifiers, such as CART, require large numbers of training data observations to characterise the relationships between predictor variables and outcome categories.
+</p>
+</details>
+<p><br></p>
+<p>You now need to find the Landsat 8 spectral reflectance values that intersect with each of the point locations.</p>
+<p>There is a convenient <code>sampleRegions()</code> function in Google Earth Engine that helps with training engineering. The <code>sampleRegions()</code> function samples the pixels of an input <code>Image</code> (<code>l8SR</code> here) using the <code>Geometry</code> objects specified as the <code>collection</code> argument (<code>trainingPoints</code> here). This function extracts the values in each band of <code>l8SR</code> that intersect with each point’s location.</p>
+<p><br></p>
+<pre class="js"><code>// Sample spectral reflectance at training points
+var trainingData = l8SR.sampleRegions({
+  collection: trainingPoints,
+  properties: [&#39;lc&#39;],
+  scale: 30
+});
+print(trainingData);
+</code></pre>
+<p><br></p>
+<p>Inspect the <code>FeatureCollection</code> <code>trainingData</code> in the <em>console</em>. You should see it contains 129 <code>Feature</code> objects and each <code>Feature</code> has a <code>properties</code> object containing an <code>lc</code> property which corresponds to a land cover type and properties <code>B2</code> through to <code>B7</code> which correspond to spectral reflectance measurements.</p>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/training-data.png" alt="`FeatureCollection` storing training data to train a supervised classifier to predict land cover type." width="50%" />
+<p class="caption">
+<code>FeatureCollection</code> storing training data to train a supervised classifier to predict land cover type.
+</p>
+</div>
+<p><br></p>
+<p>You can now use <code>trainingData</code> to train a classifier to predict land cover type based on Landsat 8 spectral reflectance data values.</p>
+</div>
+<div id="train-classifier" class="section level3">
+<h3>Train classifier</h3>
+<p>You are going to use <code>trainingData</code> to train a classification and regression tree (CART) algorithm to predict a pixel’s land cover type based on its spectral reflectance values.</p>
+<p>The first step is to create a CART object using the <code>ee.Classifier.smileCart()</code> constructor function. You then use the <code>train()</code> function to train the CART classifier. You pass your labelled training data <code>trainingData</code> into the <code>train()</code> function and it will learn the rules that best relate spectral reflectance values in your training data to the observed land cover type specified by the <code>lc</code> property.</p>
+<p><br></p>
+<pre class="js"><code>// Train a CART classifier with default parameters.
+var trainedCART = ee.Classifier.smileCart()
+  .train(trainingData, &#39;lc&#39;, bands);
+print(trainedCART);
+</code></pre>
+<p><br></p>
+<p>The video below presents a short demonstration of how CART classifiers work. You can also read Chapter 8 of <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/" target="_blank">James et al. (2013)</a> to understand the process of how CART classifier rules are trained via minimising an error function.</p>
+<p><br></p>
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/p17C9q2M00Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<p>
+Overview of CART classifiers
+</p>
+</center>
+<p><br></p>
+</div>
+<div id="predict-land-cover-type" class="section level3">
+<h3>Predict land cover type</h3>
+<p>Now you can use your trained CART classifier object to predict each Landsat 8 pixel’s land cover. To classify an <code>Image</code> in Google Earth Engine using a trained classifier use the <code>classify()</code> function. You pass your trained classifier into the <code>classify()</code> function as an argument; this function will apply the algorithm defined in your trained classifier (<code>trainedCART</code> here) to each pixel’s spectral reflectance values to predict land cover type.</p>
+<p>Display your predicted land cover <code>Image</code> on the map. Visually inspect your map of predicted land cover. How good a job has your trained classifier <code>trainedCART</code> done at predicting the land cover type of the Landsat 8 pixels?</p>
+<p><br></p>
+<pre class="js"><code>// Classify (predict land cover type) l8SR using trained CART classifier
+var lcImage = l8SR
+  .select(bands)
+  .classify(trainedCART);
+print(lcImage);
+
+//Make a palette for mapping
+var lulcColor = [
+  &#39;00FF00&#39;, // vegetation
+  &#39;000000&#39;, // built up
+  &#39;0000FF&#39;, // water
+];
+
+Map.addLayer(lcImage, {palette: lulcColor, min: 0, max: 2}, &#39;supervised classification&#39;);
+</code></pre>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/predicted-land-cover.png" alt="Predicted land cover type using the trained CART classifier" width="80%" />
+<p class="caption">
+Predicted land cover type using the trained CART classifier
+</p>
+</div>
+<p><br></p>
+<p>Use the <b>Layers</b> tab to toggle on and off the Landsat 8 RGB composite, the predicted land cover map, and the Google satellite basemaps. Zoom in on a few locations and explore the difference between the land covers captured by the Google satellite basemaps and the Landsat 8 data.</p>
+<p>You should see that in many cases a single Landsat 8 pixel is comprised of multiple land cover types (e.g. a pixel could include trees, a grass garden, paved surface, and roofs). This is a mixed pixel problem; it is one example of how spatial data often simplifies reality. Here, a mix of land cover types with different spectral signatures will be represented by a single spectral reflectance value per-band and per-pixel or by a single land cover type label.</p>
+<br>
+<center>
+<iframe src="https://player.vimeo.com/video/457375669" width="640" height="354" frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+</iframe>
+<p>
+Visualise mixed pixels
+</p>
+</center>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/mixed-pixels.png" alt="Mixed pixels - a pixel is assigned a single land cover type category yet it contains a mix of land cover types" width="80%" />
+<p class="caption">
+Mixed pixels - a pixel is assigned a single land cover type category yet it contains a mix of land cover types
+</p>
+</div>
+<p><br></p>
+<details>
+<summary><b><em>How could you reduce the mixed pixel problem that is visible when predicting land cover over urban Perth using Landsat 8 data?</em></b></summary>
+<p>
+<ul>
+<li>
+You could use finer spatial resolution data that would be able to resolve the different land cover objects present within a single Landsat pixel.
+</li>
+<li>
+You could use a fuzzy classification system where a pixel can be a member of more than one land cover type.
+</li>
+</ul>
+</p>
+</details>
+<p><br></p>
+<p>The classifier you have just trained predicts whether a pixel is one of three land cover types (vegetation, built up, or water). In reality, there are far more than three land cover types present within the area covered by the Landsat 8 <code>Image</code>. An example of this is shown in the below figure where beach between City Beach and Scarborough in Perth is classified as built up land cover. Therefore, through limiting the possible land cover types a pixel could be classified as we are introducing error into predicted land cover maps (i.e. there is a discrepancy between predicted land cover and reality).</p>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/beach-as-built-up.png" alt="Beach (sandy land cover) classified as built up." width="80%" />
+<p class="caption">
+Beach (sandy land cover) classified as built up.
+</p>
+</div>
+<p><br></p>
+<details>
+<summary><b><em>How could you train a classifier that predicts whether a pixel belongs to more land cover types than vegetation, built up, or water?</em></b></summary>
+<p>
+<p><br> Ensure that your labelled training data covers the range of land cover types within the area of interest and that you have a sufficient number of training data observations per-land cover type in order to characterise each land cover type accurately.</p>
+</p>
+</details>
+<p><br></p>
+</div>
+<div id="accuracy-assessment" class="section level3">
+<h3>Accuracy Assessment</h3>
+<p>Before using your trained classifier to predict the land cover type of new pixels (i.e. pixels that you don’t already know the land cover type) you need to know how accuracte the classifier’s predictions are. You do this by assessing the classifier’s accuracy; typically this is done by comparing predictions to observations on unseen data - data that has not been used to train the model. This will give you an indication of how well your classifier will generalise and work on new data.</p>
+<p>First, you need some test data that contains labels of observed land cover types. Then you can use your trained classifier to predict the land cover type at each of these locations. Finally, you compare the predicted versus the observed land cover types to assess the accuracy of your trained classifier.</p>
+<p>Import the the <code>FeatureCollection</code> <code>test_points</code> into the variable <code>testPoints</code>. This contains labelled points with an observed land cover type property. The process of predicting the land cover type at each of these test points is similar to the feature engineering process described above. Use the <code>sampleRegions()</code> function to extract the spectral reflectance measures for each of these points. Then use the trained classifier <code>trainedCART</code> to predict the land cover type at each test point based on its spectral reflectance values.</p>
+<p><br></p>
+<pre class="js"><code>// Accuracy Assessment
+var testPoints = ee.FeatureCollection(&#39;users/jmad1v07/gee-labs/test_points&#39;);
+Map.addLayer(testPoints, {color:&#39;yellow&#39;}, &#39;test points&#39;);
+
+// Sample spectral reflectance at test points
+var testData = l8SR.sampleRegions({
+  collection: testPoints,
+  properties: [&#39;lc&#39;],
+  scale: 30
+});
+print(testData);
+
+// Classify the test data.
+var testClassified = testData.classify(trainedCART);
+print(testClassified);
+</code></pre>
+<p><br></p>
+<p>Using the predicted versus observed land cover types for the test data points you can generate an error matrix. This an <span class="math inline">\(n\)</span> x <span class="math inline">\(n\)</span> matrix where <span class="math inline">\(n\)</span> is the number of land cover types. In Google Earth Engine error matrices, the columns (1-axis) represent the predicted data and the rows (0-axis) represent the observed test data. The diagonal of the matrix represents pixels that were correctly classified (i.e. the classifier correctly predicted the observed land cover type in the test data). This code flips (transposes) the matrix for display purposes here so observed data are in the columns and predicted data are in the rows.</p>
+<p>You can use the <code>errorMatrix()</code> function in Google Earth Engine to generate an error matrix from a <code>FeatureCollection</code>. The first argument to the <code>errorMatrix()</code> function is the observed land cover type (<code>lc</code> here) and the second argument is the predicted land cover type (<code>classification</code> here).</p>
+<p><br></p>
+<pre class="js"><code>// Get an error matrix
+var errorMat = testClassified.errorMatrix(&#39;lc&#39;, &#39;classification&#39;);
+print(&#39;error matrix: &#39;, errorMat.array().matrixTranspose(0, 1));
+</code></pre>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/error-matrix.png" alt="Error matrix and accuracy assessment indicators." width="70%" />
+<p class="caption">
+Error matrix and accuracy assessment indicators.
+</p>
+</div>
+<p><br></p>
+<p>The sum of the diagonal elements is the number of correctly classified pixels. The overall accuracy of the classifier can be computed as:</p>
+<p><span class="math display">\[accuracy=\frac{Correctly Classified Points}{Total Number of Points}\]</span> This indicator of classification accuracy can be interpreted as <span class="math inline">\(x\)</span>% of an image is correctly classified. It does not give any indication of the spatial variability in classification accuracy or if certain land cover types are classified more accurately than others.</p>
+<p>There are helpful functions in Google Earth Engine that you can apply to error matrices to compute accuracy assessment statistics. You can apply the <code>accuracy()</code> function to your error matrix to compute the overall accuracy and you can apply the <code>kappa()</code> function to compute the kappa statistic.</p>
+<p><br></p>
+<pre class="js"><code>print(&#39;overall accuracy: &#39;, errorMat.accuracy());
+print(&#39;kappa: &#39;, errorMat.kappa());
+print(&#39;producers accuracy: &#39;, errorMat.producersAccuracy());
+print(&#39;users accuracy:&#39;, errorMat.consumersAccuracy());
+</code></pre>
+<p><br></p>
+<p>Using the error matrix you can compute producer’s and user’s accuracy that give an indication of the accuracy of classification for individual land cover types.</p>
+<p>The producer’s accuracy is computed by dividing the entry in cell (<span class="math inline">\(i\)</span>, <span class="math inline">\(i\)</span>) of the error matrix by the sum of column <span class="math inline">\(i\)</span>. The producer’s accuracy is a measure of omission error and informs on the number of test pixels in a given land cover type that were correctly classified. Here, all of the vegetation (class 0) pixels in the test dataset were correctly classified as vegetation by <code>trainedCART</code>. Eight of the test data points labelled as built up were classified as vegetation; therefore, built up land cover has a producer’s accuracy of 78%.</p>
+<p>The user’s accuracy is computed by dividing the entry in cell (<span class="math inline">\(i\)</span>, <span class="math inline">\(i\)</span>) of the error matrix by the sum of row <span class="math inline">\(i\)</span>. The user’s accuracy is a measure of commission error (i.e. erroneously labelling a pixel a given land cover type). Of the 34 test data points that were predicted as being of vegetation land cover type, eight were observed as being built up. Thus, vegetation land cover has a user’s accuracy of 76%.</p>
+<hr>
+<p><br></p>
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;">
+
+</div>
+<footer>
+<p>
+Advanced GIS and Remote Sensing
+</p>
+</footer>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
