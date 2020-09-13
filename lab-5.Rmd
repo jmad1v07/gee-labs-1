@@ -139,7 +139,7 @@ knitr::include_graphics('img/osm-building-footprint-uwa.png')
 <details>
   <summary><b>*Can you visualise the `uniTree` `Image` on the map display? Look back to lab 4 for examples of how to visualise the Urban Monitor data and for appropriate colour schemes.*</b></summary>
   <p>
-  <br>
+<br>
   ```{js, echo=TRUE, eval=FALSE}
 // UM uni tree
 Map.addLayer(uniTree, {min: 0, max: 1, palette:['#009900']}, 'UM Tree');
