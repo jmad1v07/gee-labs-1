@@ -225,7 +225,7 @@ You can now use `trainingData` to train a classifier to predict land cover type 
 
 ### Train classifier
 
-You are going to use `trainingData` to train a classification and regression tree (CART) algorithm to predict a pixel's land cover type based on its spectral reflectance values. 
+You are going to use `trainingData` to train a classification and regression tree (CART) model to predict a pixel's land cover type based on its spectral reflectance values. 
 
 The first step is to create a CART object using the `ee.Classifier.smileCart()` constructor function. You then use the `train()` function to train the CART classifier. You pass your labelled training data `trainingData` into the `train()` function and it will learn the rules that best relate spectral reflectance values in your training data to the observed land cover type specified by the `lc` property.
 

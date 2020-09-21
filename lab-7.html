@@ -381,6 +381,9 @@ div.tocify {
 <li>
   <a href="lab-7.html">Lab 7</a>
 </li>
+<li>
+  <a href="lab-8.html">Lab 8</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -569,7 +572,7 @@ print(trainingData);
 </div>
 <div id="train-classifier" class="section level3">
 <h3>Train classifier</h3>
-<p>You are going to use <code>trainingData</code> to train a classification and regression tree (CART) algorithm to predict a pixel’s land cover type based on its spectral reflectance values.</p>
+<p>You are going to use <code>trainingData</code> to train a classification and regression tree (CART) model to predict a pixel’s land cover type based on its spectral reflectance values.</p>
 <p>The first step is to create a CART object using the <code>ee.Classifier.smileCart()</code> constructor function. You then use the <code>train()</code> function to train the CART classifier. You pass your labelled training data <code>trainingData</code> into the <code>train()</code> function and it will learn the rules that best relate spectral reflectance values in your training data to the observed land cover type specified by the <code>lc</code> property.</p>
 <p><br></p>
 <pre class="js"><code>// Train a CART classifier with default parameters.

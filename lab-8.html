@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Lab 8</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 52px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h2 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h3 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h4 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h5 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.section h6 {
+  padding-top: 57px;
+  margin-top: -57px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="overview.html">Overview</a>
+</li>
+<li>
+  <a href="js-introduction.html">JS Intro</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Lab 4
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lab-4.html">Lab 4a</a>
+    </li>
+    <li>
+      <a href="lab-4b.html">Lab 4b</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="lab-5.html">Lab 5</a>
+</li>
+<li>
+  <a href="lab-6.html">Lab 6</a>
+</li>
+<li>
+  <a href="lab-7.html">Lab 7</a>
+</li>
+<li>
+  <a href="lab-8.html">Lab 8</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Lab 8</h1>
+
+</div>
+
+
+<p><br></p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>In Lab 7 you implemented a workflow to train and validate a machine learning model to perform a classification task. A classification problem is when the outcome variable is qualitative (i.e. it can take on a value of one of <span class="math inline">\(K\)</span> classes or categories). If the outcome variable is numerical and continuous this is termed a regression problem. This lab will introduce a workflow to train, validate, and interpret a machine learning model for regression tasks. It will also introduce you to some more tools that you can use to interpret a trained model and evaluate its suitability for applied tasks.</p>
+<p>You will use a range of predictor variables to train a model that predicts summer land surface temperature (LST) across a study area in Perth.</p>
+<div id="predicting-land-surface-temperatures" class="section level3">
+<h3>Predicting Land Surface Temperatures</h3>
+<p>Exposure to warmer temperatures can have adverse impacts on various facets or indicators of well-being (see below figure from <a href="https://science.sciencemag.org/content/353/6304/aad9837.abstract" target="_blank">Carleton and Hsiang (2016)</a>).</p>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/carleton-hsiang-science-2016.jpg" alt="Climate impacts on indicators of well-being (source: Carleton and Hsiang (2016))." width="80%" />
+<p class="caption">
+Climate impacts on indicators of well-being (source: Carleton and Hsiang (2016)).
+</p>
+</div>
+<p><br></p>
+<p>Populations in urban areas can be particularly exposed to warmer temperatures compared to populations in proximal rural locations; this is termed the urban heat island (UHI) effect. Land cover affects the energy balance and thus temperature in urban areas; for example, trees can provide a cooling affect via evapotranspiration or shade. The abilitu to predict how different configurations of urban land cover affects temperature is important for planners seeking to develop urban areas in ways that minimise heat exposure. The Low Carbon Living CRC has produced a useful <a href="http://www.lowcarbonlivingcrc.com.au/sites/all/files/publications_file_attachments/rp2024_guide_to_urban_cooling_strategies_2017_web.pdf" target="_blank">Guide to Urban Cooling Strategies</a> demonstrating how different urban land cover types affect temperature.</p>
+<p>In this lab you will use a range of spatial layers that represent urban land cover types to train and validate a machine learning model that predicts urban LST. This model could be used for scenario analyses where the effect of different urban developments, which result in different land covers, on LST can be modelled.</p>
+</div>
+<div id="random-forests-model" class="section level3">
+<h3>Random Forests Model</h3>
+<p>As in lab 7, your goal will be to train a model <span class="math inline">\(f\)</span> which relates predictor variables <span class="math inline">\(X\)</span> to an outcome <span class="math inline">\(Y\)</span>.</p>
+<p><span class="math display">\[Y = f(X)\]</span></p>
+<p>However, here <span class="math inline">\(Y\)</span> is LST which is a continuous variable. Therefore, the model <span class="math inline">\(f\)</span> that you train will be in regression mode not classification mode. This will still be a supervised learning task where you have observations of LST, <span class="math inline">\(Y\)</span>, and predictor variables, <span class="math inline">\(X\)</span>, which you use train a model <span class="math inline">\(\hat{f}\)</span> that learns rules that relate <span class="math inline">\(X\)</span> to predicted LST values, <span class="math inline">\(\hat{Y}\)</span>.</p>
+<p>The model you will be using is a Random Forests model. A Random Forests model comprises an ensemble of decision (regression) tree models. In regression mode, the final prediction is the average of the predictions from all the regression trees in the ensemble.</p>
+<div id="regression-trees" class="section level4">
+<h4>Regression Trees</h4>
+<p>First, let’s go through the process of training a single regression tree. A single regression tree divides the predictor space - the range of values the <span class="math inline">\(p\)</span> predictor variables can take - into <span class="math inline">\(J\)</span> distinct and non-overlapping regions <span class="math inline">\(R_{1}, R_{2},...R_{J}\)</span>. If an observation ends up in region <span class="math inline">\(R_{j}\)</span> it takes on the response value assigned to that region which is the mean of all response values for that region in the training data. When training a regression tree, your task is to determine the rules that best divide the predictor space into <span class="math inline">\(J\)</span> regions by minimising an error or loss function.</p>
+<p>First, you find the predictor variable <span class="math inline">\(X_{j}\)</span> and cutpoint value <span class="math inline">\(s\)</span> that splits the training data such that the residual sum of squares (RSS) of response variable <span class="math inline">\(Y\)</span> in the two regions generated by the split is minimised. For any <span class="math inline">\(j\)</span> and <span class="math inline">\(s\)</span> in your training data you can define two regions:</p>
+<p><span class="math display">\[R_{1}(j,s) = \{X|X_{j} &lt; s\}  \: and \: R_{2}(j,s) = \{X|X_{j} ≥ s\}\]</span></p>
+<p>and you seek <span class="math inline">\(X_{j}\)</span> and <span class="math inline">\(s\)</span> that minimises the sum of the RSS for the two regions <span class="math inline">\(R_{1}\)</span> and <span class="math inline">\(R_{2}\)</span>:</p>
+<p><span class="math display">\[ \sum_{i: x_{i} \in R_{1}(j,s)}(y_{i} - \hat{y}_{R1})^2 + \sum_{i: x_{i} \in R_{2}(j,s)}(y_{i} - \hat{y}_{R2})^2 \]</span> <span class="math inline">\(\hat{y}_{R1}\)</span> is the mean of the response variable <span class="math inline">\(Y\)</span> in the region <span class="math inline">\(R_{1}\)</span> and <span class="math inline">\(\hat{y}_{R2}\)</span> is the mean of the response variable <span class="math inline">\(Y\)</span> in the region <span class="math inline">\(R_{2}\)</span>.</p>
+<p>You recursively repeat this process for the data in each of the subsequent splits until a stopping criterion is reached (e.g. minimum number of training observations in a final leaf node, maximum number of leaf nodes reached). The set of splits along predictor variables <span class="math inline">\(X\)</span> and cutpoints <span class="math inline">\(s\)</span> are the learned decision rules that determine how your model predicts <span class="math inline">\(\hat{y}_i\)</span> for a set of known predictor variables <span class="math inline">\(x_{i}\)</span>.</p>
+<p>The figure below illustrates the process of creating a regression tree by recursively splitting the training data into regions that minimise the RSS between the observed response value and average of the response values in a given region <span class="math inline">\(R_{(j,s)}\)</span>.</p>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/james-et-al-dec-tree.png" alt="Top left is the outcome of recursively splitting training data that consists of two predictors variables $X_{1}$ and $X_{2}$, top right is the same splits in the data represented as a tree, and the bottom panel shows a prediction surface with predicted values on the Y-axis (source: James et al. (2013))." width="80%" />
+<p class="caption">
+Top left is the outcome of recursively splitting training data that consists of two predictors variables <span class="math inline">\(X_{1}\)</span> and <span class="math inline">\(X_{2}\)</span>, top right is the same splits in the data represented as a tree, and the bottom panel shows a prediction surface with predicted values on the Y-axis (source: James et al. (2013)).
+</p>
+</div>
+<p><br></p>
+</div>
+<div id="random-forests" class="section level4">
+<h4>Random Forests</h4>
+<p>A Random Forests model is an ensemble of regression trees generated by taking <b>bootstrap samples</b> (sampling with replacement) from the training data and fitting a regression tree to each sample. One issue with a single regression tree is that is has high variance; if you train a model <span class="math inline">\(\hat{f}\)</span> using different training datasets and you get different <span class="math inline">\(\hat{f}\)</span>’s then that method has high variance. If you train a regression tree with sample 1, <span class="math inline">\(X_{1}\)</span>, and then train a regression tree with sample 2, <span class="math inline">\(X_{2}\)</span>, where both samples are drawn from the same population, small differences in the samples could result in different rules that characterise your trained regression trees <span class="math inline">\(\hat{f}_1\)</span> and <span class="math inline">\(\hat{f}_2\)</span>. This will result in different predictions for the same input data.</p>
+<p>Bootstrap aggregation (bagging) is a method to reduce the variance in predictions. You draw <span class="math inline">\(B\)</span> training samples from your training data and train a regression tree <span class="math inline">\(\hat{f}_{b}\)</span> for each <span class="math inline">\(1, 2,...B\)</span> training samples. For each <span class="math inline">\(x_{i}\)</span> your prediction is the average prediction returned from all <span class="math inline">\(\hat{f}_b(x)\)</span>.</p>
+<p><span class="math display">\[ \hat{y}_{bag}(x) = \frac{1} {B} \sum_{b=1}^B \hat{f}_b(x)\]</span></p>
+<p>This video provides an overview of bootstrap aggregation (bagging).</p>
+<br>
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5Lu1eTiX7qM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</center>
+<p><br></p>
+<p>When you generate bagged training samples some of your initial training dataset are not used to train a given regression tree <span class="math inline">\(\hat{f}_b\)</span>. You can use these held-out data to compute the prediction error for a each regression tree by comparing predictions <span class="math inline">\(\hat{y}_i\)</span> for these data points to observed values <span class="math inline">\(y_{i}\)</span>. This is termed the <b>out-of-bag</b> error. You can combine the out-of-bag error computed for each <span class="math inline">\(i\)</span> observation in your training data to compute an overall out-of-bag mean square error (MSE) estimate for your bagged model.</p>
+<p>Random forests build on bagged tree models by decorrelating the decision trees within the ensemble. If there was one strong predictor variable in your training dataset, each time you train a regression tree in using a bagged training sample you would expect this variable to be dominant in determining the first split in your tree. This would result in your regression trees having a similar structure and possibly missing relationships between other predictor variables and the response. Therefore, when training a random forests model at each split only <span class="math inline">\(m\)</span> out of <span class="math inline">\(p\)</span> predictor variables are considered. This decorrelates the regression trees in the random forests ensemble reducing the variance in predictions and capturing more information about the relationships between the predictors and the response variable.</p>
+<p>Chapter 8 and Chapter 2 (section 2.2.2) of <a href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf" target="_blank">James et al. (2013)</a> provide a clear and detailed explanation of Random Forests models.</p>
+<p>This video also provides an overview of the process of training a Random Forests model.</p>
+<br>
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/o7iDkcpOr_g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</center>
+<p><br></p>
+<p>Random forests models are used for a variety of prediction tasks involving spatial data. Some of the advantages of random forests models are:</p>
+<ul>
+<li>Tree based models can easily handle qualitative and quantitative predictor variables</li>
+<li>Random forests models are relatively robust to being trained with large numbers of predictor variables</li>
+<li>Random forests models handle (multiple) interactions between predictor variables (when the relationship between predictors and response is complex)</li>
+<li>Random forests models can handle non-linear relationships between predictor variables and response variables</li>
+<li>Random forests models generally have good predictive performance</li>
+<li>Random forests models are relatively quick to train</li>
+</ul>
+<p>Disadvantages of random forests models include:</p>
+<ul>
+<li>Black box - it is difficult to see inside the model and visualise the relationships between predictors and response (how do you visualise &gt; 100 regression trees?)</li>
+<li>Random forests are not suited to inference problems - how does <span class="math inline">\(Y\)</span> change as a function of <span class="math inline">\(X\)</span>. The model <span class="math inline">\(f\)</span> cannot be a black box in inference tasks as you are interested in <span class="math inline">\(f\)</span>’s form</li>
+</ul>
+<p>This <a href="https://christophm.github.io/interpretable-ml-book/" target="_blank">free and open book (Interpetable Machine Learning)</a> includes some accessible discussion of limits to non-parametric machine learning models, such as random forests, and approaches to interpret them.</p>
+</div>
+</div>
+<div id="setup" class="section level3">
+<h3>Setup</h3>
+<p><br></p>
+<pre class="js"><code>/*
+Lab 8
+Author: Test
+Date: XX-XX-XXXX
+
+*/
+</code></pre>
+<p><br></p>
+</div>
+<div id="data-import" class="section level3">
+<h3>Data Import</h3>
+<p>Import an <code>Image</code> <code>lab8Data</code> which contains a band <code>lst</code>; this is the response or outcome variable. <code>lst</code> is the average Landsat 8 LST for Perth’s summer months (December, January, and February) for the years 2014 to 2019 and was computed using the method presented in <a href="https://ieeexplore.ieee.org/document/6784508" target="_blank">Jiménez-Muñoz et al. (2014)</a>.</p>
+<p>This <code>Image</code> also contains a range of land cover related predictor variables as bands; you will train a model to predict LST using these bands. These predictor variables include:</p>
+<p><code>mb_cat16</code> - the <a href="https://www.abs.gov.au/ausstats/abs@.nsf/Lookup/by%20Subject/1270.0.55.001~July%202016~Main%20Features~Mesh%20Blocks%20(MB)~10012" target="_blank">ABS Mesh Block</a> land use category for the Mesh Block with the largest intersection with a Landsat 8 pixel. The values correspond to land use categories:</p>
+<ol style="list-style-type: decimal">
+<li>Parkland</li>
+<li>Transport</li>
+<li>Residential</li>
+<li>Water</li>
+<li>Education</li>
+<li>Commercial</li>
+<li>Hospital / Medical</li>
+<li>Industrial</li>
+<li>Other</li>
+</ol>
+<p><code>mb_road_length</code> - the length in metres of all Open Street Map roads that are returned from the intersection of Open Street Map roads and the Mesh Block.</p>
+<p><code>building_count</code> - count of buildings whose footprint intersects with a Landsat 8 pixel footprint. Building data is derived from the <a href="https://geoscape.com.au/data/buildings/" target="_blank">Geoscape Buildings</a> product.</p>
+<p><code>building_area</code> - sum of building footprint area (in square metres) whose footprint intersects with a Landsat 8 pixel footprint. Building data is derived from the <a href="https://geoscape.com.au/data/buildings/" target="_blank">Geoscape Buildings</a> product.</p>
+<p><code>median_eave_height</code> - for all buildings that intersect with a Landsat 8 pixel, the mean of the relative height of the eave elevation to the ground elevation and is calculated by taking the median eave elevation minus the minimum ground elevation. Building data is derived from the <a href="https://geoscape.com.au/data/buildings/" target="_blank">Geoscape Buildings</a> product.</p>
+<p><code>max_building_height</code> - for all buildings that intersect with a Landsat 8 pixel, the mean relative height of the roof elevation to the ground elevation and is calculated by taking the maximum roof elevation minus the minimum ground elevation. Building data is derived from the <a href="https://geoscape.com.au/data/buildings/" target="_blank">Geoscape Buildings</a> product.</p>
+<p><code>swim_pool_count</code> - count of swimming pools at buildings that intersect with a Landsat 8 pixel footprint. Swimming pool data is derived from the <a href="https://geoscape.com.au/data/buildings/" target="_blank">Geoscape Buildings</a> product.</p>
+<p><code>solar_panel_count</code> - count of buildings that intersect with a Landsat 8 pixel footprint and have solar panels. Solar panel data is derived from the <a href="https://geoscape.com.au/data/buildings/" target="_blank">Geoscape Buildings</a> product.</p>
+<p><code>tree_pct</code> - percentage of a Landsat 8 pixel covered by tree canopy. Defined as vegetation greater than 3 m in height and derived from the Urban Monitor product <a href="https://urbanmonitor-beta.landgate.wa.gov.au/content/app/urban-monitor-metadata-final-report.pdf" target="_blank">(Caccetta, 2012)</a>.</p>
+<p><code>shrub_pct</code> - percentage of a Landsat 8 pixel covered by shrub. Defined as vegetation greater than 0.5 m and less than 3 m in height and derived from the Urban Monitor product <a href="https://urbanmonitor-beta.landgate.wa.gov.au/content/app/urban-monitor-metadata-final-report.pdf" target="_blank">(Caccetta, 2012)</a>.</p>
+<p><code>grass_pct</code> - percentage of a Landsat 8 pixel covered by grass. Defined as vegetation less than 0.5 m in height and derived from the Urban Monitor product <a href="https://urbanmonitor-beta.landgate.wa.gov.au/content/app/urban-monitor-metadata-final-report.pdf" target="_blank">(Caccetta, 2012)</a>.</p>
+<p>Import <code>lab8Data</code> and visualise its <code>Image</code> bands on the map display. Visually inspect the relationship between different land cover types and LST. Do they conform to your expectations? For example, use the <b>Layers</b> to turn off all layers except <code>LST</code> and <code>building_area</code>; can you see the relationship between large buildings and surface temperature?</p>
+<br>
+<center>
+<iframe src="https://player.vimeo.com/video/460028055" width="640" height="284" frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+</iframe>
+<p>
+Visualisation of warmer LST over Sir Charles Gairdner Hospital.
+</p>
+</center>
+<p><br></p>
+<pre class="js"><code>// Data import
+
+// mb_cat16 - ABS Mesh Block land use
+// mb_road_length - length of OSM roads (m) in an ABS Mesh Block
+// lst - Landsat 8 LST (K) Dec-Feb average for years 2014 - 2019
+// building_count - count of building footprints intersecting Landsat 8 pixel
+// building_area - area of building footprints intersecting Landsat 8 pixel
+// median_eave_height - median eave height of buildings intersecting Landsat 8 pixel
+// max_building_height - max building height of buildings intersecting Landsat 8 pixel
+// swim_pool_count - count of swimming pools at properties intersecting Landsat 8 pixel
+// solar_panel_count - count of solar panels at properties intersecting Landsat 8 pixel
+// tree_pct - % tree cover of Landsat 8 pixel
+// shrub_pct - % shrub cover of Landsat 8 pixel
+// grass_pct - % grass cover of Landsat 8 pixel
+var lab8Data = ee.Image(&#39;users/jmad1v07/gee-labs/lab-8-data&#39;);
+lab8Data = lab8Data.rename([&#39;mb_cat16&#39;, &#39;mb_road_length&#39;, &#39;lst&#39;, &#39;building_count&#39;, &#39;building_area&#39;, &#39;median_eave_height&#39;, &#39;max_building_height&#39;, &#39;swim_pool_count&#39;, &#39;solar_panel_count&#39;, &#39;tree_pct&#39;, &#39;shrub_pct&#39;, &#39;grass_pct&#39;]);
+print(lab8Data);
+
+// create study area from lab8Data
+var bBox = lab8Data.geometry();
+Map.centerObject(bBox, 13);
+Map.addLayer(bBox);
+
+// Visualise LST
+Map.addLayer(lab8Data.select(&#39;lst&#39;), {min:295, max:315, palette:[&#39;0000FF&#39;, &#39;00FFFF&#39;, &#39;FFFF00&#39;, &#39;FF0000&#39;]}, &#39;LST&#39;);
+
+// Visualise Building Count
+Map.addLayer(lab8Data.select(&#39;building_count&#39;), {min:0, max:8, palette:[&#39;#ffffd4&#39;,&#39;#fee391&#39;,&#39;#fec44f&#39;,&#39;#fe9929&#39;,&#39;#d95f0e&#39;,&#39;#993404&#39;]}, &#39;Building Count&#39;);
+
+// Visualise Building Area
+Map.addLayer(lab8Data.select(&#39;building_area&#39;), {min:0, max:10000, palette:[&#39;#ffffd4&#39;,&#39;#fee391&#39;,&#39;#fec44f&#39;,&#39;#fe9929&#39;,&#39;#d95f0e&#39;,&#39;#993404&#39;]}, &#39;Building Area&#39;);
+
+// Visualise Tree Cover
+Map.addLayer(lab8Data.select(&#39;tree_pct&#39;), {min:0, max:100, palette:[&#39;#edf8e9&#39;,&#39;#c7e9c0&#39;,&#39;#a1d99b&#39;,&#39;#74c476&#39;,&#39;#31a354&#39;,&#39;#006d2c&#39;]}, &#39;Tree %&#39;);
+</code></pre>
+<br>
+<hr>
+<p><br></p>
+</div>
+</div>
+<div id="training-feature-engineering" class="section level2">
+<h2>Training (Feature) Engineering</h2>
+<p>The first task in a supervised classification workflow is to prepare the training data. You have already imported and visualised the outcome variable (<code>lst</code>) and a range of spatial land cover related variables which will be predictors.</p>
+<p>There are some additional variables in Google Earth Engine that you can add to your training data. There is often a relationship between elevation or distance from water bodies and temperature (e.g. cooling winds coming off the ocean).</p>
+<p>There are a range of elevation datasets pre-loaded into Google Earth Engine; here, you will import the <a href="https://developers.google.com/earth-engine/datasets/catalog/AU_GA_DEM_1SEC_v10_DEM-H" target="_blank">DEM-H: Australian SRTM Hydrologically Enforced Digital Elevation Model</a> where each pixel value represents elevation in metres.</p>
+<p><br></p>
+<pre class="js"><code>// Training engineering
+
+// import elevation data
+var dem = ee.Image(&#39;AU/GA/DEM_1SEC/v10/DEM-H&#39;).clip(bBox);
+Map.addLayer(dem, {min: 0, max: 50, palette:[&#39;#8c510a&#39;,&#39;#d8b365&#39;,&#39;#f6e8c3&#39;,&#39;#c7eae5&#39;,&#39;#5ab4ac&#39;,&#39;#01665e&#39;]}, &#39;DEM&#39;);
+</code></pre>
+<p><br></p>
+<p>To compute the distance to water you will use the <a href="https://developers.google.com/earth-engine/datasets/catalog/JRC_GSW1_2_GlobalSurfaceWater" target="_blank">JRC Global Surface Water Mapping Layers v1.2</a> data. The <code>seasonality</code> band pixel values represent the number of months in a year a location was covered by surface water; using the relational operator <code>eq()</code> identify all pixels that are permanently water (i.e. <code>seasonality.eq(12)</code> where 12 represents the number months in a year that a pixel is water).</p>
+<p>To compute the distance from each location in the study area <code>bBox</code> to a water body use the <code>fastDistanceTransform()</code> function. The <code>fastDistanceTransform()</code> function returns the squared number of pixels between a location and the nearest non-zero pixel in the input <code>Image</code> (<code>jrcWater</code> here where pixel values of one represent permanent water). To convert the return value from <code>fastDistanceTransform()</code> to metres use the square root function <code>sqrt()</code> and the multiply the pixel number by the pixel dimension <code>multiply(ee.Image.pixelArea().sqrt())</code>.</p>
+<p><br></p>
+<pre class="js"><code>// water distance
+var jrcWater = ee.Image(&#39;JRC/GSW1_2/GlobalSurfaceWater&#39;)
+  .select(&#39;seasonality&#39;)
+  .eq(12)
+  .clip(bBox);
+
+var waterDist = jrcWater.fastDistanceTransform(1000)
+  .sqrt()
+  .clip(bBox)
+  .multiply(ee.Image.pixelArea().sqrt())
+  .rename([&#39;water_distance&#39;]);
+Map.addLayer(waterDist, {min: 0, max: 3000, palette:[&#39;#253494&#39;, &#39;#2c7fb8&#39;, &#39;#41b6c4&#39;, &#39;#7fcdbb&#39;, &#39;#c7e9b4&#39;, &#39;#ffffcc&#39;]}, &#39;distance to water (m)&#39;);
+</code></pre>
+<p><br></p>
+<p>You need to add <code>dem</code> and <code>waterDist</code> as bands to the training data. You can use the <code>addBands()</code> function for this. <br></p>
+<pre class="js"><code>// add water distance and dem to training data
+lab8Data = lab8Data.addBands(dem).addBands(waterDist);
+</code></pre>
+<p><br></p>
+<p>Having prepared and inspected the outcome and predictor data you need to create samples to train and validate the model. First, mask out water bodies from the <code>dem</code> and <code>waterDist</code> bands.</p>
+<p>You will generate test and training samples by performing a stratified random sample where each of the Mesh Block land use categories are strata. You can use the <code>stratifiedSample()</code> function in Google Earth Engine to randomly sample a pre-specified number of points from strata (groups) in an <code>Image</code>. You need to convert the band <code>mb_cat16</code> to integer data type prior to using it as a strata argument in the <code>stratifiedSample()</code> function. The <code>seed</code> argument to the <code>stratifiedSample()</code> function ensures that you draw the same random sample each time you execute your code; this is important to ensure your results are reproducible.</p>
+<br>
+<details>
+<summary><b><em>Why did you take a stratified random sample as opposed to a random sample?</em></b></summary>
+<p>
+<br> By sampling from each of the Mesh Block land use categories you ensure that your training data is drawn from the range of land cover types / contexts present in the study area. This ensures that land cover types that might cover a small area are included in model training; these locations might be missed in a normal random sampling procedure.<br />
+
+</p>
+</details>
+<p><br></p>
+<pre class="js"><code>//mask water from elevation and water distance layers
+var mask = lab8Data.select(&#39;lst&#39;).gt(0);
+lab8Data = lab8Data.updateMask(mask);
+
+var mb_cat16_int = lab8Data.select(&#39;mb_cat16&#39;).toInt().rename(&#39;mb_cat16_int&#39;);
+lab8Data = lab8Data.addBands(mb_cat16_int);
+
+var training = lab8Data.stratifiedSample({
+  numPoints: 300, 
+  classBand: &#39;mb_cat16_int&#39;, 
+  region: bBox,
+  seed: 0,
+  scale: 30
+  
+});
+print(training);
+
+var test = lab8Data.stratifiedSample({
+  numPoints: 100, 
+  classBand: &#39;mb_cat16_int&#39;, 
+  region: bBox,
+  seed: 1,
+  scale: 30
+  
+});
+print(test);</code></pre>
+<br>
+<details>
+<summary><b><em>What could be one problem with how the <code>training</code> and <code>test</code> samples were generated?</em></b></summary>
+<p>
+<br> A separate stratified random sample was generated for the test data. There is a chance that locations included in the training sample could also be in the test sample. Also, by stratifying the sample using Mesh Block land use categories it is likely that test and training samples are drawn from locations close to each other. This might result in training and test sample data being spatially correlated and not fully independent observations. There is an example <a href="https://developers.google.com/earth-engine/guides/classification#accuracy-assessment" target="_blank">here</a> of how you can use a spatial filter to remove test data points that are geographically close to training data.
+</p>
+</details>
+<p><br></p>
+<hr>
+<p><br></p>
+</div>
+<div id="model-training" class="section level2">
+<h2>Model Training</h2>
+<p>Using the training data that you have just prepared, train a random forests model that will predict LST. First, create a list of bands naming the outcome variable (<code>lst</code>) and the predictor variables in the training data <code>training</code>.</p>
+<p><br></p>
+<pre class="js"><code>// Model Training
+
+// bands to use in training the model
+var bands = [&#39;mb_cat16&#39;, &#39;mb_road_length&#39;, &#39;building_count&#39;, &#39;building_area&#39;, &#39;median_eave_height&#39;, &#39;max_building_height&#39;, &#39;swim_pool_count&#39;, &#39;solar_panel_count&#39;, &#39;tree_pct&#39;, &#39;shrub_pct&#39;, &#39;grass_pct&#39;, &#39;elevation&#39;, &#39;water_distance&#39;];
+</code></pre>
+<p><br></p>
+<p>You need to create an random forests model object of the <code>ee.Classifier.smileRandomForest</code> class and set the <code>numberOfTrees</code> and <code>seed</code> arguments. The <code>numberOfTrees</code> argument specifies the number of regression trees to include in ensemble. The <code>seed</code> is used to initialise a pseudo-random number generator; setting the seed ensures that the same bootstrap samples are drawn within the random forests algorithm each time you execute your code. This ensures your results are reproducible.</p>
+<p>Google Earth Engine implements the <a href="http://haifengl.github.io/api/java/smile/regression/RandomForest.html#importance" target="_blank">smile random forests</a> model.</p>
+<p>You need to set the output mode of the random forests model as <code>REGRESSION</code>. LST is a continuous numeric variable so you are using the random forests for a regression task here.</p>
+<p>Finally, once you have set up the parameters for your random forests model (i.e. <code>numberOfTrees</code>) and set it to regression mode you are ready to train the model using your training data.</p>
+<p><br></p>
+<pre class="js"><code>// Train a random forests classifier
+var randomForest = ee.Classifier.smileRandomForest({
+  numberOfTrees: 100,
+  seed: 0})
+  .setOutputMode(&#39;REGRESSION&#39;)
+  .train({
+    features: training,
+    classProperty: &#39;lst&#39;,
+    inputProperties: bands
+  });
+    </code></pre>
+<br>
+<hr>
+<p><br></p>
+</div>
+<div id="model-interpretation" class="section level2">
+<h2>Model Interpretation</h2>
+<p>Compared to a single classification or regression tree or the results from estimating a linear regression model interpreting random forests models is more challenging. As the random forests model is an ensemble of many regression trees it is difficult to visualise the relationships between predictors and response (think about the difference between looking at a single regression tree versus 100 regression trees). There is often a trade-off between the prediction accuracy provided by a random forests model and ease of interpreting the model.</p>
+<p>You can call the <code>explain()</code> function on your trained random forests model <code>randomForest</code> to obtain some model diagnostics. The dictionary object returned by <code>explain()</code> includes an <code>outOfBagErrorEstimate</code> property. This reports on the root mean square error (RMSE) between observed and predicted LST for training data that was not included in a given regression tree due to the bootstrap resampling process (remember from the introduction that each regression tree in a random forests model is trained using a different sample of the training data - for each tree, some training data observations were not used in the training process).</p>
+<p>Print the dictionary returned by <code>explain()</code> to the <em>console</em>.</p>
+<p><br></p>
+<pre class="js"><code>// Model interpretation
+var explainRF = randomForest.explain();
+print(&#39;Explain:&#39;, explainRF);
+</code></pre>
+<p><br></p>
+<p>Your <code>explainRF</code> dictionary object should be similar to the below figure. This random forests model has an out-of-bag error estimate of 1.09 Kelvin (RMSE between predicted and observed LST for all data points not included in a given regression tree within the random forests ensemble).</p>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/out-of-bag.png" alt="Printing the dictionary returned by `explain()` to the console." width="70%" />
+<p class="caption">
+Printing the dictionary returned by <code>explain()</code> to the console.
+</p>
+</div>
+<p><br></p>
+<p>You will also see a property in <code>expainRF</code> called <code>importance</code>. This is a measure of variable importance in terms of each variables contribution to prediction accuracy. The variable importance measure represents the amount the error function (RSS) was reduced due to splits in a regression tree over a predictor variable and summed over all <span class="math inline">\(B\)</span> trees in the ensemble. A larger variable importance measure indicates that predictor variable is more important for prediction accuracy.</p>
+<p>The <a href="http://haifengl.github.io/api/java/smile/regression/RandomForest.html#importance" target="_blank">smile random forests model</a> documentation defines the variable importance measure as <em>“Every time a split of a node is made on variable the impurity criterion for the two descendent nodes is less than the parent node. Adding up the decreases for each individual variable over all trees in the forest gives a fast measure of variable importance that is often very consistent with the permutation importance measure.”</em></p>
+<p>You can extract the <code>importance</code> property from <code>explainRF</code> to a <code>Feature</code> object and then plot each variable’s importance score as a column chart. Inspect your chart in the <em>console</em>.</p>
+<p><br></p>
+<pre class="js"><code>var variableImportance = ee.Feature(null, ee.Dictionary(explainRF).get(&#39;importance&#39;));
+ 
+var chartVarImp =
+ui.Chart.feature.byProperty(variableImportance)
+  .setChartType(&#39;ColumnChart&#39;)
+  .setOptions({
+    title: &#39;Random Forest Variable Importance&#39;,
+    legend: {position: &#39;none&#39;},
+    hAxis: {title: &#39;Bands&#39;},
+    vAxis: {title: &#39;Importance&#39;}
+});
+
+print(chartVarImp);
+</code></pre>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/variable-importance.png" alt="Variable importance chart for predictors of LST." width="80%" />
+<p class="caption">
+Variable importance chart for predictors of LST.
+</p>
+</div>
+<p><br></p>
+<details>
+<summary><b><em>Can you explain why some predictors have higher variable importance scores?</em></b></summary>
+<p>
+<br> Water distance, tree cover, road length, and elevation had high variable importance scores. Locations close to water (coastal or riverside locations) might be cooled by winds blowing off water bodies. Tree cover can cool via evapotranspiration or shade. Locations with higher altitude are cooler; however, the variation in elevation in this study area might not explain much variation in temperature. It is likely that the elevation variable is picking up that Kings Park is higher, cooler, and more vegetated. Roads are open surfaces (i.e. exposed to income solar radiation) that can absorb heat. It is plausible that locations with greater road coverage are warmer - can you check your display of <code>lst</code> on the map to see if roads are warmer?
+</p>
+</details>
+<p><br></p>
+<details>
+<summary><b><em>Can you identify a limitation to interpreting models using variable importance plots?</em></b></summary>
+<p>
+<br> Variable importance plots are useful for informing on variables that are important for prediction accuracy. However, they do not provide any information on the relationship between predictors and outcome variables. Models such as linear regression models are better suited to inference problems such as these. However, there are tools you can use to explore relationships between predictors and outcome variables in random forests models such as <a href="https://christophm.github.io/interpretable-ml-book/pdp.html" target="_blank">partial dependence plots</a>.
+</p>
+</details>
+<p><br></p>
+<p>A final model interpretation activity is predicting LST for all locations in the <code>lab8Data</code> <code>Image</code>, the data set you used to generate your <code>training</code> sample. You can visualise the prediction of LST on the map and compare it to observed LST.</p>
+<p><br></p>
+<pre class="js"><code>// Predict LST
+var predLST = lab8Data.classify(randomForest);
+Map.addLayer(predLST, {min: 295, max: 310, palette:[&#39;0000FF&#39;, &#39;00FFFF&#39;, &#39;FFFF00&#39;, &#39;FF0000&#39;]}, &#39;predicted LST&#39;);
+</code></pre>
+<p><br></p>
+<p>Your predicted LST should look similar to the figure below.</p>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="img/pred-lst.png" alt="Predicted LST." width="80%" />
+<p class="caption">
+Predicted LST.
+</p>
+</div>
+<p><br></p>
+<hr>
+<p><br></p>
+</div>
+<div id="model-validation" class="section level2">
+<h2>Model Validation</h2>
+<p>Your goal in this lab was to train a random forests model that could predict LST based on a suite of land cover indicators. As was stated at the beginning of the lab, such a model could be useful for urban planning providing a tool to predict LST under different land cover / development scenarios and identify where and how temperature exposure could be reduced. However, before a model can be used for such purposes it needs to be validated to assess how well it generalises to data that was not used in model training.</p>
+<p>There are a range of <a href="https://bradleyboehmke.github.io/HOML/process.html#model-eval" target="_blank">error statistics</a> (e.g. RMSE, mean square error (MSE)) you can compute to assess how well your model generalises to unseen data; these statistics measure the discrepancy between an observed and predicted outcome for data points the model has not seen before. The following code demonstrates how to compute the RMSE for your predictions of LST for the <code>test</code> dataset.</p>
+<p>First, you need to use your trained model <code>randomForest</code> to predict LST values for your <code>test</code> data points. Inspect the data in the <em>console</em> to confirm that each <code>Feature</code> in <code>test</code> has a predicted LST value stored in the new <code>classification</code> property. How well does the predicted LST match the observed LST?</p>
+<p><br></p>
+<pre class="js"><code>// Model Validation
+var predTestLST = test.classify(randomForest);
+print(predTestLST);
+</code></pre>
+<p><br></p>
+<p>Next, you can use your predicted and observed LST values to compute the RMSE for your model’s prediction of LST on unseen test data. The RMSE is computed as:</p>
+<p><span class="math display">\[RMSE = \sqrt{\frac{1}{n} \sum^n_{i=1}(y_i - \hat y_i)^2}\]</span> For each data point <span class="math inline">\(i\)</span> in your <code>test</code> dataset, you compute the squared difference between observed LST <span class="math inline">\(y_{i}\)</span> and predicted LST <span class="math inline">\(\hat{y}_i\)</span>. Then you compute the mean of the squared differences between <span class="math inline">\(y_{i}\)</span> and <span class="math inline">\(\hat{y}_i\)</span> in your <code>test</code> data. Finally, you take the square root of the mean of the squared differences so you can interpret your error metric in units of the response variable (K or Kelvin here).</p>
+<p>The following code block will compute the the RMSE using you <code>test</code> data. First, you declare a function that computes the squared difference between observed and predicted LST for each <code>test</code> <code>Feature</code>. Then you call the <code>reduceColumns()</code> function which reduces (aggregates) all the values in a specified property of <code>Feature</code>s in a <code>FeatureCollection</code>; to compute RMSE use the mean function applied to the column <code>diff_squared</code>. Finally, apply the square root function <code>sqrt()</code> to the output of the call to <code>reduceColumns()</code>.</p>
+<p>You should see your RMSE value printed to the <em>console</em>.</p>
+<pre class="js"><code>var squaredDiff = function(feature) {
+  var lstObs = ee.Number(feature.get(&#39;lst&#39;));
+  var lstPred = ee.Number(feature.get(&#39;classification&#39;));
+  var diff = lstObs.subtract(lstPred);
+  return feature.set(&#39;diff_squared&#39;, diff.pow(2));
+};
+
+// Calculate RMSE
+var rmse = ee.Number(predTestLST.map(squaredDiff)
+  .reduceColumns(ee.Reducer.mean(), [&#39;diff_squared&#39;])
+  .get(&#39;mean&#39;)
+).sqrt();
+print(&#39;RMSE: &#39;, rmse);
+</code></pre>
+<p><br></p>
+<p>What was the RMSE for random forests model when evaluated against <code>test</code> data? How can you interpret this error statistic? Is your model accurate enough, when applied to unseen data, to be useful for urban development and land use planning scenario analysis?</p>
+<p>Things to consider are: how large is your model’s prediction error relative to variation in LST you could expect to observe between different land cover types? How does your model compare to other similar non-parametric machine learning models in the literature (and are these models evaluated using independent test data)?, and how does your model compare to predictions of temperature that could be derived from other methods (e.g. energy balance models)?</p>
+<p><a href="https://www.sciencedirect.com/science/article/pii/S0301479720303583?casa_token=9ogBbT84VxMAAAAA:p78GJM9PYcZ7O6yHnG9ab0AU8EKl5OsVqMB7khunl1PrmouJzhN7wqN_z7CdSZgiFVLzO6liNw#mmc1" target="_blank">Hu et al. (2020)</a> present a tree based model that predicts LST based on a range of land cover related datasets. How did they validate their models performance?</p>
+<p>See <a href="https://www.sciencedirect.com/science/article/abs/pii/S1618866716301297" target="_blank">Thom et al. (2016)</a> for an example of a study validating the SOLWEIG energy balance model for urban temperature predictions in Adelaide.</p>
+<hr>
+<p><br></p>
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;">
+
+</div>
+<footer>
+<p>
+Advanced GIS and Remote Sensing
+</p>
+</footer>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
